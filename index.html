@@ -742,53 +742,31 @@
                     <div class="bg-blue-600 text-white text-center py-2">
                         <span class="font-bold">Commercial</span>
                     </div>
-                    <div class="h-64 bg-gradient-to-br from-blue-300 to-blue-500 flex items-center justify-center">
-                        <div class="text-white text-center">
-                            <div
-                                class="w-20 h-32 bg-white opacity-90 rounded mx-auto mb-2 transform transition-all duration-500 hover:rotate-y-180">
-                            </div>
-                            <p class="text-xs">Office Building</p>
-                        </div>
+                    <div class="h-64 bg-cover " style="background-image: url('images/comercial1.jpg');">
+
                     </div>
                     <div class="bg-gray-800 text-white p-6">
-                        <h3 class="text-xl font-bold text-center mb-4">RAJARANI Summit</h3>
-                        <p class="text-sm text-center mb-2">Commercial Property for Lease at Financial Dist.</p>
-                        <p class="text-sm text-center mb-4">Gachibowli</p>
-                        <p class="text-xs text-center mb-4">2.17 acres | 5,00,000 Sq.Ft. of SBA | 3 basements + G + 11
-                            Office Floors</p>
-                        <div class="text-center">
-                            <button
-                                class="bg-blue-600 text-white px-6 py-2 rounded font-bold hover:bg-blue-700 transition transform hover:scale-105">Know
-                                More</button>
-                        </div>
+                        <h3 class="text-2xl font-bold text-center mb-2">Raja Rani Complex</h3>
+                        <p class="text-sm text-center mb-1">Courtpeta, In front of B.D.A Office</p>
+                        </p>
+
                     </div>
                 </div>
+
 
                 <!-- Paradigm -->
                 <div class="bg-white rounded-lg shadow-lg overflow-hidden border-2 border-blue-200 commercial-card">
                     <div class="bg-blue-600 text-white text-center py-2">
                         <span class="font-bold">Commercial</span>
                     </div>
-                    <div class="h-64 bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center">
-                        <div class="text-white text-center">
-                            <div
-                                class="w-24 h-28 bg-white opacity-90 rounded mx-auto mb-2 transform transition-all duration-500 hover:rotate-y-180">
-                            </div>
-                            <p class="text-xs">Modern Office Complex</p>
-                        </div>
+                    <div class="h-64 bg-cover " style="background-image: url('images/commercial2.jpg');">
+
                     </div>
                     <div class="bg-gray-800 text-white p-6">
-                        <h3 class="text-xl font-bold text-center mb-4">Paradigm</h3>
-                        <p class="text-xs text-center mb-2">TS RERA Reg. No. P02400000690</p>
-                        <p class="text-sm text-center mb-2">Commercial Property for Lease at Financial Dist.</p>
-                        <p class="text-sm text-center mb-4">Gachibowli</p>
-                        <p class="text-xs text-center mb-4">2.63 acres | 1.05 million Sq. ft. of SBA | 5 basements + G +
-                            18 Office Floors</p>
-                        <div class="text-center">
-                            <button
-                                class="bg-blue-600 text-white px-6 py-2 rounded font-bold hover:bg-blue-700 transition transform hover:scale-105">Know
-                                More</button>
-                        </div>
+                        <h3 class="text-2xl font-bold text-center mb-2">Raja Rani Mall</h3>
+                        <p class="text-sm text-center mb-1">GOSANINUAGAON, Berhampur</p>
+                        </p>
+
                     </div>
                 </div>
 
@@ -797,30 +775,14 @@
                     <div class="bg-blue-600 text-white text-center py-2">
                         <span class="font-bold">Commercial</span>
                     </div>
-                    <div class="h-64 bg-gradient-to-br from-blue-500 to-blue-700 flex items-center justify-center">
-                        <div class="text-white text-center">
-                            <div class="grid grid-cols-2 gap-2">
-                                <div
-                                    class="w-10 h-24 bg-white opacity-90 rounded transform transition-all duration-500 hover:translate-y-[-10px]">
-                                </div>
-                                <div class="w-10 h-28 bg-white opacity-95 rounded transform transition-all duration-500 hover:translate-y-[-10px]"
-                                    style="transition-delay: 0.2s"></div>
-                            </div>
-                            <p class="text-xs mt-2">Twin Towers</p>
-                        </div>
+                    <div class="h-64 bg-cover " style="background-image: url('images/commercial3.jpg');">
+
                     </div>
                     <div class="bg-gray-800 text-white p-6">
-                        <h3 class="text-xl font-bold text-center mb-4">RAJARANI West Avenue</h3>
-                        <p class="text-xs text-center mb-2">TS RERA Reg. No. P02400001820</p>
-                        <p class="text-sm text-center mb-2">Commercial Property for Lease at Kokapet,</p>
-                        <p class="text-sm text-center mb-4">Gachibowli.</p>
-                        <p class="text-xs text-center mb-4">7.45 acres | 3.6 million Sq.Ft. of SBA | 5 basements + 3
-                            suits + 25 Office Floors</p>
-                        <div class="text-center">
-                            <button
-                                class="bg-blue-600 text-white px-6 py-2 rounded font-bold hover:bg-blue-700 transition transform hover:scale-105">Know
-                                More</button>
-                        </div>
+                        <h3 class="text-2xl font-bold text-center mb-2">Raja Rani Paradise</h3>
+                        <p class="text-sm text-center mb-1">At Station Road, Berhampur</p>
+                        </p>
+
                     </div>
                 </div>
             </div>
@@ -1139,11 +1101,19 @@
             mobileMenu.classList.toggle('hidden');
         });
 
-        // Close mobile menu when clicking outside
-        document.addEventListener('click', function (event) {
-            if (!mobileMenuBtn.contains(event.target) && !mobileMenu.contains(event.target)) {
-                mobileMenu.classList.add('hidden');
-            }
+        document.addEventListener('DOMContentLoaded', function () {
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            const mobileMenu = document.getElementById('mobileMenu');
+
+            mobileMenuBtn.addEventListener('click', function () {
+                mobileMenu.classList.toggle('hidden');
+            });
+
+            document.addEventListener('click', function (event) {
+                if (!mobileMenuBtn.contains(event.target) && !mobileMenu.contains(event.target)) {
+                    mobileMenu.classList.add('hidden');
+                }
+            });
         });
 
         // 3D Hero Canvas
