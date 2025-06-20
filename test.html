@@ -1,0 +1,990 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RAJARANI Properties - Real Estate</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+    <style>
+        /* Smooth scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Swiper customization */
+        .swiper-button-next,
+        .swiper-button-prev {
+            color: #1e40af;
+        }
+
+        .swiper-pagination-bullet-active {
+            background: #1e40af;
+        }
+
+        /* Simple animations */
+        .floating {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Mobile menu animation */
+        .mobile-menu {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        .mobile-menu.active {
+            max-height: 300px;
+        }
+
+        /* Navigation active state */
+        .nav-link {
+            position: relative;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: #1e40af;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: #1e40af;
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        /* Video section styles */
+        .video-container {
+            position: relative;
+            width: 100%;
+            padding-top: 177.78%;
+            /* 16:9 = 56.25%, 9:16 = 177.78% */
+            overflow: hidden;
+        }
+
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* Commercial Swiper specific styles */
+        .commercialSwiper .swiper-slide {
+            height: auto;
+        }
+
+        .commercialSwiper .swiper-button-next,
+        .commercialSwiper .swiper-button-prev {
+            color: #1e40af;
+            background: rgba(255, 255, 255, 0.9);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-top: -20px;
+        }
+
+        .commercialSwiper .swiper-button-next:after,
+        .commercialSwiper .swiper-button-prev:after {
+            font-size: 16px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body class="bg-white">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-md py-4 sticky top-0 z-50">
+        <div class="container mx-auto px-4 flex justify-between items-center">
+            <div class="flex items-center">
+                <div class="w-12 h-12 flex items-center justify-center mr-3">
+                    <img class="w-full h-full object-contain" src="images/logo.png" alt="RAJARANI Logo">
+                </div>
+                <div>
+                    <h1 class="text-xl font-bold text-gray-800">RAJARANI</h1>
+                    <p class="text-xs text-gray-600">REAL ESTATE</p>
+                </div>
+            </div>
+
+            <!-- Desktop Menu -->
+            <div class="hidden md:flex space-x-8">
+                <a href="#home" class="text-gray-700 hover:text-blue-600 font-medium nav-link">HOME</a>
+                <a href="#about" class="text-gray-700 hover:text-blue-600 font-medium nav-link">ABOUT US</a>
+                <a href="#commercial" class="text-gray-700 hover:text-blue-600 font-medium nav-link">COMMERCIAL
+                    PROJECT</a>
+                <a href="#completed" class="text-gray-700 hover:text-blue-600 font-medium nav-link">RESIDENTIAL
+                    PROJECT</a>
+                <a href="#footer" class="text-gray-700 hover:text-blue-600 font-medium nav-link">CONTACT US</a>
+            </div>
+
+            <!-- Mobile Menu Button -->
+            <div class="md:hidden">
+                <button id="mobileMenuBtn" class="text-gray-700 focus:outline-none">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="mobile-menu md:hidden bg-white shadow-lg">
+            <div class="px-4 py-2 space-y-2">
+                <a href="#home"
+                    class="block text-gray-700 hover:text-blue-600 font-medium py-2 mobile-nav-link">HOME</a>
+                <a href="#about" class="block text-gray-700 hover:text-blue-600 font-medium py-2 mobile-nav-link">ABOUT
+                    US</a>
+                <a href="#commercial"
+                    class="block text-gray-700 hover:text-blue-600 font-medium py-2 mobile-nav-link">COMMERCIAL
+                    PROJECT</a>
+                <a href="#completed"
+                    class="block text-gray-700 hover:text-blue-600 font-medium py-2 mobile-nav-link">RESIDENTIAL
+                    PROJECT</a>
+                <a href="#footer"
+                    class="block text-gray-700 hover:text-blue-600 font-medium py-2 mobile-nav-link">CONTACT US</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="relative h-[80vh] bg-cover bg-center text-white py-20"
+        style="background-image: url('https://img.freepik.com/free-photo/four-people-protective-helmets-inspecting-building-area_259150-60517.jpg?ga=GA1.1.172258652.1750391369&semt=ais_hybrid&w=740');">
+        <div class="absolute inset-0 bg-black bg-opacity-50"></div>
+        <div class="container mx-auto px-4 h-full flex items-center relative z-10">
+            <div class="w-full md:w-1/2">
+                <h1 class="text-5xl md:text-6xl font-bold mb-6 text-white floating">Building Dreams, <br>Creating Homes
+                </h1>
+                <p class="text-xl mb-8 text-white">Experience luxury living with RAJARANI Properties - where quality
+                    meets innovation.</p>
+                <div class="flex space-x-4">
+                    <a href="#completed"
+                        class="bg-white text-blue-700 px-6 py-3 rounded-lg font-bold hover:bg-blue-100 transition duration-300 transform hover:scale-105">
+                        Explore Projects
+                    </a>
+                    <a href="#footer"
+                        class="border-2 border-white text-white px-6 py-3 rounded-lg font-bold hover:bg-white hover:bg-opacity-10 transition duration-300 transform hover:scale-105">
+                        Contact Us
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Projects Section -->
+    <section id="completed" class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <h2 class="text-4xl font-bold text-center text-gray-800 mb-4">Featured Projects</h2>
+            <div class="w-20 h-1 bg-blue-600 mx-auto mb-12"></div>
+
+            <div class="swiper featuredSwiper">
+                <div class="swiper-wrapper">
+                    <!-- Project 1 -->
+                    <div class="swiper-slide">
+                        <div class="bg-white rounded-lg shadow-lg overflow-hidden card-hover">
+                            <div style="background-image: url(images/future1.jpg);"
+                                class="h-80 bg-center bg-cover relative">
+                                <a href="https://maps.app.goo.gl/eqpWfDupf7sS7GM1A" target="_blank"
+                                    class="absolute bottom-2 left-4 bg-red-600 text-white px-3 py-1 rounded text-sm font-bold flex items-center gap-2 shadow-lg hover:bg-red-700 transition">
+                                    <i class="fas fa-map-marker-alt text-white"></i> Station Road
+                                </a>
+                            </div>
+                            <div class="bg-gray-800 text-white p-6">
+                                <h3 class="text-2xl font-bold mb-2 capitalize">Raja Rani Field Phase - 2 (PUKUDIBANDHA)
+                                </h3>
+                                <p class="text-sm mb-2">Premium Lifestyle 2 & 3 BHK Apartments</p>
+                                <p class="text-sm mb-2">Pukidubandha, Berhampur</p>
+                                <div class="flex justify-between items-center">
+                                    <p class="text-lg font-bold">Price On Request</p>
+                                    <button
+                                        class="bg-blue-600 text-white px-4 py-2 rounded text-sm font-bold hover:bg-blue-700 transition">Know
+                                        More</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Project 2 -->
+                    <div class="swiper-slide">
+                        <div class="bg-white rounded-lg shadow-lg overflow-hidden card-hover">
+                            <div style="background-image: url(images/complete1.jpg);"
+                                class="h-80 bg-center bg-cover relative">
+                                <a href="https://www.google.com/maps?q=19.341404,84.766602" target="_blank"
+                                    class="absolute bottom-2 left-4 bg-red-600 text-white px-3 py-1 rounded text-sm font-bold flex items-center gap-2 shadow-lg hover:bg-red-700 transition">
+                                    <i class="fas fa-map-marker-alt text-white"></i> Aska Road Near
+                                </a>
+                            </div>
+                            <div class="bg-gray-800 text-white p-6">
+                                <h3 class="text-2xl font-bold mb-2 capitalize">Raja Rani Dream Homes</h3>
+                                <p class="text-sm mb-2">Premium Lifestyle 2 & 3 BHK Apartments</p>
+                                <p class="text-sm mb-2">Aska Road, Berhampur</p>
+                                <div class="flex justify-between items-center">
+                                    <p class="text-lg font-bold">Price On Request</p>
+                                    <button
+                                        class="bg-blue-600 text-white px-4 py-2 rounded text-sm font-bold hover:bg-blue-700 transition">Know
+                                        More</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Project 3 -->
+                    <div class="swiper-slide">
+                        <div class="bg-white rounded-lg shadow-lg overflow-hidden card-hover">
+                            <div style="background-image: url(images/greenvelly.jpg);"
+                                class="h-80 bg-center bg-cover relative">
+                                <a href="#" target="_blank"
+                                    class="absolute bottom-2 left-4 bg-red-600 text-white px-3 py-1 rounded text-sm font-bold flex items-center gap-2 shadow-lg hover:bg-red-700 transition">
+                                    <i class="fas fa-map-marker-alt text-white"></i> Ambapua
+                                </a>
+                            </div>
+                            <div class="bg-gray-800 text-white p-6">
+                                <h3 class="text-xl font-bold mb-2">Raja Rani Green Valley (AMBAPUA)</h3>
+                                <p class="text-sm mb-2">2BHK & 3BHK Luxury Apartments</p>
+                                <p class="text-sm mb-2">Ambapua, Berhampur</p>
+                                <div class="flex justify-between items-center">
+                                    <p class="text-lg font-bold">Price On Request</p>
+                                    <button
+                                        class="bg-blue-600 text-white px-4 py-2 rounded text-sm font-bold hover:bg-blue-700 transition">Know
+                                        More</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
+                <div class="swiper-pagination"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- QVT Assured Section -->
+    <section class="py-16 bg-gray-100">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-6xl font-bold text-gray-800 mb-2">RAJA RANI</h2>
+                <p class="text-xl text-gray-600 font-medium tracking-wider">ASSURED</p>
+                <div class="flex justify-center space-x-4 mt-2">
+                    <span class="text-sm text-gray-500 font-medium">QUALITY</span>
+                    <span class="text-blue-600">•</span>
+                    <span class="text-sm text-gray-500 font-medium">TRANSPARENCY</span>
+                    <span class="text-blue-600">•</span>
+                    <span class="text-sm text-gray-500 font-medium">DELIVERY</span>
+                </div>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+                <!-- Quality -->
+                <div class="bg-white p-8 rounded-lg shadow-lg card-hover border-t-4 border-blue-600">
+                    <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mb-6 mx-auto">
+                        <i class="fas fa-medal text-blue-600 text-2xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-center mb-4 text-gray-800">QUALITY</h3>
+                    <p class="text-center text-gray-600 leading-relaxed">Quality is the way of life at RAJARANI
+                        Properties. Using premium materials and innovative technology, we've set new benchmarks in how
+                        real estate is conceived, designed and built.</p>
+                </div>
+
+                <!-- Transparency -->
+                <div class="bg-white p-8 rounded-lg shadow-lg card-hover border-t-4 border-gray-700">
+                    <div class="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mb-6 mx-auto">
+                        <i class="fas fa-search-dollar text-gray-700 text-2xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-center mb-4 text-gray-800">TRANSPARENCY</h3>
+                    <p class="text-center text-gray-600 leading-relaxed">Trust and credibility drive our business.
+                        RAJARANI Properties is synonymous with transparency, ensuring customers can make fully informed
+                        decisions with complete confidence.</p>
+                </div>
+
+                <!-- Timely Delivery -->
+                <div class="bg-white p-8 rounded-lg shadow-lg card-hover border-t-4 border-blue-600">
+                    <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mb-6 mx-auto">
+                        <i class="fas fa-clock text-blue-600 text-2xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-center mb-4 text-gray-800">TIMELY DELIVERY</h3>
+                    <p class="text-center text-gray-600 leading-relaxed">Our unwavering commitment to project timelines
+                        sets us apart in the real estate industry. We honor our promises, delivering homes when we say
+                        we will.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5 Reasons Section -->
+    <section class="py-16 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <h2 class="text-4xl font-bold text-center text-gray-800 mb-16">5 REASONS TO CHOOSE RAJARANI</h2>
+
+            <!-- Customer Focus -->
+            <div class="grid md:grid-cols-2 gap-12 items-center mb-16">
+                <div class="flex items-start space-x-4">
+                    <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
+                        <i class="fas fa-user-friends text-blue-600 text-2xl"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-2xl font-bold text-gray-800 mb-3">Customer Focus</h3>
+                        <p class="text-gray-600 leading-relaxed">Our main focus is on producing customer-centric homes.
+                            We strive to create living spaces that will significantly improve the quality of life for
+                            individuals and families.</p>
+                    </div>
+                </div>
+                <div
+                    class="w-full h-64 bg-gradient-to-br from-blue-100 to-blue-200 rounded-lg flex items-center justify-center">
+                    <img class="w-full h-full object-cover rounded-lg"
+                        src="https://i.pinimg.com/736x/05/f3/43/05f343318e93ec3568e0009dea4ea2b4.jpg"
+                        alt="Happy family">
+                </div>
+            </div>
+
+            <!-- Transparency -->
+            <div class="grid md:grid-cols-2 gap-12 items-center mb-16">
+                <div
+                    class="w-full h-64 bg-gradient-to-br from-blue-100 to-blue-200 rounded-lg flex items-center justify-center md:order-1">
+                    <img class="w-full h-full object-cover rounded-lg"
+                        src="https://i.pinimg.com/736x/bd/63/40/bd63408123944839840dc33e9d15d943.jpg"
+                        alt="Transparency">
+                </div>
+                <div class="flex items-start space-x-4 md:order-2">
+                    <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
+                        <i class="fas fa-search-dollar text-blue-600 text-2xl"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-2xl font-bold text-gray-800 mb-3">Transparency</h3>
+                        <p class="text-gray-600 leading-relaxed">Transparency is the key to a successful real estate
+                            brand. Our goal is to build brand value and foster trust & loyalty among customers with our
+                            transparent operations.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Trust -->
+            <div class="grid md:grid-cols-2 gap-12 items-center mb-16">
+                <div class="flex items-start space-x-4">
+                    <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
+                        <i class="fas fa-handshake text-blue-600 text-2xl"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-2xl font-bold text-gray-800 mb-3">Trust</h3>
+                        <p class="text-gray-600 leading-relaxed">Trust is one of the most important components of the
+                            real estate business. We ensure that the relationship between customers and our brand is
+                            immortalised with our end-to-end services.</p>
+                    </div>
+                </div>
+                <div
+                    class="w-full h-64 bg-gradient-to-br from-blue-100 to-blue-200 rounded-lg flex items-center justify-center">
+                    <img class="w-full h-full object-cover rounded-lg"
+                        src="https://i.pinimg.com/736x/be/1c/ff/be1cff5cc27026e555bfea382918c33c.jpg" alt="Trust">
+                </div>
+            </div>
+
+            <!-- Innovation -->
+            <div class="grid md:grid-cols-2 gap-12 items-center mb-16">
+                <div
+                    class="w-full h-64 bg-gradient-to-br from-blue-100 to-blue-200 rounded-lg flex items-center justify-center md:order-1">
+                    <img class="w-full h-full object-cover rounded-lg"
+                        src="https://i.pinimg.com/736x/f8/32/36/f8323628ac09a215bf29d7d532318e2b.jpg" alt="Innovation">
+                </div>
+                <div class="flex items-start space-x-4 md:order-2">
+                    <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
+                        <i class="fas fa-lightbulb text-blue-600 text-2xl"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-2xl font-bold text-gray-800 mb-3">Innovation</h3>
+                        <p class="text-gray-600 leading-relaxed">Real estate innovation is synonymous to building a
+                            brighter future of the sector. For 15 years, we have been constantly reinventing ourselves
+                            to explore newer avenues.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sustainability -->
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div class="flex items-start space-x-4">
+                    <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
+                        <i class="fas fa-leaf text-blue-600 text-2xl"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-2xl font-bold text-gray-800 mb-3">Sustainability</h3>
+                        <p class="text-gray-600 leading-relaxed">We understand the increased importance of environmental
+                            sustainability and have taken the initiative to incorporate eco-friendly real estate
+                            designs.</p>
+                    </div>
+                </div>
+                <div
+                    class="w-full h-64 bg-gradient-to-br from-blue-100 to-blue-200 rounded-lg flex items-center justify-center">
+                    <img class="w-full h-full object-cover rounded-lg"
+                        src="https://i.pinimg.com/736x/49/7b/de/497bde65654ebd191be0071d2b7ce182.jpg"
+                        alt="Sustainability">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-20 bg-white">
+        <div class="container mx-auto px-4">
+            <h2 class="text-4xl font-bold text-center text-gray-800 mb-4">RAJA RANI GROUP</h2>
+            <div class="w-20 h-1 bg-blue-600 mx-auto mb-12"></div>
+
+            <!-- Stats Section -->
+            <div class="grid md:grid-cols-4 gap-10 mb-16">
+                <div class="text-center">
+                    <div
+                        class="w-20 h-20 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
+                        <i class="fas fa-trophy text-blue-600 text-3xl"></i>
+                    </div>
+                    <h3 class="text-3xl font-bold text-gray-900">15+</h3>
+                    <p class="text-lg font-medium text-gray-600 mt-1">YEARS OF EXCELLENCE</p>
+                </div>
+
+                <div class="text-center">
+                    <div
+                        class="w-20 h-20 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
+                        <i class="fas fa-city text-blue-600 text-3xl"></i>
+                    </div>
+                    <h3 class="text-3xl font-bold text-gray-900">STRONG</h3>
+                    <p class="text-lg font-medium text-gray-600 mt-1">FOUNDATION IN ODISHA</p>
+                </div>
+
+                <div class="text-center">
+                    <div
+                        class="w-20 h-20 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
+                        <i class="fas fa-stopwatch text-blue-600 text-3xl"></i>
+                    </div>
+                    <h3 class="text-3xl font-bold text-gray-900">TIMELY</h3>
+                    <p class="text-lg font-medium text-gray-600 mt-1">DELIVERY</p>
+                </div>
+
+                <div class="text-center">
+                    <div
+                        class="w-20 h-20 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
+                        <i class="fas fa-heart text-blue-600 text-3xl"></i>
+                    </div>
+                    <h3 class="text-3xl font-bold text-gray-900">10000+</h3>
+                    <p class="text-lg font-medium text-gray-600 mt-1">TRUSTED BY THOUSANDS</p>
+                </div>
+            </div>
+
+            <!-- About Content -->
+            <div class="max-w-4xl mx-auto mb-16">
+                <p class="text-gray-700 text-lg leading-relaxed text-center mb-6">
+                    <strong>RAJA RANI GROUP</strong> began its journey in 2008 with a vision to transform the real
+                    estate landscape through honest practices and high-quality construction. What started as a modest
+                    venture has now evolved into a well-recognized real estate enterprise.
+                </p>
+                <p class="text-gray-700 text-lg leading-relaxed text-center">
+                    Over the past 15+ years, RAJA RANI GROUP has built a strong foundation in Odisha, particularly in
+                    Berhampur and beyond. Our commitment to transparency and high construction standards has made us a
+                    trusted name among property seekers and investors.
+                </p>
+            </div>
+
+            <!-- Mission Vision Values -->
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Our Mission -->
+                <div class="bg-blue-50 p-6 rounded-xl shadow-md card-hover">
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-bullseye text-blue-600 text-2xl mr-3"></i>
+                        <h3 class="text-xl font-bold text-blue-700">Our Mission</h3>
+                    </div>
+                    <ul class="list-disc list-inside text-sm space-y-2 text-gray-700">
+                        <li>Deliver high-quality real estate solutions with customer-first approach</li>
+                        <li>Create vibrant, inclusive, and sustainable communities</li>
+                        <li>Adopt modern construction practices and eco-friendly designs</li>
+                        <li>Maintain ethical principles in every step of development</li>
+                    </ul>
+                </div>
+
+                <!-- Our Vision -->
+                <div class="bg-blue-50 p-6 rounded-xl shadow-md card-hover">
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-eye text-blue-600 text-2xl mr-3"></i>
+                        <h3 class="text-xl font-bold text-blue-700">Our Vision</h3>
+                    </div>
+                    <ul class="list-disc list-inside text-sm space-y-2 text-gray-700">
+                        <li>Become one of India's most admired and trusted real estate companies</li>
+                        <li>Deliver landmark projects that define luxury and quality</li>
+                        <li>Uphold transparency and long-term client relationships</li>
+                        <li>Continuously innovate in design, planning, and execution</li>
+                    </ul>
+                </div>
+
+                <!-- Core Values -->
+                <div class="bg-blue-50 p-6 rounded-xl shadow-md card-hover">
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-gem text-blue-600 text-2xl mr-3"></i>
+                        <h3 class="text-xl font-bold text-blue-700">Core Values</h3>
+                    </div>
+                    <ul class="list-disc list-inside text-sm space-y-2 text-gray-700">
+                        <li><strong>Integrity:</strong> Honest, fair, and accountable practices</li>
+                        <li><strong>Quality:</strong> Highest standards in materials and workmanship</li>
+                        <li><strong>Innovation:</strong> Latest technology and design thinking</li>
+                        <li><strong>Commitment:</strong> On-time delivery and customer satisfaction</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Commercial Projects Section with Swiper -->
+    <section id="commercial" class="py-16 bg-[#2D4F2B]">
+        <div class="container mx-auto px-4">
+            <h2 class="text-4xl font-bold text-center text-gray-800 mb-4">COMMERCIAL PROJECTS</h2>
+            <div class="w-20 h-1 bg-blue-600 mx-auto mb-12"></div>
+
+            <div class="swiper commercialSwiper">
+                <div class="swiper-wrapper">
+                    <!-- Commercial Project 1 -->
+                    <div class="swiper-slide">
+                        <div class="bg-white rounded-lg shadow-lg overflow-hidden border-2 border-blue-200 card-hover">
+                            <div class="bg-blue-600 text-white text-center py-2">
+                                <span class="font-bold">Commercial</span>
+                            </div>
+                            <div class="h-64 bg-cover bg-center"
+                                style="background-image: url('images/comercial1.jpg');"></div>
+                            <div class="bg-gray-800 text-white p-6">
+                                <h3 class="text-2xl font-bold text-center mb-2">Raja Rani Complex</h3>
+                                <p class="text-sm text-center">Courtpeta, In front of B.D.A Office</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Commercial Project 2 -->
+                    <div class="swiper-slide">
+                        <div class="bg-white rounded-lg shadow-lg overflow-hidden border-2 border-blue-200 card-hover">
+                            <div class="bg-blue-600 text-white text-center py-2">
+                                <span class="font-bold">Commercial</span>
+                            </div>
+                            <div class="h-64 bg-cover bg-center"
+                                style="background-image: url('images/commercial2.jpg');"></div>
+                            <div class="bg-gray-800 text-white p-6">
+                                <h3 class="text-2xl font-bold text-center mb-2">Raja Rani Mall</h3>
+                                <p class="text-sm text-center">GOSANINUAGAON, Berhampur</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Commercial Project 3 -->
+                    <div class="swiper-slide">
+                        <div class="bg-white rounded-lg shadow-lg overflow-hidden border-2 border-blue-200 card-hover">
+                            <div class="bg-blue-600 text-white text-center py-2">
+                                <span class="font-bold">Commercial</span>
+                            </div>
+                            <div class="h-64 bg-cover bg-center"
+                                style="background-image: url('images/commercial3.jpg');"></div>
+                            <div class="bg-gray-800 text-white p-6">
+                                <h3 class="text-2xl font-bold text-center mb-2">Raja Rani Paradise</h3>
+                                <p class="text-sm text-center">At Station Road, Berhampur</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Commercial Project 4 -->
+                    <div class="swiper-slide">
+                        <div class="bg-white rounded-lg shadow-lg overflow-hidden border-2 border-blue-200 card-hover">
+                            <div class="bg-blue-600 text-white text-center py-2">
+                                <span class="font-bold">Commercial</span>
+                            </div>
+                            <div class="h-64 bg-cover bg-center"
+                                style="background-image: url('images/commpercial4.jpg');"></div>
+                            <div class="bg-gray-800 text-white p-6">
+                                <h3 class="text-2xl font-bold text-center mb-2">Raja Rani Tower</h3>
+                                <p class="text-sm text-center">Kamapali, Berhampur</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Commercial Project 4 -->
+                    <div class="swiper-slide">
+                        <div class="bg-white rounded-lg shadow-lg overflow-hidden border-2 border-blue-200 card-hover">
+                            <div class="bg-blue-600 text-white text-center py-2">
+                                <span class="font-bold">Commercial</span>
+                            </div>
+                            <div class="h-64 bg-cover bg-center"
+                                style="background-image: url('images/commercial5.jpg');">
+                            </div>
+                            <div class="bg-gray-800 text-white p-6">
+                                <h3 class="text-2xl font-bold text-center mb-2">Raja Rani Enclave</h3>
+                                <p class="text-sm text-center">Gokuldham, Gosaninuagaon, Berhampur</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Commercial Project 4 -->
+                    <div class="swiper-slide">
+                        <div class="bg-white rounded-lg shadow-lg overflow-hidden border-2 border-blue-200 card-hover">
+                            <div class="bg-blue-600 text-white text-center py-2">
+                                <span class="font-bold">Residential</span>
+                            </div>
+                            <div class="h-64 bg-cover bg-center" style="background-image: url('images/comlete2.jpg');">
+                            </div>
+                            <div class="bg-gray-800 text-white p-6">
+                                <h3 class="text-2xl font-bold text-center mb-2">Raja Rani Enclave</h3>
+                                <p class="text-sm text-center"> Gosaninuagaon, Berhampur</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Commercial Project 4 -->
+                    <div class="swiper-slide">
+                        <div class="bg-white rounded-lg shadow-lg overflow-hidden border-2 border-blue-200 card-hover">
+                            <div class="bg-blue-600 text-white text-center py-2">
+                                <span class="font-bold">Residential</span>
+                            </div>
+                            <div class="h-64 bg-cover bg-center"
+                                style="background-image: url('images/nilaya\ \(2\).jpg');">
+                            </div>
+                            <div class="bg-gray-800 text-white p-6">
+                                <h3 class="text-2xl font-bold text-center mb-2">Raja Rani Enclave</h3>
+                                <p class="text-sm text-center">Rajeev Nagar Gosaninuagaon, Berhampur</p>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+                </div>
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
+                <div class="swiper-pagination"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Video Showcase Section -->
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <h2 class="text-4xl font-bold text-center text-gray-800 mb-4">PROJECT VIDEOS</h2>
+            <div class="w-20 h-1 bg-blue-600 mx-auto mb-12"></div>
+
+            <div class="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto">
+                <!-- Video 1 -->
+                <div class="bg-white rounded-lg shadow-lg overflow-hidden card-hover">
+                    <div class="video-container">
+                        <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+                            title="Raja Rani Properties - Project Overview" frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowfullscreen>
+                        </iframe>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Raja Rani Complex - Virtual Tour</h3>
+                        <p class="text-gray-600 text-sm">Take a virtual tour of our premium commercial complex featuring
+                            modern amenities and strategic location.</p>
+                    </div>
+                </div>
+
+                <!-- Video 2 -->
+                <div class="bg-white rounded-lg shadow-lg overflow-hidden card-hover">
+                    <div class="video-container">
+                        <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+                            title="Raja Rani Properties - Construction Progress" frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowfullscreen>
+                        </iframe>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Construction Progress - Time Lapse</h3>
+                        <p class="text-gray-600 text-sm">Watch the construction progress of our latest residential
+                            project showcasing our commitment to quality.</p>
+                    </div>
+                </div>
+
+                <!-- Video 3 -->
+                <div class="bg-white rounded-lg shadow-lg overflow-hidden card-hover">
+                    <div class="video-container">
+                        <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+                            title="Raja Rani Properties - Customer Testimonials" frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowfullscreen>
+                        </iframe>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Happy Customers - Testimonials</h3>
+                        <p class="text-gray-600 text-sm">Hear from our satisfied customers about their experience with
+                            Raja Rani Properties.</p>
+                    </div>
+                </div>
+
+                <!-- Video 4 -->
+                <div class="bg-white rounded-lg shadow-lg overflow-hidden card-hover">
+                    <div class="video-container">
+                        <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+                            title="Raja Rani Properties - Future Projects" frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowfullscreen>
+                        </iframe>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Upcoming Projects - Preview</h3>
+                        <p class="text-gray-600 text-sm">Get a sneak peek of our upcoming luxury residential and
+                            commercial projects in Berhampur.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="footer" class="bg-gray-800 text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid md:grid-cols-4 gap-8">
+                <!-- Company Info -->
+                <div>
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 rounded-full flex items-center justify-center mr-3">
+                            <img class="w-10 h-12" src="images/logo.png" alt="Logo">
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold">RAJARANI</h3>
+                            <p class="text-xs text-gray-400">REAL ESTATE</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-400 text-sm mb-4">
+                        Shaping innovations in real estate with quality, transparency, and timely delivery since 2008.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="https://www.facebook.com/profile.php?id=100088773827960" target="_blank"
+                            class="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center hover:bg-blue-700 transition">
+                            <i class="fab fa-facebook-f text-white text-sm"></i>
+                        </a>
+                        <a href="https://www.instagram.com/raja_rani_homes" target="_blank"
+                            class="w-8 h-8 bg-pink-500 rounded-full flex items-center justify-center hover:bg-pink-600 transition">
+                            <i class="fab fa-instagram text-white text-sm"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Quick Links -->
+                <div>
+                    <h4 class="text-lg font-bold mb-4">Quick Links</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#home" class="text-gray-400 hover:text-white transition">Home</a></li>
+                        <li><a href="#about" class="text-gray-400 hover:text-white transition">About Us</a></li>
+                        <li><a href="#completed" class="text-gray-400 hover:text-white transition">Properties</a></li>
+                        <li><a href="#commercial" class="text-gray-400 hover:text-white transition">Commercial</a></li>
+                    </ul>
+                </div>
+
+                <!-- Property Types -->
+                <div>
+                    <h4 class="text-lg font-bold mb-4">Cities</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#completed" class="text-gray-400 hover:text-white transition">Berhampur</a></li>
+                        <li><a href="#commercial" class="text-gray-400 hover:text-white transition">Bhubaneswar</a></li>
+                        <li><a href="#completed" class="text-gray-400 hover:text-white transition">Ichhapuram</a></li>
+                    </ul>
+                </div>
+
+                <!-- Contact Info -->
+                <div>
+                    <h4 class="text-lg font-bold mb-4">Contact Info</h4>
+                    <div class="space-y-3 text-sm text-gray-400">
+                        <div class="flex items-start space-x-2">
+                            <i class="fas fa-map-marker-alt text-blue-500 mt-1"></i>
+                            <p>RAJA RANI TOWER, KAMAPALLI MAIN ROAD, BERHAMPUR, ODISHA - 760004</p>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <i class="fas fa-phone text-blue-500"></i>
+                            <p>8260604188, 9237771777, 9124723354</p>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <i class="fas fa-phone-volume text-blue-500"></i>
+                            <p>0680-2283535</p>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <i class="fas fa-envelope text-blue-500"></i>
+                            <p>realestaterajarani@gmail.com</p>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <i class="fas fa-globe text-blue-500"></i>
+                            <p><a href="http://www.rajaranirealestate.com" target="_blank"
+                                    class="hover:text-white">www.rajaranirealestate.com</a></p>
+                        </div>
+                        <div class="flex items-start space-x-2">
+                            <i class="fas fa-clock text-blue-500 mt-1"></i>
+                            <p>Mon–Sat: 10:00 AM – 8:00 PM<br>Sun: 10:00 AM – 02:00 PM</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="border-t border-gray-700 mt-8 pt-8">
+                <div class="flex flex-col md:flex-row justify-between items-center">
+                    <p class="text-gray-400 text-sm mb-4 md:mb-0">© 2025 RAJARANI REAL ESTATE Pvt Ltd. All rights
+                        reserved.</p>
+                    <div class="flex space-x-6 text-sm">
+                        <a href="#" class="text-gray-400 hover:text-white transition">Privacy Policy</a>
+                        <a href="#" class="text-gray-400 hover:text-white transition">Terms & Conditions</a>
+                        <a href="#" class="text-gray-400 hover:text-white transition">RERA</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize Featured Projects Swiper
+        const featuredSwiper = new Swiper('.featuredSwiper', {
+            slidesPerView: 1,
+            spaceBetween: 30,
+            loop: true,
+            autoplay: {
+                delay: 5000,
+                disableOnInteraction: false,
+            },
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+            },
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            },
+            breakpoints: {
+                768: {
+                    slidesPerView: 2,
+                },
+                1024: {
+                    slidesPerView: 2,
+                }
+            }
+        });
+
+        // Initialize Commercial Projects Swiper
+        const commercialSwiper = new Swiper('.commercialSwiper', {
+            slidesPerView: 1,
+            spaceBetween: 30,
+            loop: true,
+            autoplay: {
+                delay: 4000,
+                disableOnInteraction: false,
+            },
+            pagination: {
+                el: '.commercialSwiper .swiper-pagination',
+                clickable: true,
+            },
+            navigation: {
+                nextEl: '.commercialSwiper .swiper-button-next',
+                prevEl: '.commercialSwiper .swiper-button-prev',
+            },
+            breakpoints: {
+                640: {
+                    slidesPerView: 1,
+                },
+                768: {
+                    slidesPerView: 2,
+                },
+                1024: {
+                    slidesPerView: 3,
+                }
+            }
+        });
+
+        // Mobile Menu Functionality
+        document.addEventListener('DOMContentLoaded', function () {
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            const mobileMenu = document.getElementById('mobileMenu');
+
+            // Toggle mobile menu
+            mobileMenuBtn.addEventListener('click', function () {
+                mobileMenu.classList.toggle('active');
+            });
+
+            // Close mobile menu when clicking on a link
+            const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
+            mobileNavLinks.forEach(link => {
+                link.addEventListener('click', function () {
+                    mobileMenu.classList.remove('active');
+                });
+            });
+
+            // Close mobile menu when clicking outside
+            document.addEventListener('click', function (event) {
+                if (!mobileMenuBtn.contains(event.target) && !mobileMenu.contains(event.target)) {
+                    mobileMenu.classList.remove('active');
+                }
+            });
+
+            // Smooth scrolling for all navigation links
+            const allNavLinks = document.querySelectorAll('a[href^="#"]');
+            allNavLinks.forEach(link => {
+                link.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    const targetSection = document.querySelector(targetId);
+
+                    if (targetSection) {
+                        const offsetTop = targetSection.offsetTop - 80; // Account for fixed navbar
+                        window.scrollTo({
+                            top: offsetTop,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+
+            // Add active state to navigation links based on scroll position
+            window.addEventListener('scroll', function () {
+                const sections = document.querySelectorAll('section[id]');
+                const navLinks = document.querySelectorAll('.nav-link');
+
+                let current = '';
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop - 100;
+                    const sectionHeight = section.clientHeight;
+                    if (window.scrollY >= sectionTop && window.scrollY < sectionTop + sectionHeight) {
+                        current = section.getAttribute('id');
+                    }
+                });
+
+                navLinks.forEach(link => {
+                    link.classList.remove('text-blue-600');
+                    if (link.getAttribute('href') === `#${current}`) {
+                        link.classList.add('text-blue-600');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>

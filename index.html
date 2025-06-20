@@ -4,227 +4,198 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RAJARANI Properties - 3D Experience</title>
+    <title>RAJARANI Properties - Real Estate</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
+    <script>
+        // Tailwind CSS Custom Configuration
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        // Custom Brand Colors
+                        'brand': {
+                            'navy': '#102E50',      // Primary Dark Blue
+                            'gold': '#F5C45E',      // Secondary Gold
+                            'orange': '#E78B48',    // Accent Orange
+                            'red': '#BE3D2A'        // Accent Red
+                        }
+                    },
+                    fontFamily: {
+                        // Centralized Font Configuration (easy to change later)
+                        'primary': ['Inter', 'system-ui', 'sans-serif'],
+                        'secondary': ['Poppins', 'system-ui', 'sans-serif'],
+                        'heading': ['Montserrat', 'system-ui', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
 
     <style>
+        /* Import Google Fonts */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Poppins:wght@300;400;500;600;700;800;900&family=Montserrat:wght@300;400;500;600;700;800;900&display=swap');
+
+        /* Smooth scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Swiper customization with brand colors */
         .swiper-button-next,
         .swiper-button-prev {
-            color: #1e40af;
+            color: #102E50;
         }
 
         .swiper-pagination-bullet-active {
-            background: #1e40af;
+            background: #F5C45E;
         }
 
-        /* 3D Effects and Animations */
-        .hero-canvas {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 0;
-        }
-
-        .hero-content {
-            position: relative;
-            z-index: 1;
-        }
-
+        /* Simple animations */
         .floating {
             animation: float 6s ease-in-out infinite;
         }
 
         @keyframes float {
-            0% {
+
+            0%,
+            100% {
                 transform: translateY(0px);
             }
 
             50% {
                 transform: translateY(-20px);
             }
-
-            100% {
-                transform: translateY(0px);
-            }
         }
 
-        .rotate-3d {
-            transition: transform 0.5s ease;
-            transform-style: preserve-3d;
-        }
-
-        .rotate-3d:hover {
-            transform: rotateY(10deg) rotateX(5deg);
-        }
-
-        .card-3d {
+        .card-hover {
             transition: all 0.3s ease;
-            transform-style: preserve-3d;
-            perspective: 1000px;
         }
 
-        .card-3d:hover {
-            transform: translateZ(20px);
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(16, 46, 80, 0.15);
         }
 
-        .parallax-bg {
-            transition: transform 0.5s cubic-bezier(0.215, 0.61, 0.355, 1);
-            will-change: transform;
-        }
-
-        .stats-item {
-            opacity: 0;
-            transform: translateY(50px);
-            transition: all 0.8s ease;
-        }
-
-        .stats-item.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .reason-icon {
-            transition: all 0.5s ease;
-        }
-
-        .reason-card:hover .reason-icon {
-            transform: rotateY(180deg);
-        }
-
-        .project-card {
-            transition: all 0.5s ease;
-            transform-style: preserve-3d;
-        }
-
-        .project-card:hover {
-            transform: scale(1.03) translateY(-10px);
-        }
-
-        .director-card {
+        /* Mobile menu animation */
+        .mobile-menu {
+            max-height: 0;
             overflow: hidden;
-            perspective: 1000px;
+            transition: max-height 0.3s ease;
         }
 
-        .director-card-inner {
-            transition: transform 0.8s;
-            transform-style: preserve-3d;
+        .mobile-menu.active {
+            max-height: 300px;
         }
 
-        .director-card:hover .director-card-inner {
-            transform: rotateY(10deg);
-        }
-
-        .director-image {
-            transition: all 0.5s ease;
-        }
-
-        .director-card:hover .director-image {
-            transform: scale(1.05);
-        }
-
-        /* 3D Building Animation */
-        .building-animation {
+        /* Navigation active state with brand colors */
+        .nav-link {
             position: relative;
-            width: 100%;
-            height: 300px;
-            perspective: 1000px;
+            transition: color 0.3s ease;
         }
 
-        .building {
+        .nav-link:hover {
+            color: #F5C45E;
+        }
+
+        .nav-link::after {
+            content: '';
             position: absolute;
-            width: 60px;
-            height: 200px;
-            background: linear-gradient(to top, #1e40af, #3b82f6);
-            transform-style: preserve-3d;
-            transform: translateZ(0);
-            animation: buildUp 2s forwards;
-            opacity: 0;
-            bottom: 0;
-        }
-
-        .building:nth-child(2) {
-            left: 80px;
-            height: 150px;
-            animation-delay: 0.2s;
-        }
-
-        .building:nth-child(3) {
-            left: 160px;
-            height: 250px;
-            animation-delay: 0.4s;
-        }
-
-        .building:nth-child(4) {
-            left: 240px;
-            height: 180px;
-            animation-delay: 0.6s;
-        }
-
-        .building:nth-child(5) {
-            left: 320px;
-            height: 220px;
-            animation-delay: 0.8s;
-        }
-
-        @keyframes buildUp {
-            0% {
-                transform: translateY(100%) scaleY(0);
-                opacity: 0;
-            }
-
-            100% {
-                transform: translateY(0) scaleY(1);
-                opacity: 1;
-            }
-        }
-
-        /* Particle Background */
-        #particles-js {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            top: 0;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
             left: 0;
-            z-index: 0;
+            background-color: #F5C45E;
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+
+        .video-card {
+            background-color: #ffffff;
+            border: 2px solid #F5C45E;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .video-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(16, 46, 80, 0.2);
+            border-color: #E78B48;
+        }
+
+        .video-card h3 {
+            color: #102E50;
+        }
+
+        .video-card p {
+            color: #555;
+        }
+
+        .section-title {
+            color: #102E50;
+        }
+
+        .section-underline {
+            background-color: #F5C45E;
+        }
+
+        /* Commercial Swiper specific styles */
+        .commercialSwiper .swiper-slide {
+            height: auto;
+        }
+
+        .commercialSwiper .swiper-button-next,
+        .commercialSwiper .swiper-button-prev {
+            color: #102E50;
+            background: rgba(245, 196, 94, 0.9);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-top: -20px;
+        }
+
+        .commercialSwiper .swiper-button-next:after,
+        .commercialSwiper .swiper-button-prev:after {
+            font-size: 16px;
+            font-weight: bold;
         }
     </style>
 </head>
 
-<body class="bg-white">
+<body class="bg-white font-primary">
     <!-- Navigation -->
     <nav class="bg-white shadow-md py-4 sticky top-0 z-50">
         <div class="container mx-auto px-4 flex justify-between items-center">
             <div class="flex items-center">
-                <div class="w-12 h-12  flex items-center justify-center mr-3 rotate-3d">
-                    <img class="w-full h-full object-contain" src="images/logo.png" alt="">
+                <div class="w-12 h-12 flex items-center justify-center mr-3">
+                    <img class="w-full h-full object-contain" src="images/logo.png" alt="RAJARANI Logo">
                 </div>
                 <div>
-                    <h1 class="text-xl font-bold text-gray-800">RAJARANI</h1>
-                    <p class="text-xs text-gray-600">REAL ESTATE</p>
+                    <h1 class="text-xl font-bold text-brand-navy font-heading">RAJARANI</h1>
+                    <p class="text-xs text-brand-orange font-medium">REAL ESTATE</p>
                 </div>
             </div>
+
+            <!-- Desktop Menu -->
             <div class="hidden md:flex space-x-8">
-                <a href="#" class="text-gray-700 hover:text-blue-600 font-medium nav-link">HOME</a>
-                <a href="#about" class="text-gray-700 hover:text-blue-600 font-medium nav-link">ABOUT US</a>
-                <a href="#commercial"
-                    class="text-gray-700 hover:text-blue-600 font-medium nav-link uppercase">Commercial Project</a>
-                <a href="#completed"
-                    class="text-gray-700 hover:text-blue-600 font-medium nav-link uppercase">Residential Project</a>
-                <a href="#footer" class="text-gray-700 hover:text-blue-600 font-medium nav-link">CONTACT US</a>
+                <a href="#home" class="text-brand-navy hover:text-brand-gold font-medium nav-link">HOME</a>
+                <a href="#about" class="text-brand-navy hover:text-brand-gold font-medium nav-link">ABOUT US</a>
+                <a href="#commercial" class="text-brand-navy hover:text-brand-gold font-medium nav-link">COMMERCIAL
+                    PROJECT</a>
+                <a href="#completed" class="text-brand-navy hover:text-brand-gold font-medium nav-link">RESIDENTIAL
+                    PROJECT</a>
+                <a href="#footer" class="text-brand-navy hover:text-brand-gold font-medium nav-link">CONTACT US</a>
             </div>
+
+            <!-- Mobile Menu Button -->
             <div class="md:hidden">
-                <button id="mobileMenuBtn" class="text-gray-700">
+                <button id="mobileMenuBtn" class="text-brand-navy focus:outline-none">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M4 6h16M4 12h16M4 18h16"></path>
@@ -232,40 +203,44 @@
                 </button>
             </div>
         </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="mobile-menu md:hidden bg-white shadow-lg">
+            <div class="px-4 py-2 space-y-2">
+                <a href="#home"
+                    class="block text-brand-navy hover:text-brand-gold font-medium py-2 mobile-nav-link">HOME</a>
+                <a href="#about"
+                    class="block text-brand-navy hover:text-brand-gold font-medium py-2 mobile-nav-link">ABOUT US</a>
+                <a href="#commercial"
+                    class="block text-brand-navy hover:text-brand-gold font-medium py-2 mobile-nav-link">COMMERCIAL
+                    PROJECT</a>
+                <a href="#completed"
+                    class="block text-brand-navy hover:text-brand-gold font-medium py-2 mobile-nav-link">RESIDENTIAL
+                    PROJECT</a>
+                <a href="#footer"
+                    class="block text-brand-navy hover:text-brand-gold font-medium py-2 mobile-nav-link">CONTACT US</a>
+            </div>
+        </div>
     </nav>
 
-    <!-- Mobile Menu -->
-    <div id="mobileMenu" class="hidden md:hidden bg-white shadow-lg">
-        <div class="px-4 py-2 space-y-2">
-            <a href="#" class="block text-gray-700 hover:text-blue-600 font-medium py-2">HOME</a>
-            <a href="#about" class="block text-gray-700 hover:text-blue-600 font-medium py-2">ABOUT US</a>
-            <a href="#commercial" class="block text-gray-700 hover:text-blue-600 font-medium py-2">Commercial
-                Project</a>
-            <a href="#completed" class="block text-gray-700 hover:text-blue-600 font-medium py-2">Residential
-                Project</a>
-            <a href="#footer" class="block text-gray-700 hover:text-blue-600 font-medium py-2">CONTACT US</a>
-        </div>
-    </div>
-
-    <!-- Hero Section with 3D Effect -->
-    <section class="relative h-[80vh] bg-cover bg-center text-white py-20"
+    <!-- Hero Section -->
+    <section id="home" class="relative h-[80vh] bg-cover bg-center text-white py-20"
         style="background-image: url('https://img.freepik.com/free-photo/four-people-protective-helmets-inspecting-building-area_259150-60517.jpg?ga=GA1.1.172258652.1750391369&semt=ais_hybrid&w=740');">
-
-        <!-- Dark overlay -->
-        <div class="absolute inset-0 bg-black bg-opacity-50 z-0"></div>
-
+        <div class="absolute inset-0 bg-brand-navy bg-opacity-70"></div>
         <div class="container mx-auto px-4 h-full flex items-center relative z-10">
             <div class="w-full md:w-1/2">
-                <h1 class="text-5xl md:text-6xl font-bold mb-6 text-white">Building Dreams, <br>Creating Homes</h1>
-                <p class="text-xl mb-8 text-white">Experience luxury living with RAJARANI Properties - where quality
-                    meets innovation.</p>
+                <h1 class="text-5xl md:text-6xl font-bold mb-6 text-white floating font-heading">Building Dreams,
+                    <br>Creating Homes
+                </h1>
+                <p class="text-xl mb-8 text-white font-primary">Experience luxury living with RAJARANI Properties -
+                    where quality meets innovation.</p>
                 <div class="flex space-x-4">
                     <a href="#completed"
-                        class="bg-white text-blue-700 px-6 py-3 rounded-lg font-bold hover:bg-blue-100 transition duration-300 transform hover:scale-105">
+                        class="bg-brand-gold text-brand-navy px-6 py-3 rounded-lg font-bold hover:bg-brand-orange hover:text-white transition duration-300 transform hover:scale-105">
                         Explore Projects
                     </a>
                     <a href="#footer"
-                        class="border-2 border-white text-white px-6 py-3 rounded-lg font-bold hover:bg-white hover:bg-opacity-10 transition duration-300 transform hover:scale-105">
+                        class="border-2 border-brand-gold text-brand-gold px-6 py-3 rounded-lg font-bold hover:bg-brand-gold hover:text-brand-navy transition duration-300 transform hover:scale-105">
                         Contact Us
                     </a>
                 </div>
@@ -273,36 +248,34 @@
         </div>
     </section>
 
-
-
-
-    <!-- Complete Projects with 3D Cards -->
-    <section id="completed" class="py-16 bg-white">
+    <!-- Featured Projects Section -->
+    <section id="completed" class="py-16 bg-gray-50">
         <div class="container mx-auto px-4">
-            <h2 class="text-4xl font-bold text-center text-gray-800 mb-4">OUR PROJECTS</h2>
-            <div class="w-20 h-1 bg-blue-600 mx-auto mb-12"></div>
+            <h2 class="text-4xl font-bold text-center text-brand-navy mb-4 font-heading">Featured Projects</h2>
+            <div class="w-20 h-1 bg-brand-gold mx-auto mb-12"></div>
 
             <div class="swiper featuredSwiper">
                 <div class="swiper-wrapper">
                     <!-- Project 1 -->
                     <div class="swiper-slide">
-                        <div class="bg-white rounded-lg shadow-lg overflow-hidden">
-                            <div style="background-image: url(images/comlete2.jpg);"
-                                class="h-80 bg-gradient-to-br bg-cover bg-top from-blue-500 to-blue-700 flex items-center justify-center relative">
-
-                                <a href="https://maps.app.goo.gl/d2edHonA5j1XsLdF7" target="_blank"
-                                    class="absolute bottom-2 left-4 bg-red-600 text-white px-3 py-1 rounded text-sm font-bold flex items-center gap-2 shadow-lg hover:bg-red-700 transition">
-                                    <i class="fas fa-map-marker-alt text-white"></i> GOSANINUAGAON
+                        <div
+                            class="bg-white rounded-lg shadow-lg overflow-hidden card-hover border-2 border-brand-gold/20">
+                            <div style="background-image: url(images/future1.jpg);"
+                                class="h-80 bg-center bg-cover relative">
+                                <a href="https://maps.app.goo.gl/eqpWfDupf7sS7GM1A" target="_blank"
+                                    class="absolute bottom-2 left-4 bg-brand-red text-white px-3 py-1 rounded text-sm font-bold flex items-center gap-2 shadow-lg hover:bg-brand-orange transition">
+                                    <i class="fas fa-map-marker-alt text-white"></i> Station Road
                                 </a>
-
                             </div>
-                            <div class="bg-gray-800 text-white p-6">
-                                <h3 class="text-lg font-bold mb-2">RAJA RANI RESIDENCY (GOSANINUAGAON)</h3>
-                                <p class="text-sm mb-2">2BHK & 3BHK Luxury Apartments</p>
-                                <p class="text-sm mb-2">GOSANINUAGAON</p>
+                            <div class="bg-brand-navy text-white p-6">
+                                <h3 class="text-2xl font-bold mb-2 capitalize font-heading">Raja Rani Field Phase - 2
+                                    (PUKUDIBANDHA)</h3>
+                                <p class="text-sm mb-2 text-brand-gold">Premium Lifestyle 2 & 3 BHK Apartments</p>
+                                <p class="text-sm mb-2">Pukidubandha, Berhampur</p>
                                 <div class="flex justify-between items-center">
-                                    <p class="text-lg font-bold">Price On Request</p>
-                                    <button class="bg-blue-600 text-white px-4 py-2 rounded text-sm font-bold">Know
+                                    <p class="text-lg font-bold text-brand-gold">Price On Request</p>
+                                    <button
+                                        class="bg-brand-gold text-brand-navy px-4 py-2 rounded text-sm font-bold hover:bg-brand-orange hover:text-white transition">Know
                                         More</button>
                                 </div>
                             </div>
@@ -311,23 +284,23 @@
 
                     <!-- Project 2 -->
                     <div class="swiper-slide">
-                        <div class="bg-white rounded-lg shadow-lg overflow-hidden">
-                            <div style="background-image: url(images/nilaya\ \(2\).jpg);"
-                                class="h-80 bg-gradient-to-br bg-cover bg-right from-blue-500 to-blue-700 flex items-center justify-center relative">
-
-                                <a href="https://maps.app.goo.gl/wHSfV7PUki8yomsRA" target="_blank"
-                                    class="absolute bottom-2 left-4 bg-red-600 text-white px-3 py-1 rounded text-sm font-bold flex items-center gap-2 shadow-lg hover:bg-red-700 transition">
-                                    <i class="fas fa-map-marker-alt text-white"></i> GOSANINUAGAON
+                        <div
+                            class="bg-white rounded-lg shadow-lg overflow-hidden card-hover border-2 border-brand-gold/20">
+                            <div style="background-image: url(images/complete1.jpg);"
+                                class="h-80 bg-center bg-cover relative">
+                                <a href="https://www.google.com/maps?q=19.341404,84.766602" target="_blank"
+                                    class="absolute bottom-2 left-4 bg-brand-red text-white px-3 py-1 rounded text-sm font-bold flex items-center gap-2 shadow-lg hover:bg-brand-orange transition">
+                                    <i class="fas fa-map-marker-alt text-white"></i> Aska Road Near
                                 </a>
-
                             </div>
-                            <div class="bg-gray-800 text-white p-6">
-                                <h3 class="text-lg font-bold mb-2">RAJA RANI NILAYA (GOSANINUAGAON)</h3>
-                                <p class="text-sm mb-2">3BHK & 4BHK Luxury Apartments</p>
-                                <p class="text-sm mb-2">Rajeev Nagar Gosaninuagaon, Berhampur</p>
+                            <div class="bg-brand-navy text-white p-6">
+                                <h3 class="text-2xl font-bold mb-2 capitalize font-heading">Raja Rani Dream Homes</h3>
+                                <p class="text-sm mb-2 text-brand-gold">Premium Lifestyle 2 & 3 BHK Apartments</p>
+                                <p class="text-sm mb-2">Aska Road, Berhampur</p>
                                 <div class="flex justify-between items-center">
-                                    <p class="text-lg font-bold">Price On Request</p>
-                                    <button class="bg-blue-600 text-white px-4 py-2 rounded text-sm font-bold">Know
+                                    <p class="text-lg font-bold text-brand-gold">Price On Request</p>
+                                    <button
+                                        class="bg-brand-gold text-brand-navy px-4 py-2 rounded text-sm font-bold hover:bg-brand-orange hover:text-white transition">Know
                                         More</button>
                                 </div>
                             </div>
@@ -336,723 +309,645 @@
 
                     <!-- Project 3 -->
                     <div class="swiper-slide">
-                        <div class="bg-white rounded-lg shadow-lg overflow-hidden">
-                            <div style="background-image: url(images/future1.jpg);"
-                                class="h-80 bg-gradient-to-br w-full bg-center bg-cover from-blue-400 to-blue-600 flex items-center justify-center relative">
-                                <a href="hhttps://maps.app.goo.gl/eqpWfDupf7sS7GM1A" target="_blank"
-                                    class="absolute bottom-2 left-4 bg-red-600 text-white px-3 py-1 rounded text-sm font-bold flex items-center gap-2 shadow-lg hover:bg-red-700 transition">
-                                    <i class="fas fa-map-marker-alt text-white"></i> Station Road
-                                </a>
-
-                            </div>
-                            <div class="bg-gray-800 text-white p-6">
-                                <h3 class="text-2xl font-bold mb-2 capitalize"> Raja Rani Field Phase - 2 (PUKUDIBANDHA)
-                                </h3>
-                                <p class="text-sm mb-2">Premium Lifestyle 2 & 3 BHK Apartments</p>
-                                <p class="text-sm mb-2">Pukidubandha, Berhampur</p>
-
-
-                                <p class="text-xs mb-4"></p>
-                                <div class="flex justify-between items-center">
-                                    <p class="text-lg font-bold">Price On Request</p>
-                                    <button class="bg-blue-600 text-white px-4 py-2 rounded text-sm font-bold">Know
-                                        More</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Project 4 -->
-                    <div class="swiper-slide">
-                        <div class="bg-white rounded-lg shadow-lg overflow-hidden">
-                            <div style="background-image: url(images/complete1.jpg);"
-                                class="h-80 bg-gradient-to-br w-full bg-center bg-cover from-blue-400 to-blue-600 flex items-center  justify-center relative">
-                                <a href="https://www.google.com/maps?q=19.341404,84.766602" target="_blank"
-                                    class="absolute bottom-2 left-4 bg-red-600 text-white px-3 py-1 rounded text-sm font-bold flex items-center gap-2 shadow-lg hover:bg-red-700 transition">
-                                    <i class="fas fa-map-marker-alt text-white"></i> Aska Road Near
-                                </a>
-
-                            </div>
-                            <div class="bg-gray-800 text-white p-6">
-                                <h3 class="text-2xl font-bold mb-2 capitalize"> Raja Rani Dream Homes</h3>
-                                <p class="text-sm mb-2">Premium Lifestyle 2 & 3 BHK Apartments</p>
-                                <p class="text-sm mb-2">Aska Road, Berhampur</p>
-
-                                <div class="flex justify-between items-center">
-                                    <p class="text-lg font-bold">Price On Request</p>
-                                    <button class="bg-blue-600 text-white px-4 py-2 rounded text-sm font-bold">Know
-                                        More</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Project 5 -->
-                    <div class="swiper-slide">
-                        <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+                        <div
+                            class="bg-white rounded-lg shadow-lg overflow-hidden card-hover border-2 border-brand-gold/20">
                             <div style="background-image: url(images/greenvelly.jpg);"
-                                class=" h-80 bg-gradient-to-br w-full bg-center bg-cover from-blue-400 to-blue-600 flex items-center  justify-center relative">
-
-                                <!-- Optional Map Link -->
+                                class="h-80 bg-center bg-cover relative">
                                 <a href="#" target="_blank"
-                                    class="absolute bottom-2 left-4 bg-red-600 text-white px-3 py-1 rounded text-sm font-bold flex items-center gap-2 shadow-lg hover:bg-red-700 transition">
+                                    class="absolute bottom-2 left-4 bg-brand-red text-white px-3 py-1 rounded text-sm font-bold flex items-center gap-2 shadow-lg hover:bg-brand-orange transition">
                                     <i class="fas fa-map-marker-alt text-white"></i> Ambapua
                                 </a>
-
                             </div>
-                            <div class="bg-gray-800 text-white p-6">
-                                <h3 class="text-xl font-bold mb-2">Raja Rani Green Valley (AMBAPUA)</h3>
-                                <p class="text-sm mb-2">2BHK & 3BHK Luxury Apartments</p>
+                            <div class="bg-brand-navy text-white p-6">
+                                <h3 class="text-xl font-bold mb-2 font-heading">Raja Rani Green Valley (AMBAPUA)</h3>
+                                <p class="text-sm mb-2 text-brand-gold">2BHK & 3BHK Luxury Apartments</p>
                                 <p class="text-sm mb-2">Ambapua, Berhampur</p>
                                 <div class="flex justify-between items-center">
-                                    <p class="text-lg font-bold">Price On Request</p>
-                                    <button class="bg-blue-600 text-white px-4 py-2 rounded text-sm font-bold">Know
+                                    <p class="text-lg font-bold text-brand-gold">Price On Request</p>
+                                    <button
+                                        class="bg-brand-gold text-brand-navy px-4 py-2 rounded text-sm font-bold hover:bg-brand-orange hover:text-white transition">Know
                                         More</button>
                                 </div>
                             </div>
                         </div>
                     </div>
-
-
-
                 </div>
-                <div class="swiper-button-next text-white"></div>
-                <div class="swiper-button-prev text-white"></div>
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
                 <div class="swiper-pagination"></div>
             </div>
         </div>
     </section>
 
-    <!-- QVT Assured Section with 3D Cards -->
-    <section class="py-16 bg-gray-100">
+    <!-- QVT Assured Section -->
+    <section class="py-16 bg-brand-navy">
         <div class="container mx-auto px-4">
             <div class="text-center mb-12">
-                <div class="inline-block">
-                    <h2 class="text-6xl font-bold text-gray-800 mb-2 qvt-title relative">
-                        <span class="relative z-10">RAJA RANI</span>
-                        <span class="absolute -bottom-1 left-0 w-full h-2 bg-blue-600 z-0 opacity-30"></span>
-                    </h2>
-                    <p class="text-xl text-gray-600 font-medium tracking-wider">ASSURED</p>
-                    <div class="flex justify-center space-x-4 mt-2">
-                        <span class="text-sm text-gray-500 font-medium">QUALITY</span>
-                        <span class="text-blue-600">•</span>
-                        <span class="text-sm text-gray-500 font-medium">TRANSPARENCY</span>
-                        <span class="text-blue-600">•</span>
-                        <span class="text-sm text-gray-500 font-medium"> DELIVERY</span>
-                    </div>
+                <h2 class="text-4xl font-bold text-white mb-2 font-heading">RAJA RANI</h2>
+                <div class="w-20 h-1 bg-brand-gold mx-auto mb-12"></div>
+                <p class="text-xl text-brand-gold font-medium tracking-wider font-secondary">ASSURED</p>
+                <div class="flex justify-center space-x-4 mt-2">
+                    <span class="text-sm text-brand-orange font-medium">QUALITY</span>
+                    <span class="text-brand-gold">•</span>
+                    <span class="text-sm text-brand-orange font-medium">TRANSPARENCY</span>
+                    <span class="text-brand-gold">•</span>
+                    <span class="text-sm text-brand-orange font-medium">DELIVERY</span>
                 </div>
             </div>
 
             <div class="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
                 <!-- Quality -->
-                <div
-                    class="bg-white p-8 rounded-lg shadow-lg transform transition-all duration-300 hover:-translate-y-2 hover:shadow-xl qvt-card border-t-4 border-blue-600">
-                    <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mb-6 mx-auto">
-                        <i class="fas fa-medal text-blue-600 text-2xl"></i>
+                <div class="bg-white p-8 rounded-lg shadow-lg card-hover border-t-4 border-brand-gold">
+                    <div class="w-16 h-16 bg-brand-gold/20 rounded-full flex items-center justify-center mb-6 mx-auto">
+                        <i class="fas fa-medal text-brand-gold text-2xl"></i>
                     </div>
-                    <h3 class="text-2xl font-bold text-center mb-4 text-gray-800">QUALITY</h3>
-                    <p class="text-center text-gray-600 leading-relaxed">Quality is the way of life at RAJARANI
-                        Properties.
-                        Using premium materials and innovative technology, we've set new benchmarks in how real estate
-                        is
-                        conceived, designed and built.</p>
+                    <h3 class="text-2xl font-bold text-center mb-4 text-brand-navy font-heading">QUALITY</h3>
+                    <p class="text-center text-gray-600 leading-relaxed font-primary">Quality is the way of life at
+                        RAJARANI Properties. Using premium materials and innovative technology, we've set new benchmarks
+                        in how real estate is conceived, designed and built.</p>
                 </div>
 
                 <!-- Transparency -->
-                <div class="bg-white p-8 rounded-lg shadow-lg transform transition-all duration-300 hover:-translate-y-2 hover:shadow-xl qvt-card border-t-4 border-gray-700"
-                    style="transition-delay: 0.1s">
-                    <div class="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mb-6 mx-auto">
-                        <i class="fas fa-search-dollar text-gray-700 text-2xl"></i>
+                <div class="bg-white p-8 rounded-lg shadow-lg card-hover border-t-4 border-brand-orange">
+                    <div
+                        class="w-16 h-16 bg-brand-orange/20 rounded-full flex items-center justify-center mb-6 mx-auto">
+                        <i class="fas fa-search-dollar text-brand-orange text-2xl"></i>
                     </div>
-                    <h3 class="text-2xl font-bold text-center mb-4 text-gray-800">TRANSPARENCY</h3>
-                    <p class="text-center text-gray-600 leading-relaxed">Trust and credibility drive our business.
-                        RAJARANI Properties is synonymous with transparency, ensuring customers can make fully informed
-                        decisions with complete confidence.</p>
+                    <h3 class="text-2xl font-bold text-center mb-4 text-brand-navy font-heading">TRANSPARENCY</h3>
+                    <p class="text-center text-gray-600 leading-relaxed font-primary">Trust and credibility drive our
+                        business. RAJARANI Properties is synonymous with transparency, ensuring customers can make fully
+                        informed decisions with complete confidence.</p>
                 </div>
 
                 <!-- Timely Delivery -->
-                <div class="bg-white p-8 rounded-lg shadow-lg transform transition-all duration-300 hover:-translate-y-2 hover:shadow-xl qvt-card border-t-4 border-blue-600"
-                    style="transition-delay: 0.2s">
-                    <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mb-6 mx-auto">
-                        <i class="fas fa-clock text-blue-600 text-2xl"></i>
+                <div class="bg-white p-8 rounded-lg shadow-lg card-hover border-t-4 border-brand-red">
+                    <div class="w-16 h-16 bg-brand-red/20 rounded-full flex items-center justify-center mb-6 mx-auto">
+                        <i class="fas fa-clock text-brand-red text-2xl"></i>
                     </div>
-                    <h3 class="text-2xl font-bold text-center mb-4 text-gray-800">TIMELY DELIVERY</h3>
-                    <p class="text-center text-gray-600 leading-relaxed">Our unwavering commitment to project timelines
-                        sets us apart in the real estate industry. We honor our promises, delivering homes when we say
-                        we will.</p>
+                    <h3 class="text-2xl font-bold text-center mb-4 text-brand-navy font-heading">TIMELY DELIVERY</h3>
+                    <p class="text-center text-gray-600 leading-relaxed font-primary">Our unwavering commitment to
+                        project timelines sets us apart in the real estate industry. We honor our promises, delivering
+                        homes when we say we will.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- 5 Reasons Section - Zigzag Format with Animation -->
-    <section class="py-16 bg-gray-50 overflow-hidden">
+    <!-- 5 Reasons Section -->
+    <section class="py-16 bg-[#FEF3E2]">
         <div class="container mx-auto px-4">
-            <h2 class="text-4xl font-bold text-center text-gray-800 mb-16 reason-title relative">
-                <span class="relative z-10">5 REASONS TO CHOOSE RAJARANI</span>
-                <span class="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-24 h-1 bg-blue-600 z-0"></span>
+            <h2 class="text-4xl font-bold text-center text-brand-navy mb-16 font-heading">5 REASONS TO CHOOSE RAJARANI
             </h2>
 
-            <!-- Customer Focus - Left -->
-            <div class="grid md:grid-cols-2 gap-12 items-center mb-16 reason-card" data-index="1">
+            <!-- Customer Focus -->
+            <div class="grid md:grid-cols-2 gap-12 items-center mb-16">
                 <div class="flex items-start space-x-4">
-                    <div
-                        class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0 reason-icon">
-                        <i class="fas fa-user-friends text-blue-600 text-2xl"></i>
+                    <div class="w-16 h-16 bg-brand-gold/20 rounded-full flex items-center justify-center flex-shrink-0">
+                        <i class="fas fa-user-friends text-brand-gold text-2xl"></i>
                     </div>
                     <div>
-                        <h3 class="text-2xl font-bold text-gray-800 mb-3">Customer Focus</h3>
-                        <p class="text-gray-600 leading-relaxed">Our main focus is on producing customer-centric homes.
-                            We strive to create living spaces that will significantly improve the quality of life for
-                            individuals and families, by setting high standards in customer-centricity, architectural
-                            design, quality and safety.</p>
+                        <h3 class="text-2xl font-bold text-brand-navy mb-3 font-heading">Customer Focus</h3>
+                        <p class="text-gray-600 leading-relaxed font-primary">Our main focus is on producing
+                            customer-centric homes. We strive to create living spaces that will significantly improve
+                            the quality of life for individuals and families.</p>
                     </div>
                 </div>
                 <div
-                    class="w-full h-64 bg-gradient-to-br overflow-hidden from-blue-100 to-blue-200 rounded-lg flex items-center justify-center parallax-bg">
-                    <img class="w-full h-full object-cover transform transition-transform duration-700 hover:scale-110"
+                    class="w-full h-64 bg-gradient-to-br from-brand-gold/20 to-brand-orange/20 rounded-lg flex items-center justify-center">
+                    <img class="w-full h-full object-cover rounded-lg"
                         src="https://i.pinimg.com/736x/05/f3/43/05f343318e93ec3568e0009dea4ea2b4.jpg"
-                        alt="Happy family in living room">
+                        alt="Happy family">
                 </div>
             </div>
 
-            <!-- Transparency - Right -->
-            <div class="grid md:grid-cols-2 gap-12 items-center mb-16 reason-card" data-index="2">
+            <!-- Transparency -->
+            <div class="grid md:grid-cols-2 gap-12 items-center mb-16">
                 <div
-                    class="w-full h-64 bg-gradient-to-br from-blue-100 to-blue-200 rounded-lg flex items-center justify-center md:order-1 parallax-bg">
-                    <img class="w-full h-full object-cover transform transition-transform duration-700 hover:scale-110"
+                    class="w-full h-64 bg-gradient-to-br from-brand-orange/20 to-brand-red/20 rounded-lg flex items-center justify-center md:order-1">
+                    <img class="w-full h-full object-cover rounded-lg"
                         src="https://i.pinimg.com/736x/bd/63/40/bd63408123944839840dc33e9d15d943.jpg"
-                        alt="Transparent documents">
+                        alt="Transparency">
                 </div>
                 <div class="flex items-start space-x-4 md:order-2">
                     <div
-                        class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0 reason-icon">
-                        <i class="fas fa-search-dollar text-blue-600 text-2xl"></i>
+                        class="w-16 h-16 bg-brand-orange/20 rounded-full flex items-center justify-center flex-shrink-0">
+                        <i class="fas fa-search-dollar text-brand-orange text-2xl"></i>
                     </div>
                     <div>
-                        <h3 class="text-2xl font-bold text-gray-800 mb-3">Transparency</h3>
-                        <p class="text-gray-600 leading-relaxed">Transparency is the key to a successful real estate
-                            brand. Our goal is to build brand value and foster trust & loyalty among customers with our
-                            transparent operations.</p>
+                        <h3 class="text-2xl font-bold text-brand-navy mb-3 font-heading">Transparency</h3>
+                        <p class="text-gray-600 leading-relaxed font-primary">Transparency is the key to a successful
+                            real estate brand. Our goal is to build brand value and foster trust & loyalty among
+                            customers with our transparent operations.</p>
                     </div>
                 </div>
             </div>
 
-            <!-- Trust - Left -->
-            <div class="grid md:grid-cols-2 gap-12 items-center mb-16 reason-card" data-index="3">
+            <!-- Trust -->
+            <div class="grid md:grid-cols-2 gap-12 items-center mb-16">
                 <div class="flex items-start space-x-4">
-                    <div
-                        class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0 reason-icon">
-                        <i class="fas fa-handshake text-blue-600 text-2xl"></i>
+                    <div class="w-16 h-16 bg-brand-red/20 rounded-full flex items-center justify-center flex-shrink-0">
+                        <i class="fas fa-handshake text-brand-red text-2xl"></i>
                     </div>
                     <div>
-                        <h3 class="text-2xl font-bold text-gray-800 mb-3">Trust</h3>
-                        <p class="text-gray-600 leading-relaxed">Trust is one of the most important components of the
-                            real estate business. We ensure that the relationship between customers and our brand is
-                            immortalised with our end-to-end services.</p>
+                        <h3 class="text-2xl font-bold text-brand-navy mb-3 font-heading">Trust</h3>
+                        <p class="text-gray-600 leading-relaxed font-primary">Trust is one of the most important
+                            components of the real estate business. We ensure that the relationship between customers
+                            and our brand is immortalised with our end-to-end services.</p>
                     </div>
                 </div>
                 <div
-                    class="w-full h-64 bg-gradient-to-br from-blue-100 to-blue-200 rounded-lg flex items-center justify-center parallax-bg">
-                    <img class="w-full h-full object-cover transform transition-transform duration-700 hover:scale-110"
-                        src="https://i.pinimg.com/736x/be/1c/ff/be1cff5cc27026e555bfea382918c33c.jpg"
-                        alt="Handshake trust symbol">
+                    class="w-full h-64 bg-gradient-to-br from-brand-navy/20 to-brand-gold/20 rounded-lg flex items-center justify-center">
+                    <img class="w-full h-full object-cover rounded-lg"
+                        src="https://i.pinimg.com/736x/be/1c/ff/be1cff5cc27026e555bfea382918c33c.jpg" alt="Trust">
                 </div>
             </div>
 
-            <!-- Innovation - Right -->
-            <div class="grid md:grid-cols-2 gap-12 items-center mb-16 reason-card" data-index="4">
+            <!-- Innovation -->
+            <div class="grid md:grid-cols-2 gap-12 items-center mb-16">
                 <div
-                    class="w-full h-64 bg-gradient-to-br from-blue-100 to-blue-200 rounded-lg flex items-center justify-center md:order-1 parallax-bg">
-                    <img class="w-full h-full object-cover transform transition-transform duration-700 hover:scale-110"
-                        src="https://i.pinimg.com/736x/f8/32/36/f8323628ac09a215bf29d7d532318e2b.jpg"
-                        alt="Modern innovative building">
+                    class="w-full h-64 bg-gradient-to-br from-brand-gold/20 to-brand-navy/20 rounded-lg flex items-center justify-center md:order-1">
+                    <img class="w-full h-full object-cover rounded-lg"
+                        src="https://i.pinimg.com/736x/f8/32/36/f8323628ac09a215bf29d7d532318e2b.jpg" alt="Innovation">
                 </div>
                 <div class="flex items-start space-x-4 md:order-2">
-                    <div
-                        class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0 reason-icon">
-                        <i class="fas fa-lightbulb text-blue-600 text-2xl"></i>
+                    <div class="w-16 h-16 bg-brand-navy/20 rounded-full flex items-center justify-center flex-shrink-0">
+                        <i class="fas fa-lightbulb text-brand-navy text-2xl"></i>
                     </div>
                     <div>
-                        <h3 class="text-2xl font-bold text-gray-800 mb-3">Innovation</h3>
-                        <p class="text-gray-600 leading-relaxed">Real estate innovation is synonymous to building a
-                            brighter future of the sector. For 15 years, we have been constantly reinventing ourselves
-                            to explore newer avenues and implement innovative practices in the realty sector to provide
-                            our customers with a unique product and experience.</p>
+                        <h3 class="text-2xl font-bold text-brand-navy mb-3 font-heading">Innovation</h3>
+                        <p class="text-gray-600 leading-relaxed font-primary">Real estate innovation is synonymous to
+                            building a brighter future of the sector. For 15 years, we have been constantly reinventing
+                            ourselves to explore newer avenues.</p>
                     </div>
                 </div>
             </div>
 
-            <!-- Sustainability - Left -->
-            <div class="grid md:grid-cols-2 gap-12 items-center reason-card" data-index="5">
+            <!-- Sustainability -->
+            <div class="grid md:grid-cols-2 gap-12 items-center">
                 <div class="flex items-start space-x-4">
                     <div
-                        class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0 reason-icon">
-                        <i class="fas fa-leaf text-blue-600 text-2xl"></i>
+                        class="w-16 h-16 bg-brand-orange/20 rounded-full flex items-center justify-center flex-shrink-0">
+                        <i class="fas fa-leaf text-brand-orange text-2xl"></i>
                     </div>
                     <div>
-                        <h3 class="text-2xl font-bold text-gray-800 mb-3">Sustainability</h3>
-                        <p class="text-gray-600 leading-relaxed">We understand the increased importance of environmental
-                            sustainability and have taken the initiative to incorporate eco-friendly real estate designs
-                            and build energy-efficient/scalable green homes which will serve as a healthier space for
-                            our customers.</p>
+                        <h3 class="text-2xl font-bold text-brand-navy mb-3 font-heading">Sustainability</h3>
+                        <p class="text-gray-600 leading-relaxed font-primary">We understand the increased importance of
+                            environmental sustainability and have taken the initiative to incorporate eco-friendly real
+                            estate designs.</p>
                     </div>
                 </div>
                 <div
-                    class="w-full h-64 bg-gradient-to-br from-blue-100 to-blue-200 rounded-lg flex items-center justify-center parallax-bg">
-                    <img class="w-full h-full object-cover transform transition-transform duration-700 hover:scale-110"
+                    class="w-full h-64 bg-gradient-to-br from-brand-red/20 to-brand-orange/20 rounded-lg flex items-center justify-center">
+                    <img class="w-full h-full object-cover rounded-lg"
                         src="https://i.pinimg.com/736x/49/7b/de/497bde65654ebd191be0071d2b7ce182.jpg"
-                        alt="Green sustainable building">
+                        alt="Sustainability">
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Font Awesome CSS -->
-
-    <!-- Company Stats with 3D Animation -->
+    <!-- About Section -->
     <section id="about" class="py-20 bg-white">
         <div class="container mx-auto px-4">
-            <h2 class="text-4xl font-bold text-center text-gray-800 mb-4">RAJA RANI GROUP</h2>
-            <div class="w-20 h-1 bg-blue-600 mx-auto mb-12"></div>
+            <h2 class="text-4xl font-bold text-center text-brand-navy mb-4 font-heading">RAJA RANI GROUP</h2>
+            <div class="w-20 h-1 bg-brand-gold mx-auto mb-12"></div>
 
             <!-- Stats Section -->
             <div class="grid md:grid-cols-4 gap-10 mb-16">
                 <div class="text-center">
                     <div
-                        class="w-20 h-20 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg animate-bounce-slow">
-                        <i class="fas fa-trophy text-blue-600 text-3xl"></i>
+                        class="w-20 h-20 bg-brand-gold/20 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
+                        <i class="fas fa-trophy text-brand-gold text-3xl"></i>
                     </div>
-                    <h3 class="text-3xl font-bold text-gray-900 counter" data-target="15">15</h3>
-                    <p class="text-lg font-medium text-gray-600 mt-1">YEARS OF EXCELLENCE</p>
+                    <h3 class="text-3xl font-bold text-brand-navy font-heading">15+</h3>
+                    <p class="text-lg font-medium text-brand-orange mt-1 font-secondary">YEARS OF EXCELLENCE</p>
                 </div>
 
                 <div class="text-center">
                     <div
-                        class="w-20 h-20 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg animate-bounce-slow delay-150">
-                        <i class="fas fa-city text-blue-600 text-3xl"></i>
+                        class="w-20 h-20 bg-brand-orange/20 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
+                        <i class="fas fa-city text-brand-orange text-3xl"></i>
                     </div>
-                    <h3 class="text-3xl font-bold text-gray-900">STRONG</h3>
-                    <p class="text-lg font-medium text-gray-600 mt-1">FOUNDATION IN ODISHA</p>
+                    <h3 class="text-3xl font-bold text-brand-navy font-heading">STRONG</h3>
+                    <p class="text-lg font-medium text-brand-orange mt-1 font-secondary">FOUNDATION IN ODISHA</p>
                 </div>
 
                 <div class="text-center">
                     <div
-                        class="w-20 h-20 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg animate-bounce-slow delay-300">
-                        <i class="fas fa-stopwatch text-blue-600 text-3xl"></i>
+                        class="w-20 h-20 bg-brand-red/20 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
+                        <i class="fas fa-stopwatch text-brand-red text-3xl"></i>
                     </div>
-                    <h3 class="text-3xl font-bold text-gray-900">TIMELY</h3>
-                    <p class="text-lg font-medium text-gray-600 mt-1">DELIVERY</p>
+                    <h3 class="text-3xl font-bold text-brand-navy font-heading">TIMELY</h3>
+                    <p class="text-lg font-medium text-brand-orange mt-1 font-secondary">DELIVERY</p>
                 </div>
 
                 <div class="text-center">
                     <div
-                        class="w-20 h-20 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg animate-bounce-slow delay-500">
-                        <i class="fas fa-heart text-blue-600 text-3xl"></i>
+                        class="w-20 h-20 bg-brand-navy/20 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
+                        <i class="fas fa-heart text-brand-navy text-3xl"></i>
                     </div>
-                    <h3 class="text-3xl font-bold text-gray-900 counter" data-target="1000">10000+</h3>
-                    <p class="text-lg font-medium text-gray-600 mt-1">TRUSTED BY THOUSANDS</p>
+                    <h3 class="text-3xl font-bold text-brand-navy font-heading">10000+</h3>
+                    <p class="text-lg font-medium text-brand-orange mt-1 font-secondary">TRUSTED BY THOUSANDS</p>
                 </div>
             </div>
 
-            <!-- About Section -->
-            <div class="max-w-2xl mx-auto mb-16 px-4 sm:px-6 lg:px-0">
-                <p class="text-gray-700 text-base leading-relaxed text-justify pr-4">
-                    <strong>RAJA RANI GROUP</strong> began its journey in 2008 with a vision to transform the real
-                    estate
-                    landscape through honest practices and high-quality construction. What started as a modest venture
-                    has
-                    now evolved into a well-recognized real estate enterprise, driven by dedication, teamwork, and a
-                    deep understanding of customer needs.
+            <!-- About Content -->
+            <div class="max-w-4xl mx-auto mb-16">
+                <p class="text-gray-700 text-lg leading-relaxed text-center mb-6 font-primary">
+                    <strong class="text-brand-navy">RAJA RANI GROUP</strong> began its journey in 2008 with a vision to
+                    transform the real estate landscape through honest practices and high-quality construction. What
+                    started as a modest venture has now evolved into a well-recognized real estate enterprise.
                 </p>
-                <p class="text-gray-700 text-lg leading-relaxed text-justify pr-4">
+                <p class="text-gray-700 text-lg leading-relaxed text-center font-primary">
                     Over the past 15+ years, RAJA RANI GROUP has built a strong foundation in Odisha, particularly in
                     Berhampur and beyond. Our commitment to transparency and high construction standards has made us a
                     trusted name among property seekers and investors.
                 </p>
             </div>
 
-
             <!-- Mission Vision Values -->
-            <div class="grid md:grid-cols-3 gap-8 text-gray-800 px-4 md:px-0">
+            <div class="grid md:grid-cols-3 gap-8">
                 <!-- Our Mission -->
-                <div class="bg-blue-50 p-6 rounded-xl shadow-md hover:shadow-lg transition duration-300">
-                    <div class="flex items-center mb-3">
-                        <i class="fas fa-bullseye text-blue-600 text-lg mr-3"></i>
-                        <h3 class="text-xl font-bold text-blue-700">Our Mission</h3>
+                <div class="bg-brand-gold/10 p-6 rounded-xl shadow-md card-hover border-l-4 border-brand-gold">
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-bullseye text-brand-gold text-2xl mr-3"></i>
+                        <h3 class="text-xl font-bold text-brand-navy font-heading">Our Mission</h3>
                     </div>
-                    <ul class="list-disc list-inside text-sm space-y-1">
-                        <li>Deliver high-quality real estate solutions with customer-first approach.</li>
-                        <li>Create vibrant, inclusive, and sustainable communities.</li>
-                        <li>Adopt modern construction practices and eco-friendly designs.</li>
-                        <li>Maintain ethical principles in every step of development.</li>
-                        <li>Transform urban landscapes with innovation and responsibility.</li>
+                    <ul class="list-disc list-inside text-sm space-y-2 text-gray-700 font-primary">
+                        <li>Deliver high-quality real estate solutions with customer-first approach</li>
+                        <li>Create vibrant, inclusive, and sustainable communities</li>
+                        <li>Adopt modern construction practices and eco-friendly designs</li>
+                        <li>Maintain ethical principles in every step of development</li>
                     </ul>
                 </div>
 
                 <!-- Our Vision -->
-                <div class="bg-blue-50 p-6 rounded-xl shadow-md hover:shadow-lg transition duration-300">
-                    <div class="flex items-center mb-3">
-                        <i class="fas fa-eye text-blue-600 text-lg mr-3"></i>
-                        <h3 class="text-xl font-bold text-blue-700">Our Vision</h3>
+                <div class="bg-brand-orange/10 p-6 rounded-xl shadow-md card-hover border-l-4 border-brand-orange">
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-eye text-brand-orange text-2xl mr-3"></i>
+                        <h3 class="text-xl font-bold text-brand-navy font-heading">Our Vision</h3>
                     </div>
-                    <ul class="list-disc list-inside text-sm space-y-1">
-                        <li>Become one of India’s most admired and trusted real estate companies.</li>
-                        <li>Deliver landmark projects that define luxury and quality.</li>
-                        <li>Uphold transparency and long-term client relationships.</li>
-                        <li>Continuously innovate in design, planning, and execution.</li>
-                        <li>Lead with integrity in a dynamic and competitive market.</li>
+                    <ul class="list-disc list-inside text-sm space-y-2 text-gray-700 font-primary">
+                        <li>Become one of India's most admired and trusted real estate companies</li>
+                        <li>Deliver landmark projects that define luxury and quality</li>
+                        <li>Uphold transparency and long-term client relationships</li>
+                        <li>Continuously innovate in design, planning, and execution</li>
                     </ul>
                 </div>
-
 
                 <!-- Core Values -->
-                <div class="bg-blue-50 p-6 rounded-xl shadow-md hover:shadow-lg transition duration-300">
-                    <div class="flex items-center mb-3">
-                        <i class="fas fa-gem text-blue-600 text-lg mr-3"></i>
-                        <h3 class="text-xl font-bold text-blue-700">Core Values</h3>
+                <div class="bg-brand-red/10 p-6 rounded-xl shadow-md card-hover border-l-4 border-brand-red">
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-gem text-brand-red text-2xl mr-3"></i>
+                        <h3 class="text-xl font-bold text-brand-navy font-heading">Core Values</h3>
                     </div>
-                    <ul class="list-disc list-inside text-sm space-y-1 mt-2">
-                        <li><strong>Integrity:</strong> We conduct every activity with honesty, fairness, and
-                            accountability.</li>
-                        <li><strong>Customer Focus:</strong> Our work revolves around understanding and fulfilling
-                            customer dreams.</li>
-                        <li><strong>Quality:</strong> We maintain the highest standards in materials and workmanship
-                            across all projects.</li>
-                        <li><strong>Innovation:</strong> We adopt the latest technology and design thinking to create
-                            modern, efficient spaces.</li>
-                        <li><strong>Commitment:</strong> We are dedicated to on-time delivery and exceeding customer
-                            satisfaction at every step.</li>
+                    <ul class="list-disc list-inside text-sm space-y-2 text-gray-700 font-primary">
+                        <li><strong class="text-brand-navy">Integrity:</strong> Honest, fair, and accountable practices
+                        </li>
+                        <li><strong class="text-brand-navy">Quality:</strong> Highest standards in materials and
+                            workmanship</li>
+                        <li><strong class="text-brand-navy">Innovation:</strong> Latest technology and design thinking
+                        </li>
+                        <li><strong class="text-brand-navy">Commitment:</strong> On-time delivery and customer
+                            satisfaction</li>
                     </ul>
                 </div>
             </div>
-
         </div>
     </section>
 
-
-
-
-    <!-- Commercial  -->
-    <section id="commercial" class="py-16 bg-gray-50">
+    <!-- Commercial Projects Section with Swiper -->
+    <section id="commercial" class="py-16 bg-brand-navy">
         <div class="container mx-auto px-4">
-            <div class="grid md:grid-cols-3 gap-8">
-                <!-- Summit -->
-                <div class="bg-white rounded-lg shadow-lg overflow-hidden border-2 border-blue-200 commercial-card">
-                    <div class="bg-blue-600 text-white text-center py-2">
-                        <span class="font-bold">Commercial</span>
-                    </div>
-                    <div class="h-64 bg-cover " style="background-image: url('images/comercial1.jpg');">
+            <h2 class="text-4xl font-bold text-center text-white mb-4 font-heading">COMMERCIAL PROJECTS</h2>
+            <div class="w-20 h-1 bg-brand-gold mx-auto mb-12"></div>
 
+            <div class="swiper commercialSwiper">
+                <div class="swiper-wrapper">
+                    <!-- Commercial Project 1 -->
+                    <div class="swiper-slide">
+                        <div
+                            class="bg-white rounded-lg shadow-lg overflow-hidden border-2 border-brand-gold/30 card-hover">
+                            <div class="bg-brand-gold text-brand-navy text-center py-2">
+                                <span class="font-bold font-secondary">Commercial</span>
+                            </div>
+                            <div class="h-64 bg-cover bg-center"
+                                style="background-image: url('images/comercial1.jpg');"></div>
+                            <div class="bg-brand-navy text-white p-6">
+                                <h3 class="text-2xl font-bold text-center mb-2 font-heading">Raja Rani Complex</h3>
+                                <p class="text-sm text-center text-brand-gold">Courtpeta, In front of B.D.A Office</p>
+                            </div>
+                        </div>
                     </div>
-                    <div class="bg-gray-800 text-white p-6">
-                        <h3 class="text-2xl font-bold text-center mb-2">Raja Rani Complex</h3>
-                        <p class="text-sm text-center mb-1">Courtpeta, In front of B.D.A Office</p>
-                        </p>
 
+                    <!-- Commercial Project 2 -->
+                    <div class="swiper-slide">
+                        <div
+                            class="bg-white rounded-lg shadow-lg overflow-hidden border-2 border-brand-gold/30 card-hover">
+                            <div class="bg-brand-gold text-brand-navy text-center py-2">
+                                <span class="font-bold font-secondary">Commercial</span>
+                            </div>
+                            <div class="h-64 bg-cover bg-center"
+                                style="background-image: url('images/commercial2.jpg');"></div>
+                            <div class="bg-brand-navy text-white p-6">
+                                <h3 class="text-2xl font-bold text-center mb-2 font-heading">Raja Rani Mall</h3>
+                                <p class="text-sm text-center text-brand-gold">GOSANINUAGAON, Berhampur</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Commercial Project 3 -->
+                    <div class="swiper-slide">
+                        <div
+                            class="bg-white rounded-lg shadow-lg overflow-hidden border-2 border-brand-gold/30 card-hover">
+                            <div class="bg-brand-gold text-brand-navy text-center py-2">
+                                <span class="font-bold font-secondary">Commercial</span>
+                            </div>
+                            <div class="h-64 bg-cover bg-center"
+                                style="background-image: url('images/commercial3.jpg');"></div>
+                            <div class="bg-brand-navy text-white p-6">
+                                <h3 class="text-2xl font-bold text-center mb-2 font-heading">Raja Rani Paradise</h3>
+                                <p class="text-sm text-center text-brand-gold">At Station Road, Berhampur</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Commercial Project 4 -->
+                    <div class="swiper-slide">
+                        <div
+                            class="bg-white rounded-lg shadow-lg overflow-hidden border-2 border-brand-gold/30 card-hover">
+                            <div class="bg-brand-gold text-brand-navy text-center py-2">
+                                <span class="font-bold font-secondary">Commercial</span>
+                            </div>
+                            <div class="h-64 bg-cover bg-center"
+                                style="background-image: url('images/commpercial4.jpg');"></div>
+                            <div class="bg-brand-navy text-white p-6">
+                                <h3 class="text-2xl font-bold text-center mb-2 font-heading">Raja Rani Tower</h3>
+                                <p class="text-sm text-center text-brand-gold">Kamapali, Berhampur</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Commercial Project 5 -->
+                    <div class="swiper-slide">
+                        <div
+                            class="bg-white rounded-lg shadow-lg overflow-hidden border-2 border-brand-gold/30 card-hover">
+                            <div class="bg-brand-orange text-white text-center py-2">
+                                <span class="font-bold font-secondary">Commercial</span>
+                            </div>
+                            <div class="h-64 bg-cover bg-center"
+                                style="background-image: url('images/commercial5.jpg');"></div>
+                            <div class="bg-brand-navy text-white p-6">
+                                <h3 class="text-2xl font-bold text-center mb-2 font-heading">Raja Rani Enclave</h3>
+                                <p class="text-sm text-center text-brand-gold">Gokuldham, Gosaninuagaon, Berhampur</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Residential Project 1 -->
+                    <div class="swiper-slide">
+                        <div
+                            class="bg-white rounded-lg shadow-lg overflow-hidden border-2 border-brand-gold/30 card-hover">
+                            <div class="bg-brand-red text-white text-center py-2">
+                                <span class="font-bold font-secondary">Residential</span>
+                            </div>
+                            <div class="h-64 bg-cover bg-center" style="background-image: url('images/comlete2.jpg');">
+                            </div>
+                            <div class="bg-brand-navy text-white p-6">
+                                <h3 class="text-2xl font-bold text-center mb-2 font-heading">Raja Rani Residency</h3>
+                                <p class="text-sm text-center text-brand-gold">Gosaninuagaon, Berhampur</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Residential Project 2 -->
+                    <div class="swiper-slide">
+                        <div
+                            class="bg-white rounded-lg shadow-lg overflow-hidden border-2 border-brand-gold/30 card-hover">
+                            <div class="bg-brand-red text-white text-center py-2">
+                                <span class="font-bold font-secondary">Residential</span>
+                            </div>
+                            <div class="h-64 bg-cover bg-center" style="background-image: url('images/nilaya.jpg');">
+                            </div>
+                            <div class="bg-brand-navy text-white p-6">
+                                <h3 class="text-2xl font-bold text-center mb-2 font-heading">Raja Rani Nilaya</h3>
+                                <p class="text-sm text-center text-brand-gold">Rajeev Nagar Gosaninuagaon, Berhampur</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
-
-
-                <!-- Paradigm -->
-                <div class="bg-white rounded-lg shadow-lg overflow-hidden border-2 border-blue-200 commercial-card">
-                    <div class="bg-blue-600 text-white text-center py-2">
-                        <span class="font-bold">Commercial</span>
-                    </div>
-                    <div class="h-64 bg-cover " style="background-image: url('images/commercial2.jpg');">
-
-                    </div>
-                    <div class="bg-gray-800 text-white p-6">
-                        <h3 class="text-2xl font-bold text-center mb-2">Raja Rani Mall</h3>
-                        <p class="text-sm text-center mb-1">GOSANINUAGAON, Berhampur</p>
-                        </p>
-
-                    </div>
-                </div>
-
-                <!-- West Avenue -->
-                <div class="bg-white rounded-lg shadow-lg overflow-hidden border-2 border-blue-200 commercial-card">
-                    <div class="bg-blue-600 text-white text-center py-2">
-                        <span class="font-bold">Commercial</span>
-                    </div>
-                    <div class="h-64 bg-cover " style="background-image: url('images/commercial3.jpg');">
-
-                    </div>
-                    <div class="bg-gray-800 text-white p-6">
-                        <h3 class="text-2xl font-bold text-center mb-2">Raja Rani Paradise</h3>
-                        <p class="text-sm text-center mb-1">At Station Road, Berhampur</p>
-                        </p>
-
-                    </div>
-                </div>
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
+                <div class="swiper-pagination"></div>
             </div>
         </div>
     </section>
 
-    <!-- Directors Section -->
-    <section class="py-16 bg-white">
+    <!-- Video Showcase Section -->
+    <section class="py-16 bg-[#FEF3E2]">
         <div class="container mx-auto px-4">
-            <h2 class="text-4xl font-bold text-center text-gray-800 mb-4">OUR DIRECTORS</h2>
-            <div class="w-20 h-1 bg-blue-600 mx-auto mb-12"></div>
+            <h2 class="text-4xl font-bold text-center text-[#102E50] mb-4">PROJECT VIDEOS</h2>
+            <div class="w-20 h-1 bg-[#F5C45E] mx-auto mb-12"></div>
 
-            <div class="grid md:grid-cols-2 lg:grid-cols-5 overflow-x-auto gap-8">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
 
-                <!-- Director 1 -->
-                <div class="max-w-xs mx-auto bg-white shadow-xl rounded-xl overflow-hidden border border-gray-200">
-                    <!-- Profile Image -->
-                    <div class="bg-gradient-to-br from-blue-400 to-blue-600 p-4 flex justify-center">
-                        <div class="w-full h-80 sm:h-60 overflow-hidden ">
-                            <img src="images/sir pic.jpg" alt="" class="w-full h-full object-cover ">
-                        </div>
+                <!-- Reel 1 -->
+                <div class="bg-white rounded-lg overflow-hidden shadow-lg border border-[#E78B48]">
+                    <div class="relative w-full h-[70vh] bg-black">
+                        <video src="videos/video1.mp4" autoplay muted loop playsinline
+                            class="absolute top-0 left-0 w-full h-full object-cover"></video>
                     </div>
-
-                    <!-- Details -->
-                    <div class="p-4 text-center">
-                        <h3 class="text-lg font-bold text-gray-800">MR. UMASHANKAR PANIGRAHY</h3>
-                        <p class="text-blue-600 font-semibold text-sm">Managing Partner & <br> Managing Directors Raja
-                            Rani Homes </p>
-                        <hr class="my-2 border-gray-200">
-                        <p class="text-gray-600 text-xs">A visionary leader and the cornerstone of RAJA RANI GROUP,
-                            MR.PANIGRAHY brings
-                            over two decades of experience in the real estate industry. </p>
+                    <div class="p-4">
+                        <h3 class="text-xl font-bold text-[#102E50] mb-2">Virtual Walkthrough</h3>
+                        <p class="text-sm text-gray-700">Experience a 360° virtual walkthrough of our luxurious property
+                            layout and common areas.</p>
                     </div>
                 </div>
 
-                <!-- Director 2 -->
-                <div class="max-w-xs mx-auto bg-white shadow-xl rounded-xl overflow-hidden border border-gray-200">
-                    <!-- Profile Image -->
-                    <div class="bg-gradient-to-br from-blue-400 to-blue-600 p-4 flex justify-center">
-                        <div class="w-full h-80 sm:h-60 overflow-hidden ">
-                            <img src="images/pradeep sir.jpg" alt="" class="w-full h-full object-cover ">
-                        </div>
+                <!-- Reel 2 -->
+                <div class="bg-white rounded-lg overflow-hidden shadow-lg border border-[#E78B48]">
+                    <div class="relative w-full h-[70vh] bg-black">
+                        <video src="videos/video2.mp4" autoplay muted loop playsinline
+                            class="absolute top-0 left-0 w-full h-full object-cover"></video>
                     </div>
-
-                    <!-- Details -->
-                    <div class="p-4 text-center">
-                        <h3 class="text-lg font-bold text-gray-800">MR.PRADEEP
-                            KUMAR PATRO</h3>
-                        <p class="text-blue-600 font-semibold text-sm">Partner <br> Raja Rani Real State</p>
-                        <hr class="my-2 border-gray-200">
-                        <p class="text-gray-600 text-xs">Known for his precision and professionalism, MR.PATRO
-                            contributes
-                            significantly to project planning and financial management.</p>
+                    <div class="p-4">
+                        <h3 class="text-xl font-bold text-[#102E50] mb-2">Construction Progress</h3>
+                        <p class="text-sm text-gray-700">Watch how we’re building your dream home, brick by brick, with
+                            top-quality materials.</p>
                     </div>
                 </div>
 
-                <!-- ID Card with Image -->
-                <div class="max-w-xs mx-auto bg-white shadow-xl rounded-xl overflow-hidden border border-gray-200">
-                    <!-- Profile Image -->
-                    <div class="bg-gradient-to-br from-blue-400 to-blue-600 p-4 flex justify-center">
-                        <div class="w-full h-80 sm:h-60 overflow-hidden ">
-                            <img src="images/deelip sir.jpg" alt="" class="w-full h-full object-cover ">
-                        </div>
+                <!-- Reel 3 -->
+                <div class="bg-white rounded-lg overflow-hidden shadow-lg border border-[#E78B48]">
+                    <div class="relative w-full h-[70vh] bg-black">
+                        <video src="videos/video3.mp4" autoplay muted loop playsinline
+                            class="absolute top-0 left-0 w-full h-full object-cover"></video>
                     </div>
-
-                    <!-- Details -->
-                    <div class="p-4 text-center">
-                        <h3 class="text-lg font-bold text-gray-800">MR. DEELIP KUMAR PATRO</h3>
-                        <p class="text-blue-600 font-semibold text-sm"> Director Raja Rani PTV LTD</p>
-                        <hr class="my-2 border-gray-200">
-                        <p class="text-gray-600 text-xs">MR.PATRO is a seasoned professional with a sharp focus on
-                            project execution
-                            and customer relations.</p>
+                    <div class="p-4">
+                        <h3 class="text-xl font-bold text-[#102E50] mb-2">Amenities Showcase</h3>
+                        <p class="text-sm text-gray-700">Discover the world-class amenities like gym, clubhouse, pool,
+                            and green spaces.</p>
                     </div>
                 </div>
 
-
-
-                <!-- Director 3 -->
-                <div class="max-w-xs mx-auto bg-white shadow-xl rounded-xl overflow-hidden border border-gray-200">
-                    <!-- Profile Image -->
-                    <div class="bg-gradient-to-br from-blue-400 to-blue-600 p-4 flex justify-center">
-                        <div class="w-full h-80 sm:h-60 overflow-hidden ">
-                            <img src="images/rama sir.jpg" alt="" class="w-full h-full object-cover ">
-                        </div>
+                <!-- Reel 4 -->
+                <div class="bg-white rounded-lg overflow-hidden shadow-lg border border-[#E78B48]">
+                    <div class="relative w-full h-[70vh] bg-black">
+                        <video src="videos/video4.mp4" autoplay muted loop playsinline
+                            class="absolute top-0 left-0 w-full h-full object-cover"></video>
                     </div>
-
-                    <!-- Details -->
-                    <div class="p-4 text-center">
-                        <h3 class="text-lg font-bold text-gray-800">MR.SAROJ KUMAR SAHU</h3>
-                        <p class="text-blue-600 font-semibold text-sm">Partner <br> Raja Rani Real Estate</p>
-                        <hr class="my-2 border-gray-200">
-                        <p class="text-gray-600 text-xs">A dynamic individual with an eye for opportunity and market
-                            trends, MR.SAHU plays
-                            a key role in business development and client engagement.</p>
+                    <div class="p-4">
+                        <h3 class="text-xl font-bold text-[#102E50] mb-2">Interior Sneak Peek</h3>
+                        <p class="text-sm text-gray-700">Take a glimpse into our finely crafted interiors with modern
+                            finishes and smart design.</p>
                     </div>
                 </div>
 
-
-
-                <!-- Director 5 -->
-                <div class="max-w-xs mx-auto bg-white shadow-xl rounded-xl overflow-hidden border border-gray-200">
-                    <!-- Profile Image -->
-                    <div class="bg-gradient-to-br from-blue-400 to-blue-600 p-4 flex justify-center">
-                        <div class="w-full h-80 sm:h-60 overflow-hidden ">
-                            <img src="images/bharati madam.jpg" alt="" class="w-full h-full object-cover ">
-                        </div>
+                <!-- Reel 5 -->
+                <div class="bg-white rounded-lg overflow-hidden shadow-lg border border-[#E78B48]">
+                    <div class="relative w-full h-[70vh] bg-black">
+                        <video src="videos/video5.mp4" autoplay muted loop playsinline
+                            class="absolute top-0 left-0 w-full h-full object-cover"></video>
                     </div>
-
-                    <!-- Details -->
-                    <div class="p-4 text-center">
-                        <h3 class="text-lg font-bold text-gray-800">MRS.BHARATI PANIGRAHY</h3>
-                        <p class="text-blue-600 font-semibold text-sm">Partner <br> Raja Rani Real Estate </p>
-                        <hr class="my-2 border-gray-200">
-                        <p class="text-gray-600 text-xs">MRS.PANIGRAHY brings a unique perspective to the team,
-                            emphasizing design
-                            excellence and community impact.</p>
+                    <div class="p-4">
+                        <h3 class="text-xl font-bold text-[#102E50] mb-2">Customer Stories</h3>
+                        <p class="text-sm text-gray-700">Listen to real families sharing their journey and satisfaction
+                            after owning a home with us.</p>
                     </div>
                 </div>
+
+                <!-- Reel 6 -->
+                <div class="bg-white rounded-lg overflow-hidden shadow-lg border border-[#E78B48]">
+                    <div class="relative w-full h-[70vh] bg-black">
+                        <video src="videos/video6.mp4" autoplay muted loop playsinline
+                            class="absolute top-0 left-0 w-full h-full object-top object-cover"></video>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="text-xl font-bold text-[#102E50] mb-2">Upcoming Projects</h3>
+                        <p class="text-sm text-gray-700">Get an exclusive first look at our future residential and
+                            commercial ventures in Berhampur.</p>
+                    </div>
+                </div>
+
             </div>
         </div>
     </section>
+
 
 
     <!-- Footer -->
-    <footer id="footer" class="bg-gray-800 text-white py-12">
+    <footer id="footer" class="bg-brand-navy text-white py-12">
         <div class="container mx-auto px-4">
             <div class="grid md:grid-cols-4 gap-8">
-
                 <!-- Company Info -->
                 <div>
                     <div class="flex items-center mb-4">
-                        <div class="w-12 h-12  rounded-full flex items-center justify-center mr-3 rotate-3d">
-                            <img class="w-10 h-12" src="images/logo.png" alt="">
+                        <div class="w-12 h-12 rounded-full flex items-center justify-center mr-3">
+                            <img class="w-10 h-12" src="images/logo.png" alt="Logo">
                         </div>
                         <div>
-                            <h3 class="text-xl font-bold">RAJARANI</h3>
-                            <p class="text-xs text-gray-400">REAL ESATAE</p>
+                            <h3 class="text-xl font-bold text-brand-gold font-heading">RAJARANI</h3>
+                            <p class="text-xs text-brand-orange font-secondary">REAL ESTATE</p>
                         </div>
                     </div>
-                    <p class="text-gray-400 text-sm mb-4">
-                        Shaping innovations in real estate with quality, transparency, and timely delivery since 2006.
+                    <p class="text-gray-300 text-sm mb-4 font-primary">
+                        Shaping innovations in real estate with quality, transparency, and timely delivery since 2008.
                     </p>
                     <div class="flex space-x-4">
-                        <!-- Facebook -->
-                        <a href="https://www.facebook.com/profile.php?id=100088773827960" target="_blank">
-                            <div
-                                class="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center transform transition-all duration-300 hover:scale-110">
-                                <i class="fab fa-facebook-f text-white text-sm"></i>
-                            </div>
+                        <a href="https://www.facebook.com/profile.php?id=100088773827960" target="_blank"
+                            class="w-8 h-8 bg-brand-gold rounded-full flex items-center justify-center hover:bg-brand-orange transition">
+                            <i class="fab fa-facebook-f text-brand-navy text-sm"></i>
                         </a>
-
-                        <!-- Instagram -->
-                        <a href="https://www.instagram.com/raja_rani_homes" target="_blank">
-                            <div
-                                class="w-8 h-8 bg-pink-500 rounded-full flex items-center justify-center transform transition-all duration-300 hover:scale-110">
-                                <i class="fab fa-instagram text-white text-sm"></i>
-                            </div>
+                        <a href="https://www.instagram.com/raja_rani_homes" target="_blank"
+                            class="w-8 h-8 bg-brand-orange rounded-full flex items-center justify-center hover:bg-brand-red transition">
+                            <i class="fab fa-instagram text-white text-sm"></i>
                         </a>
                     </div>
-
                 </div>
 
                 <!-- Quick Links -->
                 <div>
-                    <h4 class="text-lg font-bold mb-4">Quick Links</h4>
-                    <ul class="space-y-2 text-sm">
-                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">Home</a>
+                    <h4 class="text-lg font-bold mb-4 text-brand-gold font-heading">Quick Links</h4>
+                    <ul class="space-y-2 text-sm font-primary">
+                        <li><a href="#home" class="text-gray-300 hover:text-brand-gold transition">Home</a></li>
+                        <li><a href="#about" class="text-gray-300 hover:text-brand-gold transition">About Us</a></li>
+                        <li><a href="#completed" class="text-gray-300 hover:text-brand-gold transition">Properties</a>
                         </li>
-                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">About
-                                Us</a></li>
-                        <li><a href="#"
-                                class="text-gray-400 hover:text-white transition-colors duration-300">Properties</a>
+                        <li><a href="#commercial" class="text-gray-300 hover:text-brand-gold transition">Commercial</a>
                         </li>
-                        <li><a href="#"
-                                class="text-gray-400 hover:text-white transition-colors duration-300">Gallery</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">Media</a>
-                        </li>
-                        <li><a href="#"
-                                class="text-gray-400 hover:text-white transition-colors duration-300">Careers</a></li>
                     </ul>
                 </div>
 
                 <!-- Property Types -->
                 <div>
-                    <h4 class="text-lg font-bold mb-4">Properties</h4>
-                    <ul class="space-y-2 text-sm">
-                        <li><a href="#"
-                                class="text-gray-400 hover:text-white transition-colors duration-300">Residential</a>
+                    <h4 class="text-lg font-bold mb-4 text-brand-gold font-heading">Cities</h4>
+                    <ul class="space-y-2 text-sm font-primary">
+                        <li><a href="#completed" class="text-gray-300 hover:text-brand-gold transition">Berhampur</a>
                         </li>
-                        <li><a href="#"
-                                class="text-gray-400 hover:text-white transition-colors duration-300">Commercial</a>
+                        <li><a href="#commercial" class="text-gray-300 hover:text-brand-gold transition">Bhubaneswar</a>
                         </li>
-                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">Villas</a>
+                        <li><a href="#completed" class="text-gray-300 hover:text-brand-gold transition">Ichhapuram</a>
                         </li>
-                        <li><a href="#"
-                                class="text-gray-400 hover:text-white transition-colors duration-300">Apartments</a>
-                        </li>
-                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">Office
-                                Spaces</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">Retail
-                                Spaces</a></li>
                     </ul>
                 </div>
 
                 <!-- Contact Info -->
                 <div>
-                    <h4 class="text-lg font-bold mb-4">Contact Info</h4>
-                    <div class="space-y-3 text-sm text-gray-400">
+                    <h4 class="text-lg font-bold mb-4 text-brand-gold font-heading">Contact Info</h4>
+                    <div class="space-y-3 text-sm text-gray-300 font-primary">
                         <div class="flex items-start space-x-2">
-                            <span class="text-blue-500 mt-1"><i class="fas fa-map-marker-alt"></i></span>
-                            <p>RAJA RANI TOWER, KAMAPALLI MAIN ROAD,<br> BERHAMPUR, ODISHA - 760004</p>
+                            <i class="fas fa-map-marker-alt text-brand-orange mt-1"></i>
+                            <p>RAJA RANI TOWER, KAMAPALLI MAIN ROAD, BERHAMPUR, ODISHA - 760004</p>
                         </div>
                         <div class="flex items-center space-x-2">
-                            <span class="text-blue-500"><i class="fas fa-phone"></i></span>
+                            <i class="fas fa-phone text-brand-orange"></i>
                             <p>8260604188, 9237771777, 9124723354</p>
                         </div>
                         <div class="flex items-center space-x-2">
-                            <span class="text-blue-500"><i class="fas fa-phone-volume"></i></span>
+                            <i class="fas fa-phone-volume text-brand-orange"></i>
                             <p>0680-2283535</p>
                         </div>
                         <div class="flex items-center space-x-2">
-                            <span class="text-blue-500"><i class="fas fa-envelope"></i></span>
+                            <i class="fas fa-envelope text-brand-orange"></i>
                             <p>realestaterajarani@gmail.com</p>
                         </div>
                         <div class="flex items-center space-x-2">
-                            <span class="text-blue-500"><i class="fas fa-envelope-open"></i></span>
-                            <p>rajaranihomespvtltd@gmail.com</p>
-                        </div>
-                        <div class="flex items-center space-x-2">
-                            <span class="text-blue-500"><i class="fas fa-globe"></i></span>
-                            <p><a href="http://www.rajaranire                            <span class=" text-blue-500"><i
-                                        class="fas fa-globe"></i></span>
-                                    <p><a href="http://www.rajaranirealestate.com" target="_blank"
-                                            class="hover:text-white">www.rajaranirealestate.com</a></p>
+                            <i class="fas fa-globe text-brand-orange"></i>
+                            <p><a href="http://www.rajaranirealestate.com" target="_blank"
+                                    class="hover:text-brand-gold">www.rajaranirealestate.com</a></p>
                         </div>
                         <div class="flex items-start space-x-2">
-                            <span class="text-blue-500 mt-1"><i class="fas fa-clock"></i></span>
+                            <i class="fas fa-clock text-brand-orange mt-1"></i>
                             <p>Mon–Sat: 10:00 AM – 8:00 PM<br>Sun: 10:00 AM – 02:00 PM</p>
                         </div>
                     </div>
                 </div>
-
             </div>
 
-            <div class="border-t border-gray-700 mt-8 pt-8">
+            <div class="border-t border-brand-gold/30 mt-8 pt-8">
                 <div class="flex flex-col md:flex-row justify-between items-center">
-                    <p class="text-gray-400 text-sm mb-4 md:mb-0">© 2025 RAJARANI REAL ESTATE Pvt Ltd. All rights
-                        reserved.</p>
-                    <div class="flex space-x-6 text-sm">
-                        <a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">Privacy
-                            Policy</a>
-                        <a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">Terms &
-                            Conditions</a>
-                        <a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">RERA</a>
+                    <p class="text-gray-300 text-sm mb-4 md:mb-0 font-primary">© 2025 RAJARANI REAL ESTATE Pvt Ltd. All
+                        rights reserved.</p>
+                    <div class="flex space-x-6 text-sm font-primary">
+                        <a href="#" class="text-gray-300 hover:text-brand-gold transition">Privacy Policy</a>
+                        <a href="#" class="text-gray-300 hover:text-brand-gold transition">Terms & Conditions</a>
+                        <a href="#" class="text-gray-300 hover:text-brand-gold transition">RERA</a>
                     </div>
                 </div>
             </div>
         </div>
     </footer>
 
-    <!-- Particles.js for background effects -->
-    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
-
     <script>
-        // Initialize Swiper
-        const swiper = new Swiper('.featuredSwiper', {
+        // Initialize Featured Projects Swiper
+        const featuredSwiper = new Swiper('.featuredSwiper', {
             slidesPerView: 1,
             spaceBetween: 30,
             loop: true,
+            autoplay: {
+                delay: 5000,
+                disableOnInteraction: false,
+            },
             pagination: {
                 el: '.swiper-pagination',
                 clickable: true,
@@ -1071,19 +966,27 @@
             }
         });
 
-        const swiper2 = new Swiper('.featuredSwiper2', {
+        // Initialize Commercial Projects Swiper
+        const commercialSwiper = new Swiper('.commercialSwiper', {
             slidesPerView: 1,
             spaceBetween: 30,
             loop: true,
+            autoplay: {
+                delay: 4000,
+                disableOnInteraction: false,
+            },
             pagination: {
-                el: '.swiper-pagination',
+                el: '.commercialSwiper .swiper-pagination',
                 clickable: true,
             },
             navigation: {
-                nextEl: '.swiper-button-next',
-                prevEl: '.swiper-button-prev',
+                nextEl: '.commercialSwiper .swiper-button-next',
+                prevEl: '.commercialSwiper .swiper-button-prev',
             },
             breakpoints: {
+                640: {
+                    slidesPerView: 1,
+                },
                 768: {
                     slidesPerView: 2,
                 },
@@ -1094,380 +997,70 @@
         });
 
         // Mobile Menu Functionality
-        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-        const mobileMenu = document.getElementById('mobileMenu');
-
-        mobileMenuBtn.addEventListener('click', function () {
-            mobileMenu.classList.toggle('hidden');
-        });
-
         document.addEventListener('DOMContentLoaded', function () {
             const mobileMenuBtn = document.getElementById('mobileMenuBtn');
             const mobileMenu = document.getElementById('mobileMenu');
 
+            // Toggle mobile menu
             mobileMenuBtn.addEventListener('click', function () {
-                mobileMenu.classList.toggle('hidden');
+                mobileMenu.classList.toggle('active');
             });
 
+            // Close mobile menu when clicking on a link
+            const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
+            mobileNavLinks.forEach(link => {
+                link.addEventListener('click', function () {
+                    mobileMenu.classList.remove('active');
+                });
+            });
+
+            // Close mobile menu when clicking outside
             document.addEventListener('click', function (event) {
                 if (!mobileMenuBtn.contains(event.target) && !mobileMenu.contains(event.target)) {
-                    mobileMenu.classList.add('hidden');
+                    mobileMenu.classList.remove('active');
                 }
             });
-        });
 
-        // 3D Hero Canvas
-        function initHeroCanvas() {
-            const canvas = document.getElementById('hero-canvas');
-            if (!canvas) return;
+            // Smooth scrolling for all navigation links
+            const allNavLinks = document.querySelectorAll('a[href^="#"]');
+            allNavLinks.forEach(link => {
+                link.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    const targetSection = document.querySelector(targetId);
 
-            const renderer = new THREE.WebGLRenderer({
-                canvas,
-                antialias: true,
-                alpha: true
-            });
-            renderer.setSize(canvas.clientWidth, canvas.clientHeight);
-            renderer.setPixelRatio(window.devicePixelRatio);
-
-            const scene = new THREE.Scene();
-            const camera = new THREE.PerspectiveCamera(75, canvas.clientWidth / canvas.clientHeight, 0.1, 1000);
-            camera.position.z = 5;
-
-            // Add lights
-            const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
-            scene.add(ambientLight);
-
-            const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
-            directionalLight.position.set(5, 5, 5);
-            scene.add(directionalLight);
-
-            // Create buildings
-            const buildings = [];
-            const buildingCount = 10;
-            const buildingGeometry = new THREE.BoxGeometry(1, 1, 1);
-
-            for (let i = 0; i < buildingCount; i++) {
-                const height = Math.random() * 3 + 1;
-                const width = Math.random() * 0.5 + 0.5;
-                const depth = Math.random() * 0.5 + 0.5;
-
-                const material = new THREE.MeshStandardMaterial({
-                    color: new THREE.Color(0x1e40af).lerp(new THREE.Color(0x3b82f6), Math.random()),
-                    metalness: 0.3,
-                    roughness: 0.7
-                });
-
-                const building = new THREE.Mesh(buildingGeometry, material);
-                building.scale.set(width, height, depth);
-                building.position.x = (Math.random() - 0.5) * 10;
-                building.position.y = height / 2 - 2;
-                building.position.z = (Math.random() - 0.5) * 10 - 2;
-
-                scene.add(building);
-                buildings.push({
-                    mesh: building,
-                    rotationSpeed: (Math.random() - 0.5) * 0.01,
-                    floatSpeed: Math.random() * 0.005 + 0.002,
-                    floatOffset: Math.random() * Math.PI * 2
-                });
-            }
-
-            // Ground plane
-            const groundGeometry = new THREE.PlaneGeometry(50, 50);
-            const groundMaterial = new THREE.MeshStandardMaterial({
-                color: 0x1e40af,
-                metalness: 0.2,
-                roughness: 0.8
-            });
-            const ground = new THREE.Mesh(groundGeometry, groundMaterial);
-            ground.rotation.x = -Math.PI / 2;
-            ground.position.y = -2;
-            scene.add(ground);
-
-            // Animation loop
-            function animate() {
-                requestAnimationFrame(animate);
-
-                const time = Date.now() * 0.001;
-
-                buildings.forEach(building => {
-                    building.mesh.rotation.y += building.rotationSpeed;
-                    building.mesh.position.y = (building.mesh.scale.y / 2 - 2) + Math.sin(time + building.floatOffset) * 0.1;
-                });
-
-                renderer.render(scene, camera);
-            }
-
-            // Handle resize
-            function onWindowResize() {
-                camera.aspect = canvas.clientWidth / canvas.clientHeight;
-                camera.updateProjectionMatrix();
-                renderer.setSize(canvas.clientWidth, canvas.clientHeight);
-            }
-
-            window.addEventListener('resize', onWindowResize);
-            animate();
-        }
-
-        // Initialize particles.js
-        function initParticles() {
-            if (typeof particlesJS !== 'undefined') {
-                particlesJS("particles-js", {
-                    "particles": {
-                        "number": {
-                            "value": 80,
-                            "density": {
-                                "enable": true,
-                                "value_area": 800
-                            }
-                        },
-                        "color": {
-                            "value": "#ffffff"
-                        },
-                        "shape": {
-                            "type": "circle",
-                            "stroke": {
-                                "width": 0,
-                                "color": "#000000"
-                            },
-                        },
-                        "opacity": {
-                            "value": 0.3,
-                            "random": true,
-                            "anim": {
-                                "enable": false,
-                                "speed": 1,
-                                "opacity_min": 0.1,
-                                "sync": false
-                            }
-                        },
-                        "size": {
-                            "value": 3,
-                            "random": true,
-                            "anim": {
-                                "enable": false,
-                                "speed": 40,
-                                "size_min": 0.1,
-                                "sync": false
-                            }
-                        },
-                        "line_linked": {
-                            "enable": true,
-                            "distance": 150,
-                            "color": "#ffffff",
-                            "opacity": 0.2,
-                            "width": 1
-                        },
-                        "move": {
-                            "enable": true,
-                            "speed": 2,
-                            "direction": "none",
-                            "random": false,
-                            "straight": false,
-                            "out_mode": "out",
-                            "bounce": false,
-                        }
-                    },
-                    "interactivity": {
-                        "detect_on": "canvas",
-                        "events": {
-                            "onhover": {
-                                "enable": true,
-                                "mode": "grab"
-                            },
-                            "onclick": {
-                                "enable": true,
-                                "mode": "push"
-                            },
-                            "resize": true
-                        },
-                        "modes": {
-                            "grab": {
-                                "distance": 140,
-                                "line_linked": {
-                                    "opacity": 1
-                                }
-                            },
-                            "push": {
-                                "particles_nb": 4
-                            }
-                        }
-                    },
-                    "retina_detect": true
-                });
-            }
-        }
-
-        // Scroll animations
-        function initScrollAnimations() {
-            // Animate stats items
-            const statsItems = document.querySelectorAll('.stats-item');
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('visible');
-                    }
-                });
-            }, { threshold: 0.1 });
-
-            statsItems.forEach(item => {
-                observer.observe(item);
-            });
-
-            // Animate counters
-            const counters = document.querySelectorAll('.counter');
-            counters.forEach(counter => {
-                const target = parseInt(counter.getAttribute('data-target'));
-                const duration = 2000; // ms
-                const step = target / (duration / 16); // 60fps
-
-                let current = 0;
-                const updateCounter = () => {
-                    current += step;
-                    if (current < target) {
-                        counter.textContent = Math.floor(current);
-                        requestAnimationFrame(updateCounter);
-                    } else {
-                        counter.textContent = target;
-                    }
-                };
-
-                const counterObserver = new IntersectionObserver((entries) => {
-                    entries.forEach(entry => {
-                        if (entry.isIntersecting) {
-                            updateCounter();
-                            counterObserver.unobserve(entry.target);
-                        }
-                    });
-                }, { threshold: 0.5 });
-
-                counterObserver.observe(counter);
-            });
-
-            // Parallax effect for images
-            const parallaxBgs = document.querySelectorAll('.parallax-bg');
-            window.addEventListener('scroll', () => {
-                parallaxBgs.forEach(bg => {
-                    const rect = bg.getBoundingClientRect();
-                    const windowHeight = window.innerHeight;
-
-                    if (rect.top < windowHeight && rect.bottom > 0) {
-                        const scrollPosition = (rect.top - windowHeight) / 2;
-                        bg.style.transform = `translateY(${scrollPosition * 0.1}px)`;
+                    if (targetSection) {
+                        const offsetTop = targetSection.offsetTop - 80; // Account for fixed navbar
+                        window.scrollTo({
+                            top: offsetTop,
+                            behavior: 'smooth'
+                        });
                     }
                 });
             });
 
-            // Animate section titles
-            const titles = document.querySelectorAll('.reason-title, .qvt-title');
-            const titleObserver = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.style.animation = 'fadeInUp 1s forwards';
-                        titleObserver.unobserve(entry.target);
+            // Add active state to navigation links based on scroll position
+            window.addEventListener('scroll', function () {
+                const sections = document.querySelectorAll('section[id]');
+                const navLinks = document.querySelectorAll('.nav-link');
+
+                let current = '';
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop - 100;
+                    const sectionHeight = section.clientHeight;
+                    if (window.scrollY >= sectionTop && window.scrollY < sectionTop + sectionHeight) {
+                        current = section.getAttribute('id');
                     }
                 });
-            }, { threshold: 0.1 });
 
-            titles.forEach(title => {
-                title.style.opacity = '0';
-                titleObserver.observe(title);
-            });
-        }
-
-        // Initialize animations
-        document.addEventListener('DOMContentLoaded', function () {
-            // Initialize 3D effects
-            initHeroCanvas();
-            initParticles();
-            initScrollAnimations();
-
-            // Add animation classes to nav links
-            const navLinks = document.querySelectorAll('.nav-link');
-            navLinks.forEach((link, index) => {
-                link.style.opacity = '0';
-                link.style.transform = 'translateY(-10px)';
-                link.style.transition = `opacity 0.3s ease ${index * 0.1}s, transform 0.3s ease ${index * 0.1}s, color 0.3s ease`;
-
-                setTimeout(() => {
-                    link.style.opacity = '1';
-                    link.style.transform = 'translateY(0)';
-                }, 100);
-            });
-
-            // Add animation to hero content
-            const heroTitle = document.querySelector('.hero-title');
-            const heroSubtitle = document.querySelector('.hero-subtitle');
-
-            if (heroTitle) {
-                heroTitle.style.opacity = '0';
-                heroTitle.style.transform = 'translateY(30px)';
-                heroTitle.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
-
-                setTimeout(() => {
-                    heroTitle.style.opacity = '1';
-                    heroTitle.style.transform = 'translateY(0)';
-                }, 300);
-            }
-
-            if (heroSubtitle) {
-                heroSubtitle.style.opacity = '0';
-                heroSubtitle.style.transform = 'translateY(30px)';
-                heroSubtitle.style.transition = 'opacity 0.8s ease 0.3s, transform 0.8s ease 0.3s';
-
-                setTimeout(() => {
-                    heroSubtitle.style.opacity = '1';
-                    heroSubtitle.style.transform = 'translateY(0)';
-                }, 600);
-            }
-
-            // Add 3D effect to cards
-            const cards = document.querySelectorAll('.card-3d, .project-card, .commercial-card, .qvt-card');
-            cards.forEach(card => {
-                card.addEventListener('mousemove', function (e) {
-                    const rect = card.getBoundingClientRect();
-                    const x = e.clientX - rect.left;
-                    const y = e.clientY - rect.top;
-
-                    const centerX = rect.width / 2;
-                    const centerY = rect.height / 2;
-
-                    const rotateX = (y - centerY) / 20;
-                    const rotateY = (centerX - x) / 20;
-
-                    card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
-                });
-
-                card.addEventListener('mouseleave', function () {
-                    card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)';
+                navLinks.forEach(link => {
+                    link.classList.remove('text-brand-gold');
+                    if (link.getAttribute('href') === `#${current}`) {
+                        link.classList.add('text-brand-gold');
+                    }
                 });
             });
         });
-
-        // Add CSS3 keyframes animation
-        const style = document.createElement('style');
-        style.textContent = `
-            @keyframes fadeInUp {
-                from {
-                    opacity: 0;
-                    transform: translateY(30px);
-                }
-                to {
-                    opacity: 1;
-                    transform: translateY(0);
-                }
-            }
-
-            @keyframes rotate-y-180 {
-                from {
-                    transform: rotateY(0deg);
-                }
-                to {
-                    transform: rotateY(180deg);
-                }
-            }
-        `;
-        document.head.appendChild(style);
     </script>
 </body>
 
