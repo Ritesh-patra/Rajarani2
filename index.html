@@ -4,10 +4,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RAJARANI Properties</title>
+    <title>RAJARANI Properties - 3D Experience</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+
     <style>
         .swiper-button-next,
         .swiper-button-prev {
@@ -17,32 +24,202 @@
         .swiper-pagination-bullet-active {
             background: #1e40af;
         }
+
+        /* 3D Effects and Animations */
+        .hero-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .floating {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-20px);
+            }
+
+            100% {
+                transform: translateY(0px);
+            }
+        }
+
+        .rotate-3d {
+            transition: transform 0.5s ease;
+            transform-style: preserve-3d;
+        }
+
+        .rotate-3d:hover {
+            transform: rotateY(10deg) rotateX(5deg);
+        }
+
+        .card-3d {
+            transition: all 0.3s ease;
+            transform-style: preserve-3d;
+            perspective: 1000px;
+        }
+
+        .card-3d:hover {
+            transform: translateZ(20px);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+        }
+
+        .parallax-bg {
+            transition: transform 0.5s cubic-bezier(0.215, 0.61, 0.355, 1);
+            will-change: transform;
+        }
+
+        .stats-item {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s ease;
+        }
+
+        .stats-item.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .reason-icon {
+            transition: all 0.5s ease;
+        }
+
+        .reason-card:hover .reason-icon {
+            transform: rotateY(180deg);
+        }
+
+        .project-card {
+            transition: all 0.5s ease;
+            transform-style: preserve-3d;
+        }
+
+        .project-card:hover {
+            transform: scale(1.03) translateY(-10px);
+        }
+
+        .director-card {
+            overflow: hidden;
+            perspective: 1000px;
+        }
+
+        .director-card-inner {
+            transition: transform 0.8s;
+            transform-style: preserve-3d;
+        }
+
+        .director-card:hover .director-card-inner {
+            transform: rotateY(10deg);
+        }
+
+        .director-image {
+            transition: all 0.5s ease;
+        }
+
+        .director-card:hover .director-image {
+            transform: scale(1.05);
+        }
+
+        /* 3D Building Animation */
+        .building-animation {
+            position: relative;
+            width: 100%;
+            height: 300px;
+            perspective: 1000px;
+        }
+
+        .building {
+            position: absolute;
+            width: 60px;
+            height: 200px;
+            background: linear-gradient(to top, #1e40af, #3b82f6);
+            transform-style: preserve-3d;
+            transform: translateZ(0);
+            animation: buildUp 2s forwards;
+            opacity: 0;
+            bottom: 0;
+        }
+
+        .building:nth-child(2) {
+            left: 80px;
+            height: 150px;
+            animation-delay: 0.2s;
+        }
+
+        .building:nth-child(3) {
+            left: 160px;
+            height: 250px;
+            animation-delay: 0.4s;
+        }
+
+        .building:nth-child(4) {
+            left: 240px;
+            height: 180px;
+            animation-delay: 0.6s;
+        }
+
+        .building:nth-child(5) {
+            left: 320px;
+            height: 220px;
+            animation-delay: 0.8s;
+        }
+
+        @keyframes buildUp {
+            0% {
+                transform: translateY(100%) scaleY(0);
+                opacity: 0;
+            }
+
+            100% {
+                transform: translateY(0) scaleY(1);
+                opacity: 1;
+            }
+        }
+
+        /* Particle Background */
+        #particles-js {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 0;
+        }
     </style>
 </head>
 
 <body class="bg-white">
     <!-- Navigation -->
-    <nav class="bg-white shadow-md py-4">
+    <nav class="bg-white shadow-md py-4 sticky top-0 z-50">
         <div class="container mx-auto px-4 flex justify-between items-center">
             <div class="flex items-center">
-                <div class="w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center mr-3">
-                    <span class="text-white font-bold text-lg">RP</span>
+                <div class="w-12 h-12  flex items-center justify-center mr-3 rotate-3d">
+                    <img class="w-full h-full object-contain" src="images/logo.png" alt="">
                 </div>
                 <div>
                     <h1 class="text-xl font-bold text-gray-800">RAJARANI</h1>
-                    <p class="text-xs text-gray-600">PROPERTIES PVT LTD</p>
-                    <p class="text-xs text-gray-500">Shaping Innovations</p>
+                    <p class="text-xs text-gray-600">REAL ESTATE</p>
                 </div>
             </div>
             <div class="hidden md:flex space-x-8">
-                <a href="#" class="text-gray-700 hover:text-blue-600 font-medium">HOME</a>
-                <a href="#" class="text-gray-700 hover:text-blue-600 font-medium">ABOUT US</a>
-                <a href="#" class="text-gray-700 hover:text-blue-600 font-medium">PROPERTIES</a>
-                <a href="#" class="text-gray-700 hover:text-blue-600 font-medium">GALLERY</a>
-                <a href="#" class="text-gray-700 hover:text-blue-600 font-medium">MEDIA</a>
-                <a href="#" class="text-gray-700 hover:text-blue-600 font-medium">CAREERS</a>
-                <a href="#" class="text-gray-700 hover:text-blue-600 font-medium">CONTACT US</a>
-                <a href="#" class="text-gray-700 hover:text-blue-600 font-medium">BLOG</a>
+                <a href="#"       class="text-gray-700 hover:text-blue-600 font-medium nav-link">HOME</a>
+                <a href="#about"    class="text-gray-700 hover:text-blue-600 font-medium nav-link">ABOUT US</a>
+                <a href="#commercial" class="text-gray-700 hover:text-blue-600 font-medium nav-link uppercase">Commercial Project</a>
+                <a href="#completed" class="text-gray-700 hover:text-blue-600 font-medium nav-link uppercase">Residential Project</a>
+                <a href="#footer" class="text-gray-700 hover:text-blue-600 font-medium nav-link">CONTACT US</a>
             </div>
             <div class="md:hidden">
                 <button id="mobileMenuBtn" class="text-gray-700">
@@ -59,31 +236,265 @@
     <div id="mobileMenu" class="hidden md:hidden bg-white shadow-lg">
         <div class="px-4 py-2 space-y-2">
             <a href="#" class="block text-gray-700 hover:text-blue-600 font-medium py-2">HOME</a>
-            <a href="#" class="block text-gray-700 hover:text-blue-600 font-medium py-2">ABOUT US</a>
-            <a href="#" class="block text-gray-700 hover:text-blue-600 font-medium py-2">PROPERTIES</a>
-            <a href="#" class="block text-gray-700 hover:text-blue-600 font-medium py-2">GALLERY</a>
-            <a href="#" class="block text-gray-700 hover:text-blue-600 font-medium py-2">MEDIA</a>
-            <a href="#" class="block text-gray-700 hover:text-blue-600 font-medium py-2">CAREERS</a>
-            <a href="#" class="block text-gray-700 hover:text-blue-600 font-medium py-2">CONTACT US</a>
-            <a href="#" class="block text-gray-700 hover:text-blue-600 font-medium py-2">BLOG</a>
+            <a href="#about" class="block text-gray-700 hover:text-blue-600 font-medium py-2">ABOUT US</a>
+            <a href="#commercial" class="block text-gray-700 hover:text-blue-600 font-medium py-2">Commercial Project</a>
+            <a href="#completed" class="block text-gray-700 hover:text-blue-600 font-medium py-2">Residential Project</a>
+            <a href="#footer" class="block text-gray-700 hover:text-blue-600 font-medium py-2">CONTACT US</a>
         </div>
     </div>
 
-    <!-- Hero Section -->
-    <section class="relative h-[80vh] bg-gradient-to-r from-blue-600 to-blue-800 text-white py-20">
+    <!-- Hero Section with 3D Effect -->
+    <section class="relative h-[80vh] bg-cover bg-center text-white py-20"
+        style="background-image: url('https://img.freepik.com/free-photo/four-people-protective-helmets-inspecting-building-area_259150-60517.jpg?ga=GA1.1.172258652.1750391369&semt=ais_hybrid&w=740');">
 
+        <!-- Dark overlay -->
+        <div class="absolute inset-0 bg-black bg-opacity-50 z-0"></div>
+
+        <div class="container mx-auto px-4 h-full flex items-center relative z-10">
+            <div class="w-full md:w-1/2">
+                <h1 class="text-5xl md:text-6xl font-bold mb-6 text-white">Building Dreams, <br>Creating Homes</h1>
+                <p class="text-xl mb-8 text-white">Experience luxury living with RAJARANI Properties - where quality
+                    meets innovation.</p>
+                <div class="flex space-x-4">
+                    <a href="#completed"
+                        class="bg-white text-blue-700 px-6 py-3 rounded-lg font-bold hover:bg-blue-100 transition duration-300 transform hover:scale-105">
+                        Explore Projects
+                    </a>
+                    <a href="#footer"
+                        class="border-2 border-white text-white px-6 py-3 rounded-lg font-bold hover:bg-white hover:bg-opacity-10 transition duration-300 transform hover:scale-105">
+                        Contact Us
+                    </a>
+                </div>
+            </div>
+        </div>
     </section>
 
-    <!-- 5 Reasons Section - Zigzag Format -->
-    <section class="py-16 bg-gray-50">
+
+
+
+    <!-- Complete Projects with 3D Cards -->
+    <section id="completed" class="py-16 bg-white">
         <div class="container mx-auto px-4">
-            <h2 class="text-4xl font-bold text-center text-gray-800 mb-16">5 REASONS TO CHOOSE RAJARANI</h2>
+            <h2 class="text-4xl font-bold text-center text-gray-800 mb-4">OUR PROJECTS</h2>
+            <div class="w-20 h-1 bg-blue-600 mx-auto mb-12"></div>
+
+            <div class="swiper featuredSwiper">
+                <div class="swiper-wrapper">
+                    <!-- Project 1 -->
+                    <div class="swiper-slide">
+                        <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+                            <div style="background-image: url(images/comlete2.jpg);"
+                                class="h-80 bg-gradient-to-br bg-cover bg-top from-blue-500 to-blue-700 flex items-center justify-center relative">
+
+                                <a href="https://maps.app.goo.gl/d2edHonA5j1XsLdF7" target="_blank"
+                                    class="absolute bottom-2 left-4 bg-red-600 text-white px-3 py-1 rounded text-sm font-bold flex items-center gap-2 shadow-lg hover:bg-red-700 transition">
+                                    <i class="fas fa-map-marker-alt text-white"></i> GOSANINUAGAON
+                                </a>
+
+                            </div>
+                            <div class="bg-gray-800 text-white p-6">
+                                <h3 class="text-lg font-bold mb-2">RAJA RANI RESIDENCY (GOSANINUAGAON)</h3>
+                                <p class="text-sm mb-2">2BHK & 3BHK Luxury Apartments</p>
+                                <p class="text-sm mb-2">GOSANINUAGAON</p>
+                                <div class="flex justify-between items-center">
+                                    <p class="text-lg font-bold">Price On Request</p>
+                                    <button class="bg-blue-600 text-white px-4 py-2 rounded text-sm font-bold">Know
+                                        More</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Project 2 -->
+                    <div class="swiper-slide">
+                        <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+                            <div style="background-image: url(images/nilaya\ \(2\).jpg);"
+                                class="h-80 bg-gradient-to-br bg-cover bg-right from-blue-500 to-blue-700 flex items-center justify-center relative">
+
+                                <a href="https://maps.app.goo.gl/wHSfV7PUki8yomsRA" target="_blank"
+                                    class="absolute bottom-2 left-4 bg-red-600 text-white px-3 py-1 rounded text-sm font-bold flex items-center gap-2 shadow-lg hover:bg-red-700 transition">
+                                    <i class="fas fa-map-marker-alt text-white"></i> GOSANINUAGAON
+                                </a>
+
+                            </div>
+                            <div class="bg-gray-800 text-white p-6">
+                                <h3 class="text-lg font-bold mb-2">RAJA RANI NILAYA (GOSANINUAGAON)</h3>
+                                <p class="text-sm mb-2">3BHK & 4BHK Luxury Apartments</p>
+                                <p class="text-sm mb-2">Rajeev Nagar Gosaninuagaon, Berhampur</p>
+                                <div class="flex justify-between items-center">
+                                    <p class="text-lg font-bold">Price On Request</p>
+                                    <button class="bg-blue-600 text-white px-4 py-2 rounded text-sm font-bold">Know
+                                        More</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Project 3 -->
+                    <div class="swiper-slide">
+                        <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+                            <div style="background-image: url(images/future1.jpg);"
+                                class="h-80 bg-gradient-to-br w-full bg-center bg-cover from-blue-400 to-blue-600 flex items-center justify-center relative">
+                                <a href="hhttps://maps.app.goo.gl/eqpWfDupf7sS7GM1A" target="_blank"
+                                    class="absolute bottom-2 left-4 bg-red-600 text-white px-3 py-1 rounded text-sm font-bold flex items-center gap-2 shadow-lg hover:bg-red-700 transition">
+                                    <i class="fas fa-map-marker-alt text-white"></i> Station Road
+                                </a>
+
+                            </div>
+                            <div class="bg-gray-800 text-white p-6">
+                                <h3 class="text-2xl font-bold mb-2 capitalize"> Raja Rani Field Phase - 2 (PUKUDIBANDHA)
+                                </h3>
+                                <p class="text-sm mb-2">Premium Lifestyle 2 & 3 BHK Apartments</p>
+                                <p class="text-sm mb-2">Pukidubandha, Berhampur</p>
+
+
+                                <p class="text-xs mb-4"></p>
+                                <div class="flex justify-between items-center">
+                                    <p class="text-lg font-bold">Price On Request</p>
+                                    <button class="bg-blue-600 text-white px-4 py-2 rounded text-sm font-bold">Know
+                                        More</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Project 4 -->
+                    <div class="swiper-slide">
+                        <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+                            <div style="background-image: url(images/complete1.jpg);"
+                                class="h-80 bg-gradient-to-br w-full bg-center bg-cover from-blue-400 to-blue-600 flex items-center  justify-center relative">
+                                <a href="https://www.google.com/maps?q=19.341404,84.766602" target="_blank"
+                                    class="absolute bottom-2 left-4 bg-red-600 text-white px-3 py-1 rounded text-sm font-bold flex items-center gap-2 shadow-lg hover:bg-red-700 transition">
+                                    <i class="fas fa-map-marker-alt text-white"></i> Aska Road Near
+                                </a>
+
+                            </div>
+                            <div class="bg-gray-800 text-white p-6">
+                                <h3 class="text-2xl font-bold mb-2 capitalize"> Raja Rani Dream Homes</h3>
+                                <p class="text-sm mb-2">Premium Lifestyle 2 & 3 BHK Apartments</p>
+                                <p class="text-sm mb-2">Aska Road, Berhampur</p>
+
+                                <div class="flex justify-between items-center">
+                                    <p class="text-lg font-bold">Price On Request</p>
+                                    <button class="bg-blue-600 text-white px-4 py-2 rounded text-sm font-bold">Know
+                                        More</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Project 5 -->
+                    <div class="swiper-slide">
+                        <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+                            <div style="background-image: url(images/greenvelly.jpg);"
+                                class="aspect-[6/3] relative w-full bg-cover bg-center flex items-center justify-center relative">
+
+                                <!-- Optional Map Link -->
+                                <a href="#" target="_blank"
+                                    class="absolute bottom-2 left-4 bg-red-600 text-white px-3 py-1 rounded text-sm font-bold flex items-center gap-2 shadow-lg hover:bg-red-700 transition">
+                                    <i class="fas fa-map-marker-alt text-white"></i> Ambapua
+                                </a>
+
+                            </div>
+                            <div class="bg-gray-800 text-white p-6">
+                                <h3 class="text-xl font-bold mb-2">Raja Rani Green Valley (AMBAPUA)</h3>
+                                <p class="text-sm mb-2">2BHK & 3BHK Luxury Apartments</p>
+                                <p class="text-sm mb-2">Ambapua, Berhampur</p>
+                                <div class="flex justify-between items-center">
+                                    <p class="text-lg font-bold">Price On Request</p>
+                                    <button class="bg-blue-600 text-white px-4 py-2 rounded text-sm font-bold">Know
+                                        More</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                </div>
+                <div class="swiper-button-next text-white"></div>
+                <div class="swiper-button-prev text-white"></div>
+                <div class="swiper-pagination"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- QVT Assured Section with 3D Cards -->
+    <section class="py-16 bg-gray-100">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <div class="inline-block">
+                    <h2 class="text-6xl font-bold text-gray-800 mb-2 qvt-title relative">
+                        <span class="relative z-10">RAJA RANI</span>
+                        <span class="absolute -bottom-1 left-0 w-full h-2 bg-blue-600 z-0 opacity-30"></span>
+                    </h2>
+                    <p class="text-xl text-gray-600 font-medium tracking-wider">ASSURED</p>
+                    <div class="flex justify-center space-x-4 mt-2">
+                        <span class="text-sm text-gray-500 font-medium">QUALITY</span>
+                        <span class="text-blue-600">•</span>
+                        <span class="text-sm text-gray-500 font-medium">TRANSPARENCY</span>
+                        <span class="text-blue-600">•</span>
+                        <span class="text-sm text-gray-500 font-medium">TIMELY DELIVERY</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+                <!-- Quality -->
+                <div
+                    class="bg-white p-8 rounded-lg shadow-lg transform transition-all duration-300 hover:-translate-y-2 hover:shadow-xl qvt-card border-t-4 border-blue-600">
+                    <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mb-6 mx-auto">
+                        <i class="fas fa-medal text-blue-600 text-2xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-center mb-4 text-gray-800">QUALITY</h3>
+                    <p class="text-center text-gray-600 leading-relaxed">Quality is the way of life at RAJARANI
+                        Properties.
+                        Using premium materials and innovative technology, we've set new benchmarks in how real estate
+                        is
+                        conceived, designed and built.</p>
+                </div>
+
+                <!-- Transparency -->
+                <div class="bg-white p-8 rounded-lg shadow-lg transform transition-all duration-300 hover:-translate-y-2 hover:shadow-xl qvt-card border-t-4 border-gray-700"
+                    style="transition-delay: 0.1s">
+                    <div class="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mb-6 mx-auto">
+                        <i class="fas fa-search-dollar text-gray-700 text-2xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-center mb-4 text-gray-800">TRANSPARENCY</h3>
+                    <p class="text-center text-gray-600 leading-relaxed">Trust and credibility drive our business.
+                        RAJARANI Properties is synonymous with transparency, ensuring customers can make fully informed
+                        decisions with complete confidence.</p>
+                </div>
+
+                <!-- Timely Delivery -->
+                <div class="bg-white p-8 rounded-lg shadow-lg transform transition-all duration-300 hover:-translate-y-2 hover:shadow-xl qvt-card border-t-4 border-blue-600"
+                    style="transition-delay: 0.2s">
+                    <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mb-6 mx-auto">
+                        <i class="fas fa-clock text-blue-600 text-2xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-center mb-4 text-gray-800">TIMELY DELIVERY</h3>
+                    <p class="text-center text-gray-600 leading-relaxed">Our unwavering commitment to project timelines
+                        sets us apart in the real estate industry. We honor our promises, delivering homes when we say
+                        we will.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5 Reasons Section - Zigzag Format with Animation -->
+    <section class="py-16 bg-gray-50 overflow-hidden">
+        <div class="container mx-auto px-4">
+            <h2 class="text-4xl font-bold text-center text-gray-800 mb-16 reason-title relative">
+                <span class="relative z-10">5 REASONS TO CHOOSE RAJARANI</span>
+                <span class="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-24 h-1 bg-blue-600 z-0"></span>
+            </h2>
 
             <!-- Customer Focus - Left -->
-            <div class="grid md:grid-cols-2 gap-12 items-center mb-16">
+            <div class="grid md:grid-cols-2 gap-12 items-center mb-16 reason-card" data-index="1">
                 <div class="flex items-start space-x-4">
-                    <div class="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center flex-shrink-0">
-                        <div class="w-8 h-8 bg-white rounded-full"></div>
+                    <div
+                        class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0 reason-icon">
+                        <i class="fas fa-user-friends text-blue-600 text-2xl"></i>
                     </div>
                     <div>
                         <h3 class="text-2xl font-bold text-gray-800 mb-3">Customer Focus</h3>
@@ -94,23 +505,25 @@
                     </div>
                 </div>
                 <div
-                    class="w-full h-64 bg-gradient-to-br overflow-hidden from-blue-100 to-blue-200 rounded-lg flex items-center justify-center">
-                    <img class="w-full h-full object-cover "
-                        src="https://i.pinimg.com/736x/05/f3/43/05f343318e93ec3568e0009dea4ea2b4.jpg" alt="">
+                    class="w-full h-64 bg-gradient-to-br overflow-hidden from-blue-100 to-blue-200 rounded-lg flex items-center justify-center parallax-bg">
+                    <img class="w-full h-full object-cover transform transition-transform duration-700 hover:scale-110"
+                        src="https://i.pinimg.com/736x/05/f3/43/05f343318e93ec3568e0009dea4ea2b4.jpg"
+                        alt="Happy family in living room">
                 </div>
             </div>
 
             <!-- Transparency - Right -->
-            <div class="grid md:grid-cols-2 gap-12 items-center mb-16">
+            <div class="grid md:grid-cols-2 gap-12 items-center mb-16 reason-card" data-index="2">
                 <div
-                    class="w-full h-64 bg-gradient-to-br from-blue-100 to-blue-200 rounded-lg flex items-center justify-center md:order-1">
-                    <img class="w-full h-full object-cover "
-                        src="https://i.pinimg.com/736x/bd/63/40/bd63408123944839840dc33e9d15d943.jpg" alt="">
-
+                    class="w-full h-64 bg-gradient-to-br from-blue-100 to-blue-200 rounded-lg flex items-center justify-center md:order-1 parallax-bg">
+                    <img class="w-full h-full object-cover transform transition-transform duration-700 hover:scale-110"
+                        src="https://i.pinimg.com/736x/bd/63/40/bd63408123944839840dc33e9d15d943.jpg"
+                        alt="Transparent documents">
                 </div>
                 <div class="flex items-start space-x-4 md:order-2">
-                    <div class="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center flex-shrink-0">
-                        <div class="w-8 h-8 bg-white rounded-full border-2 border-blue-600"></div>
+                    <div
+                        class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0 reason-icon">
+                        <i class="fas fa-search-dollar text-blue-600 text-2xl"></i>
                     </div>
                     <div>
                         <h3 class="text-2xl font-bold text-gray-800 mb-3">Transparency</h3>
@@ -122,10 +535,11 @@
             </div>
 
             <!-- Trust - Left -->
-            <div class="grid md:grid-cols-2 gap-12 items-center mb-16">
+            <div class="grid md:grid-cols-2 gap-12 items-center mb-16 reason-card" data-index="3">
                 <div class="flex items-start space-x-4">
-                    <div class="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center flex-shrink-0">
-                        <div class="w-6 h-6 bg-white rounded"></div>
+                    <div
+                        class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0 reason-icon">
+                        <i class="fas fa-handshake text-blue-600 text-2xl"></i>
                     </div>
                     <div>
                         <h3 class="text-2xl font-bold text-gray-800 mb-3">Trust</h3>
@@ -135,24 +549,25 @@
                     </div>
                 </div>
                 <div
-                    class="w-full h-64 bg-gradient-to-br from-blue-100 to-blue-200 rounded-lg flex items-center justify-center">
-                    <img class="w-full h-full object-cover "
-                        src="https://i.pinimg.com/736x/be/1c/ff/be1cff5cc27026e555bfea382918c33c.jpg" alt="">
+                    class="w-full h-64 bg-gradient-to-br from-blue-100 to-blue-200 rounded-lg flex items-center justify-center parallax-bg">
+                    <img class="w-full h-full object-cover transform transition-transform duration-700 hover:scale-110"
+                        src="https://i.pinimg.com/736x/be/1c/ff/be1cff5cc27026e555bfea382918c33c.jpg"
+                        alt="Handshake trust symbol">
                 </div>
             </div>
 
             <!-- Innovation - Right -->
-            <div class="grid md:grid-cols-2 gap-12 items-center mb-16">
+            <div class="grid md:grid-cols-2 gap-12 items-center mb-16 reason-card" data-index="4">
                 <div
-                    class="w-full h-64 bg-gradient-to-br from-blue-100 to-blue-200 rounded-lg flex items-center justify-center md:order-1">
-                    <img class="w-full h-full object-cover "
-                        src="https://i.pinimg.com/736x/f8/32/36/f8323628ac09a215bf29d7d532318e2b.jpg" alt="">
+                    class="w-full h-64 bg-gradient-to-br from-blue-100 to-blue-200 rounded-lg flex items-center justify-center md:order-1 parallax-bg">
+                    <img class="w-full h-full object-cover transform transition-transform duration-700 hover:scale-110"
+                        src="https://i.pinimg.com/736x/f8/32/36/f8323628ac09a215bf29d7d532318e2b.jpg"
+                        alt="Modern innovative building">
                 </div>
                 <div class="flex items-start space-x-4 md:order-2">
-                    <div class="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center flex-shrink-0">
-                        <div class="w-8 h-8 bg-white rounded-full flex items-center justify-center">
-                            <div class="w-2 h-2 bg-blue-600 rounded-full"></div>
-                        </div>
+                    <div
+                        class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0 reason-icon">
+                        <i class="fas fa-lightbulb text-blue-600 text-2xl"></i>
                     </div>
                     <div>
                         <h3 class="text-2xl font-bold text-gray-800 mb-3">Innovation</h3>
@@ -165,12 +580,11 @@
             </div>
 
             <!-- Sustainability - Left -->
-            <div class="grid md:grid-cols-2 gap-12 items-center">
+            <div class="grid md:grid-cols-2 gap-12 items-center reason-card" data-index="5">
                 <div class="flex items-start space-x-4">
-                    <div class="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center flex-shrink-0">
-                        <div class="w-8 h-6 bg-white rounded flex items-center justify-center">
-                            <div class="w-3 h-3 bg-blue-600 rounded-full"></div>
-                        </div>
+                    <div
+                        class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0 reason-icon">
+                        <i class="fas fa-leaf text-blue-600 text-2xl"></i>
                     </div>
                     <div>
                         <h3 class="text-2xl font-bold text-gray-800 mb-3">Sustainability</h3>
@@ -181,256 +595,151 @@
                     </div>
                 </div>
                 <div
-                    class="w-full h-64 bg-gradient-to-br from-blue-100 to-blue-200 rounded-lg flex items-center justify-center">
-                    <img class="w-full h-full object-cover "
-                        src="https://i.pinimg.com/736x/49/7b/de/497bde65654ebd191be0071d2b7ce182.jpg" alt="">
+                    class="w-full h-64 bg-gradient-to-br from-blue-100 to-blue-200 rounded-lg flex items-center justify-center parallax-bg">
+                    <img class="w-full h-full object-cover transform transition-transform duration-700 hover:scale-110"
+                        src="https://i.pinimg.com/736x/49/7b/de/497bde65654ebd191be0071d2b7ce182.jpg"
+                        alt="Green sustainable building">
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Company Stats -->
-    <section class="py-16 bg-white">
+    <!-- Font Awesome CSS -->
+
+    <!-- Company Stats with 3D Animation -->
+    <section id="about" class="py-20 bg-white">
         <div class="container mx-auto px-4">
-            <h2 class="text-4xl font-bold text-center text-gray-800 mb-4">RAJARANI PROPERTIES</h2>
+            <h2 class="text-4xl font-bold text-center text-gray-800 mb-4">RAJA RANI GROUP</h2>
             <div class="w-20 h-1 bg-blue-600 mx-auto mb-12"></div>
 
-            <div class="grid md:grid-cols-4 gap-8 mb-12">
+            <!-- Stats Section -->
+            <div class="grid md:grid-cols-4 gap-10 mb-16">
                 <div class="text-center">
-                    <div class="w-24 h-24 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-4">
-                        <div class="w-12 h-12 bg-white rounded-full flex items-center justify-center">
-                            <div class="w-6 h-6 bg-blue-600 rounded"></div>
-                        </div>
+                    <div
+                        class="w-20 h-20 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg animate-bounce-slow">
+                        <i class="fas fa-trophy text-blue-600 text-3xl"></i>
                     </div>
-                    <div class="border-t-2 border-dashed border-blue-300 pt-4">
-                        <h3 class="text-2xl font-bold text-gray-800">17 YEARS OF</h3>
-                        <p class="text-lg font-semibold text-gray-600">EXCELLENCE</p>
-                    </div>
+                    <h3 class="text-3xl font-bold text-gray-900 counter" data-target="15">15</h3>
+                    <p class="text-lg font-medium text-gray-600 mt-1">YEARS OF EXCELLENCE</p>
                 </div>
 
                 <div class="text-center">
-                    <div class="w-24 h-24 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-4">
-                        <div class="w-12 h-12 bg-white rounded-full flex items-center justify-center">
-                            <div class="grid grid-cols-2 gap-1">
-                                <div class="w-2 h-3 bg-blue-600 rounded-sm"></div>
-                                <div class="w-2 h-3 bg-blue-600 rounded-sm"></div>
-                                <div class="w-2 h-2 bg-blue-600 rounded-sm"></div>
-                                <div class="w-2 h-2 bg-blue-600 rounded-sm"></div>
-                            </div>
-                        </div>
+                    <div
+                        class="w-20 h-20 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg animate-bounce-slow delay-150">
+                        <i class="fas fa-city text-blue-600 text-3xl"></i>
                     </div>
-                    <div class="border-t-2 border-dashed border-blue-300 pt-4">
-                        <h3 class="text-2xl font-bold text-gray-800">35.13 MILLION SQFT</h3>
-                        <p class="text-lg font-semibold text-gray-600">PORTFOLIO</p>
-                    </div>
+                    <h3 class="text-3xl font-bold text-gray-900">STRONG</h3>
+                    <p class="text-lg font-medium text-gray-600 mt-1">FOUNDATION IN ODISHA</p>
                 </div>
 
                 <div class="text-center">
-                    <div class="w-24 h-24 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-4">
-                        <div class="w-12 h-12 bg-white rounded-full flex items-center justify-center">
-                            <div class="flex space-x-1">
-                                <div class="w-2 h-2 bg-blue-600 rounded-full"></div>
-                                <div class="w-2 h-2 bg-blue-600 rounded-full"></div>
-                            </div>
-                        </div>
+                    <div
+                        class="w-20 h-20 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg animate-bounce-slow delay-300">
+                        <i class="fas fa-stopwatch text-blue-600 text-3xl"></i>
                     </div>
-                    <div class="border-t-2 border-dashed border-blue-300 pt-4">
-                        <h3 class="text-2xl font-bold text-gray-800">12000</h3>
-                        <p class="text-lg font-semibold text-gray-600">HAPPY RESIDENTS</p>
-                    </div>
+                    <h3 class="text-3xl font-bold text-gray-900">TIMELY</h3>
+                    <p class="text-lg font-medium text-gray-600 mt-1">DELIVERY</p>
                 </div>
 
                 <div class="text-center">
-                    <div class="w-24 h-24 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-4">
-                        <div class="w-12 h-12 bg-white rounded-full flex items-center justify-center">
-                            <div class="grid grid-cols-3 gap-1">
-                                <div class="w-1 h-1 bg-blue-600 rounded-full"></div>
-                                <div class="w-1 h-1 bg-blue-600 rounded-full"></div>
-                                <div class="w-1 h-1 bg-blue-600 rounded-full"></div>
-                                <div class="w-1 h-1 bg-blue-600 rounded-full"></div>
-                                <div class="w-1 h-1 bg-blue-600 rounded-full"></div>
-                                <div class="w-1 h-1 bg-blue-600 rounded-full"></div>
-                            </div>
-                        </div>
+                    <div
+                        class="w-20 h-20 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg animate-bounce-slow delay-500">
+                        <i class="fas fa-heart text-blue-600 text-3xl"></i>
                     </div>
-                    <div class="border-t-2 border-dashed border-blue-300 pt-4">
-                        <h3 class="text-2xl font-bold text-gray-800">15</h3>
-                        <p class="text-lg font-semibold text-gray-600">PROJECTS</p>
-                    </div>
+                    <h3 class="text-3xl font-bold text-gray-900 counter" data-target="1000">10000+</h3>
+                    <p class="text-lg font-medium text-gray-600 mt-1">TRUSTED BY THOUSANDS</p>
                 </div>
             </div>
 
-            <div class="max-w-4xl mx-auto text-gray-600 text-sm leading-relaxed space-y-4">
-                <p>Founded in 2006 by the Parupati Brothers, RAJARANI Properties is a name to reckon with in the real
-                    estate space. Since more than a decade we have been reinventing the standards of residential living
-                    in the form of gated community apartments, villas and commercial IT/ITEs spaces. We believe that a
-                    well-conceived real estate space has the power to transform lives and a smart design can impact the
-                    way we engage with our surroundings.</p>
-
-                <p>At the helm, we have four visionaries Mr. P. Jayachandra Reddy, Mr. P. Mahender Reddy, Mr. P.
-                    Sreenivas Reddy and Mr. P. Sujith Reddy whose innovative ideas and foresight have helped in their
-                    quest to build a real estate company par excellence. With multiple awards and accolades, our
-                    projects have always been appreciated as top-notch in terms of quality, specifications and
-                    standards. With a penchant for being the best among the equals, we intend to raise the bar in Indian
-                    realty with our competitive prices and timely delivery. RAJARANI Properties has over the years
-                    carved a niche for itself in the ever-growing real estate sector by creating new benchmarks in
-                    aesthetics and design to offer an exclusive experience in the realty spaces.</p>
+            <!-- About Section -->
+            <div class="max-w-4xl mx-auto text-gray-700 text-[15px] leading-relaxed mb-16 px-4 md:px-0">
+                <p class="mb-4">
+                    Founded in 2008, RAJA RANI GROUP began its journey with a vision to transform the real estate
+                    landscape with honest practices and high-quality construction. What started as a modest venture has
+                    now evolved into a well-recognized real estate enterprise, driven by dedication, teamwork, and a
+                    deep understanding of customer needs.
+                </p>
+                <p>
+                    Over the past 15+ years RAJA RANI GROUP has built a strong foundation in Odisha, particularly in the
+                    regions of Berhampur and beyond. The company's consistency in maintaining transparency and ensuring
+                    high construction standards has made us a household name among property seekers and investors.
+                </p>
             </div>
+
+            <!-- Mission Vision Values -->
+            <div class="grid md:grid-cols-3 gap-8 text-gray-800 px-4 md:px-0">
+                <!-- Our Mission -->
+                <div class="bg-blue-50 p-6 rounded-xl shadow-md hover:shadow-lg transition duration-300">
+                    <div class="flex items-center mb-3">
+                        <i class="fas fa-bullseye text-blue-600 text-lg mr-3"></i>
+                        <h3 class="text-xl font-bold text-blue-700">Our Mission</h3>
+                    </div>
+                    <ul class="list-disc list-inside text-sm space-y-1">
+                        <li>Deliver high-quality real estate solutions with customer-first approach.</li>
+                        <li>Create vibrant, inclusive, and sustainable communities.</li>
+                        <li>Adopt modern construction practices and eco-friendly designs.</li>
+                        <li>Maintain ethical principles in every step of development.</li>
+                        <li>Transform urban landscapes with innovation and responsibility.</li>
+                    </ul>
+                </div>
+
+                <!-- Our Vision -->
+                <div class="bg-blue-50 p-6 rounded-xl shadow-md hover:shadow-lg transition duration-300">
+                    <div class="flex items-center mb-3">
+                        <i class="fas fa-eye text-blue-600 text-lg mr-3"></i>
+                        <h3 class="text-xl font-bold text-blue-700">Our Vision</h3>
+                    </div>
+                    <ul class="list-disc list-inside text-sm space-y-1">
+                        <li>Become one of India’s most admired and trusted real estate companies.</li>
+                        <li>Deliver landmark projects that define luxury and quality.</li>
+                        <li>Uphold transparency and long-term client relationships.</li>
+                        <li>Continuously innovate in design, planning, and execution.</li>
+                        <li>Lead with integrity in a dynamic and competitive market.</li>
+                    </ul>
+                </div>
+
+
+                <!-- Core Values -->
+                <div class="bg-blue-50 p-6 rounded-xl shadow-md hover:shadow-lg transition duration-300">
+                    <div class="flex items-center mb-3">
+                        <i class="fas fa-gem text-blue-600 text-lg mr-3"></i>
+                        <h3 class="text-xl font-bold text-blue-700">Core Values</h3>
+                    </div>
+                    <ul class="list-disc list-inside text-sm space-y-1 mt-2">
+                        <li><strong>Integrity:</strong> We conduct every activity with honesty, fairness, and
+                            accountability.</li>
+                        <li><strong>Customer Focus:</strong> Our work revolves around understanding and fulfilling
+                            customer dreams.</li>
+                        <li><strong>Quality:</strong> We maintain the highest standards in materials and workmanship
+                            across all projects.</li>
+                        <li><strong>Innovation:</strong> We adopt the latest technology and design thinking to create
+                            modern, efficient spaces.</li>
+                        <li><strong>Commitment:</strong> We are dedicated to on-time delivery and exceeding customer
+                            satisfaction at every step.</li>
+                    </ul>
+                </div>
+            </div>
+
         </div>
     </section>
 
-    <!-- QVT Assured Section -->
-    <section class="py-16 bg-gray-100">
-        <div class="container mx-auto px-4">
-            <div class="text-center mb-12">
-                <div class="inline-block">
-                    <h2 class="text-6xl font-bold text-gray-800 mb-2">QVT</h2>
-                    <p class="text-xl text-gray-600 font-medium">ASSURED</p>
-                    <p class="text-sm text-gray-500 mt-2">QUALITY | TRANSPARENCY | TIMELY DELIVERY</p>
-                </div>
-            </div>
 
-            <div class="grid md:grid-cols-3 gap-8">
-                <!-- Quality -->
-                <div class="bg-blue-600 text-white p-8 rounded-lg">
-                    <div class="w-16 h-16 bg-white rounded-full flex items-center justify-center mb-6 mx-auto">
-                        <div class="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center">
-                            <div class="w-4 h-4 bg-white rounded-full"></div>
-                        </div>
-                    </div>
-                    <h3 class="text-2xl font-bold text-center mb-4">QUALITY</h3>
-                    <p class="text-center text-sm leading-relaxed">Quality is the way of life at RAJARANI Properties.
-                        Using quality products and services integrated with technology, we have established a benchmark
-                        in the way real estate is conceived, designed and built.</p>
-                </div>
 
-                <!-- Transparency -->
-                <div class="bg-gray-700 text-white p-8 rounded-lg">
-                    <div class="w-16 h-16 bg-white rounded-full flex items-center justify-center mb-6 mx-auto">
-                        <div class="w-8 h-8 bg-gray-700 rounded-full flex items-center justify-center">
-                            <div class="w-4 h-4 bg-white rounded-full"></div>
-                        </div>
-                    </div>
-                    <h3 class="text-2xl font-bold text-center mb-4">TRANSPARENCY</h3>
-                    <p class="text-center text-sm leading-relaxed">Real estate business is driven by trust and
-                        credibility. RAJARANI Properties is a name synonymous with quality, transparency and timeliness
-                        thus making sure that consumers can make an informed decision.</p>
-                </div>
 
-                <!-- Timely Delivery -->
-                <div class="bg-blue-600 text-white p-8 rounded-lg">
-                    <div class="w-16 h-16 bg-white rounded-full flex items-center justify-center mb-6 mx-auto">
-                        <div class="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center">
-                            <div class="w-4 h-4 bg-white rounded"></div>
-                        </div>
-                    </div>
-                    <h3 class="text-2xl font-bold text-center mb-4">TIMELY DELIVERY</h3>
-                    <p class="text-center text-sm leading-relaxed">Our focus remains on the timely delivery of projects
-                        to customers and keeps us as the flag bearers in the real estate industry.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Featured Projects -->
-    <section class="py-16 bg-white">
-        <div class="container mx-auto px-4">
-            <h2 class="text-4xl font-bold text-center text-gray-800 mb-4">FEATURED PROJECTS</h2>
-            <div class="w-20 h-1 bg-blue-600 mx-auto mb-12"></div>
-
-            <div class="swiper featuredSwiper">
-                <div class="swiper-wrapper">
-                    <!-- Project 1 -->
-                    <div class="swiper-slide">
-                        <div class="bg-white rounded-lg shadow-lg overflow-hidden">
-                            <div
-                                class="h-64 bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center relative">
-                                <div class="text-white text-center">
-                                    <div class="grid grid-cols-3 gap-2 mb-4">
-                                        <div class="w-6 h-16 bg-white opacity-80 rounded"></div>
-                                        <div class="w-6 h-20 bg-white opacity-90 rounded"></div>
-                                        <div class="w-6 h-18 bg-white rounded"></div>
-                                    </div>
-                                    <p class="text-xs">Residential Complex</p>
-                                </div>
-                                <div class="absolute top-4 left-4 bg-blue-700 text-white px-3 py-1 rounded text-sm">
-                                    BIG SAVINGS<br>BIGGER SMILE
-                                </div>
-                                <div
-                                    class="absolute top-4 right-4 bg-white text-blue-600 px-3 py-1 rounded text-sm font-bold">
-                                    PAY 50% NOW<br>REMAINING 50% ON HANDOVER
-                                </div>
-                            </div>
-                            <div class="bg-gray-800 text-white p-6">
-                                <h3 class="text-lg font-bold mb-2">WELCOME TO LIFE IN ABUNDANCE</h3>
-                                <p class="text-sm mb-2">Premium Lifestyle 2 & 3 BHK Apartments</p>
-                                <p class="text-sm mb-2">Narsingi, Hyderabad</p>
-                                <p class="text-xs mb-4">TS RERA Reg No.: P02400002487</p>
-                                <div class="flex justify-between items-center">
-                                    <p class="text-lg font-bold">₹ 10149 per sqft</p>
-                                    <button class="bg-blue-600 text-white px-4 py-2 rounded text-sm font-bold">Know
-                                        More</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Project 2 -->
-                    <div class="swiper-slide">
-                        <div class="bg-white rounded-lg shadow-lg overflow-hidden">
-                            <div
-                                class="h-64 bg-gradient-to-br from-blue-500 to-blue-700 flex items-center justify-center relative">
-                                <div class="text-white text-center">
-                                    <div class="grid grid-cols-4 gap-1 mb-4">
-                                        <div class="w-4 h-20 bg-white opacity-80 rounded"></div>
-                                        <div class="w-4 h-24 bg-white opacity-90 rounded"></div>
-                                        <div class="w-4 h-22 bg-white rounded"></div>
-                                        <div class="w-4 h-18 bg-white opacity-85 rounded"></div>
-                                    </div>
-                                    <p class="text-xs">Luxury Apartments</p>
-                                </div>
-                                <div
-                                    class="absolute top-4 left-4 bg-red-600 text-white px-3 py-1 rounded text-sm font-bold">
-                                    Newly Launched
-                                </div>
-                                <div
-                                    class="absolute bottom-4 right-4 bg-yellow-500 text-black px-3 py-1 rounded-full text-sm font-bold">
-                                    MANCHREVULA
-                                </div>
-                            </div>
-                            <div class="bg-gray-800 text-white p-6">
-                                <h3 class="text-lg font-bold mb-2">A CANVAS TO LIMITLESS LUXURY</h3>
-                                <p class="text-sm mb-2">3BHK & 4BHK Luxury Apartments</p>
-                                <p class="text-sm mb-2">Manchrevula, Hyderabad</p>
-                                <p class="text-xs mb-4">TS RERA Reg No.: P02400007500</p>
-                                <div class="flex justify-between items-center">
-                                    <p class="text-lg font-bold">Price On Request</p>
-                                    <button class="bg-blue-600 text-white px-4 py-2 rounded text-sm font-bold">Know
-                                        More</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="swiper-button-next"></div>
-                <div class="swiper-button-prev"></div>
-                <div class="swiper-pagination"></div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Commercial Projects -->
-    <section class="py-16 bg-gray-50">
+    <!-- Commercial  -->
+    <section id="commercial" class="py-16 bg-gray-50">
         <div class="container mx-auto px-4">
             <div class="grid md:grid-cols-3 gap-8">
                 <!-- Summit -->
-                <div class="bg-white rounded-lg shadow-lg overflow-hidden border-2 border-blue-200">
+                <div class="bg-white rounded-lg shadow-lg overflow-hidden border-2 border-blue-200 commercial-card">
                     <div class="bg-blue-600 text-white text-center py-2">
                         <span class="font-bold">Commercial</span>
                     </div>
                     <div class="h-64 bg-gradient-to-br from-blue-300 to-blue-500 flex items-center justify-center">
                         <div class="text-white text-center">
-                            <div class="w-20 h-32 bg-white opacity-90 rounded mx-auto mb-2"></div>
+                            <div
+                                class="w-20 h-32 bg-white opacity-90 rounded mx-auto mb-2 transform transition-all duration-500 hover:rotate-y-180">
+                            </div>
                             <p class="text-xs">Office Building</p>
                         </div>
                     </div>
@@ -441,19 +750,23 @@
                         <p class="text-xs text-center mb-4">2.17 acres | 5,00,000 Sq.Ft. of SBA | 3 basements + G + 11
                             Office Floors</p>
                         <div class="text-center">
-                            <button class="bg-blue-600 text-white px-6 py-2 rounded font-bold">Know More</button>
+                            <button
+                                class="bg-blue-600 text-white px-6 py-2 rounded font-bold hover:bg-blue-700 transition transform hover:scale-105">Know
+                                More</button>
                         </div>
                     </div>
                 </div>
 
                 <!-- Paradigm -->
-                <div class="bg-white rounded-lg shadow-lg overflow-hidden border-2 border-blue-200">
+                <div class="bg-white rounded-lg shadow-lg overflow-hidden border-2 border-blue-200 commercial-card">
                     <div class="bg-blue-600 text-white text-center py-2">
                         <span class="font-bold">Commercial</span>
                     </div>
                     <div class="h-64 bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center">
                         <div class="text-white text-center">
-                            <div class="w-24 h-28 bg-white opacity-90 rounded mx-auto mb-2"></div>
+                            <div
+                                class="w-24 h-28 bg-white opacity-90 rounded mx-auto mb-2 transform transition-all duration-500 hover:rotate-y-180">
+                            </div>
                             <p class="text-xs">Modern Office Complex</p>
                         </div>
                     </div>
@@ -465,21 +778,26 @@
                         <p class="text-xs text-center mb-4">2.63 acres | 1.05 million Sq. ft. of SBA | 5 basements + G +
                             18 Office Floors</p>
                         <div class="text-center">
-                            <button class="bg-blue-600 text-white px-6 py-2 rounded font-bold">Know More</button>
+                            <button
+                                class="bg-blue-600 text-white px-6 py-2 rounded font-bold hover:bg-blue-700 transition transform hover:scale-105">Know
+                                More</button>
                         </div>
                     </div>
                 </div>
 
                 <!-- West Avenue -->
-                <div class="bg-white rounded-lg shadow-lg overflow-hidden border-2 border-blue-200">
+                <div class="bg-white rounded-lg shadow-lg overflow-hidden border-2 border-blue-200 commercial-card">
                     <div class="bg-blue-600 text-white text-center py-2">
                         <span class="font-bold">Commercial</span>
                     </div>
                     <div class="h-64 bg-gradient-to-br from-blue-500 to-blue-700 flex items-center justify-center">
                         <div class="text-white text-center">
                             <div class="grid grid-cols-2 gap-2">
-                                <div class="w-10 h-24 bg-white opacity-90 rounded"></div>
-                                <div class="w-10 h-28 bg-white opacity-95 rounded"></div>
+                                <div
+                                    class="w-10 h-24 bg-white opacity-90 rounded transform transition-all duration-500 hover:translate-y-[-10px]">
+                                </div>
+                                <div class="w-10 h-28 bg-white opacity-95 rounded transform transition-all duration-500 hover:translate-y-[-10px]"
+                                    style="transition-delay: 0.2s"></div>
                             </div>
                             <p class="text-xs mt-2">Twin Towers</p>
                         </div>
@@ -492,7 +810,9 @@
                         <p class="text-xs text-center mb-4">7.45 acres | 3.6 million Sq.Ft. of SBA | 5 basements + 3
                             suits + 25 Office Floors</p>
                         <div class="text-center">
-                            <button class="bg-blue-600 text-white px-6 py-2 rounded font-bold">Know More</button>
+                            <button
+                                class="bg-blue-600 text-white px-6 py-2 rounded font-bold hover:bg-blue-700 transition transform hover:scale-105">Know
+                                More</button>
                         </div>
                     </div>
                 </div>
@@ -506,191 +826,257 @@
             <h2 class="text-4xl font-bold text-center text-gray-800 mb-4">OUR DIRECTORS</h2>
             <div class="w-20 h-1 bg-blue-600 mx-auto mb-12"></div>
 
-            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-                <!-- ID Card with Image -->
+            <div class="grid md:grid-cols-2 lg:grid-cols-5 overflow-x-auto gap-8">
+
+                <!-- Director 1 -->
                 <div class="max-w-xs mx-auto bg-white shadow-xl rounded-xl overflow-hidden border border-gray-200">
                     <!-- Profile Image -->
                     <div class="bg-gradient-to-br from-blue-400 to-blue-600 p-4 flex justify-center">
-                        <div class="w-full h-80 overflow-hidden ">
-                            <img src="images/deelip sir.jpg" alt=""
-                                class="w-full h-full object-cover">
+                        <div class="w-full h-80 sm:h-60 overflow-hidden ">
+                            <img src="images/sir pic.jpg" alt="" class="w-full h-full object-cover ">
                         </div>
                     </div>
 
                     <!-- Details -->
                     <div class="p-4 text-center">
-                        <h3 class="text-lg font-bold text-gray-800">Deelip</h3>
-                        <p class="text-blue-600 font-semibold text-sm">Managing Director</p>
+                        <h3 class="text-lg font-bold text-gray-800">MR. UMASHANKAR PANIGRAHY</h3>
+                        <p class="text-blue-600 font-semibold text-sm">Managing Partner & <br> Managing Directors Raja
+                            Rani Homes </p>
                         <hr class="my-2 border-gray-200">
-                        <p class="text-gray-600 text-xs">Visionary leader with extensive experience in real estate
-                            development and strategic planning.</p>
+                        <p class="text-gray-600 text-xs">A visionary leader and the cornerstone of RAJA RANI GROUP,
+                            MR.PANIGRAHY brings
+                            over two decades of experience in the real estate industry. </p>
                     </div>
                 </div>
-
 
                 <!-- Director 2 -->
                 <div class="max-w-xs mx-auto bg-white shadow-xl rounded-xl overflow-hidden border border-gray-200">
                     <!-- Profile Image -->
                     <div class="bg-gradient-to-br from-blue-400 to-blue-600 p-4 flex justify-center">
-                        <div class="w-full h-80 overflow-hidden ">
-                            <img src="images/pradeep sir.jpg" alt=""
-                                class="w-full h-full object-cover">
+                        <div class="w-full h-80 sm:h-60 overflow-hidden ">
+                            <img src="images/pradeep sir.jpg" alt="" class="w-full h-full object-cover ">
                         </div>
                     </div>
 
                     <!-- Details -->
                     <div class="p-4 text-center">
-                        <h3 class="text-lg font-bold text-gray-800">Pradeep</h3>
-                        <p class="text-blue-600 font-semibold text-sm">Managing Director</p>
+                        <h3 class="text-lg font-bold text-gray-800">MR.PRADEEP
+                            KUMAR PATRO</h3>
+                        <p class="text-blue-600 font-semibold text-sm">Partner <br> Raja Rani Real State</p>
                         <hr class="my-2 border-gray-200">
-                        <p class="text-gray-600 text-xs">Visionary leader with extensive experience in real estate
-                            development and strategic planning.</p>
+                        <p class="text-gray-600 text-xs">Known for his precision and professionalism, MR.PATRO
+                            contributes
+                            significantly to project planning and financial management.</p>
                     </div>
                 </div>
 
-                <!-- Director 3 -->
-               <div class="max-w-xs mx-auto bg-white shadow-xl rounded-xl overflow-hidden border border-gray-200">
-                    <!-- Profile Image -->
-                    <div class="bg-gradient-to-br from-blue-400 to-blue-600 p-4 flex justify-center">
-                        <div class="w-full h-80 overflow-hidden ">
-                            <img src="images/rama sir.jpg" alt=""
-                                class="w-full h-full object-cover">
-                        </div>
-                    </div>
-
-                    <!-- Details -->
-                    <div class="p-4 text-center">
-                        <h3 class="text-lg font-bold text-gray-800">Rama</h3>
-                        <p class="text-blue-600 font-semibold text-sm">Managing Director</p>
-                        <hr class="my-2 border-gray-200">
-                        <p class="text-gray-600 text-xs">Visionary leader with extensive experience in real estate
-                            development and strategic planning.</p>
-                    </div>
-                </div>
-
-                <!-- Director 4 -->
+                <!-- ID Card with Image -->
                 <div class="max-w-xs mx-auto bg-white shadow-xl rounded-xl overflow-hidden border border-gray-200">
                     <!-- Profile Image -->
                     <div class="bg-gradient-to-br from-blue-400 to-blue-600 p-4 flex justify-center">
-                        <div class="w-full h-80 overflow-hidden ">
-                            <img src="images/sir pic.jpg" alt=""
-                                class="w-full h-full object-cover">
+                        <div class="w-full h-80 sm:h-60 overflow-hidden ">
+                            <img src="images/deelip sir.jpg" alt="" class="w-full h-full object-cover ">
                         </div>
                     </div>
 
                     <!-- Details -->
                     <div class="p-4 text-center">
-                        <h3 class="text-lg font-bold text-gray-800">SIR</h3>
-                        <p class="text-blue-600 font-semibold text-sm">Managing Director</p>
+                        <h3 class="text-lg font-bold text-gray-800">MR. DEELIP KUMAR PATRO</h3>
+                        <p class="text-blue-600 font-semibold text-sm"> Director Raja Rani PTV LTD</p>
                         <hr class="my-2 border-gray-200">
-                        <p class="text-gray-600 text-xs">Visionary leader with extensive experience in real estate
-                            development and strategic planning.</p>
+                        <p class="text-gray-600 text-xs">MR.PATRO is a seasoned professional with a sharp focus on
+                            project execution
+                            and customer relations.</p>
+                    </div>
+                </div>
+
+
+
+                <!-- Director 3 -->
+                <div class="max-w-xs mx-auto bg-white shadow-xl rounded-xl overflow-hidden border border-gray-200">
+                    <!-- Profile Image -->
+                    <div class="bg-gradient-to-br from-blue-400 to-blue-600 p-4 flex justify-center">
+                        <div class="w-full h-80 sm:h-60 overflow-hidden ">
+                            <img src="images/rama sir.jpg" alt="" class="w-full h-full object-cover ">
+                        </div>
+                    </div>
+
+                    <!-- Details -->
+                    <div class="p-4 text-center">
+                        <h3 class="text-lg font-bold text-gray-800">MR.SAROJ KUMAR SAHU</h3>
+                        <p class="text-blue-600 font-semibold text-sm">Partner <br> Raja Rani Real Estate</p>
+                        <hr class="my-2 border-gray-200">
+                        <p class="text-gray-600 text-xs">A dynamic individual with an eye for opportunity and market
+                            trends, MR.SAHU plays
+                            a key role in business development and client engagement.</p>
+                    </div>
+                </div>
+
+
+
+                <!-- Director 5 -->
+                <div class="max-w-xs mx-auto bg-white shadow-xl rounded-xl overflow-hidden border border-gray-200">
+                    <!-- Profile Image -->
+                    <div class="bg-gradient-to-br from-blue-400 to-blue-600 p-4 flex justify-center">
+                        <div class="w-full h-80 sm:h-60 overflow-hidden ">
+                            <img src="images/bharati madam.jpg" alt="" class="w-full h-full object-cover ">
+                        </div>
+                    </div>
+
+                    <!-- Details -->
+                    <div class="p-4 text-center">
+                        <h3 class="text-lg font-bold text-gray-800">MRS.BHARATI PANIGRAHY</h3>
+                        <p class="text-blue-600 font-semibold text-sm">Partner <br> Raja Rani Real Estate </p>
+                        <hr class="my-2 border-gray-200">
+                        <p class="text-gray-600 text-xs">MRS.PANIGRAHY brings a unique perspective to the team,
+                            emphasizing design
+                            excellence and community impact.</p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
+
     <!-- Footer -->
-    <footer class="bg-gray-800 text-white py-12">
+    <footer id="footer" class="bg-gray-800 text-white py-12">
         <div class="container mx-auto px-4">
             <div class="grid md:grid-cols-4 gap-8">
+
                 <!-- Company Info -->
                 <div>
                     <div class="flex items-center mb-4">
-                        <div class="w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center mr-3">
-                            <span class="text-white font-bold text-lg">RP</span>
+                        <div class="w-12 h-12  rounded-full flex items-center justify-center mr-3 rotate-3d">
+                            <img class="w-10 h-12" src="images/logo.png" alt="">
                         </div>
                         <div>
                             <h3 class="text-xl font-bold">RAJARANI</h3>
-                            <p class="text-xs text-gray-400">PROPERTIES PVT LTD</p>
+                            <p class="text-xs text-gray-400">REAL ESATAE</p>
                         </div>
                     </div>
-                    <p class="text-gray-400 text-sm mb-4">Shaping innovations in real estate with quality, transparency,
-                        and timely delivery since 2006.</p>
+                    <p class="text-gray-400 text-sm mb-4">
+                        Shaping innovations in real estate with quality, transparency, and timely delivery since 2006.
+                    </p>
                     <div class="flex space-x-4">
-                        <div class="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center">
-                            <span class="text-white text-xs">f</span>
-                        </div>
-                        <div class="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center">
-                            <span class="text-white text-xs">t</span>
-                        </div>
-                        <div class="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center">
-                            <span class="text-white text-xs">in</span>
-                        </div>
-                        <div class="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center">
-                            <span class="text-white text-xs">ig</span>
-                        </div>
+                        <!-- Facebook -->
+                        <a href="https://www.facebook.com/profile.php?id=100088773827960" target="_blank">
+                            <div
+                                class="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center transform transition-all duration-300 hover:scale-110">
+                                <i class="fab fa-facebook-f text-white text-sm"></i>
+                            </div>
+                        </a>
+
+                        <!-- Instagram -->
+                        <a href="https://www.instagram.com/raja_rani_homes" target="_blank">
+                            <div
+                                class="w-8 h-8 bg-pink-500 rounded-full flex items-center justify-center transform transition-all duration-300 hover:scale-110">
+                                <i class="fab fa-instagram text-white text-sm"></i>
+                            </div>
+                        </a>
                     </div>
+
                 </div>
 
                 <!-- Quick Links -->
                 <div>
                     <h4 class="text-lg font-bold mb-4">Quick Links</h4>
-                    <ul class="space-y-2">
-                        <li><a href="#" class="text-gray-400 hover:text-white text-sm">Home</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white text-sm">About Us</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white text-sm">Properties</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white text-sm">Gallery</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white text-sm">Media</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white text-sm">Careers</a></li>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">Home</a>
+                        </li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">About
+                                Us</a></li>
+                        <li><a href="#"
+                                class="text-gray-400 hover:text-white transition-colors duration-300">Properties</a>
+                        </li>
+                        <li><a href="#"
+                                class="text-gray-400 hover:text-white transition-colors duration-300">Gallery</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">Media</a>
+                        </li>
+                        <li><a href="#"
+                                class="text-gray-400 hover:text-white transition-colors duration-300">Careers</a></li>
                     </ul>
                 </div>
 
-                <!-- Properties -->
+                <!-- Property Types -->
                 <div>
                     <h4 class="text-lg font-bold mb-4">Properties</h4>
-                    <ul class="space-y-2">
-                        <li><a href="#" class="text-gray-400 hover:text-white text-sm">Residential</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white text-sm">Commercial</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white text-sm">Villas</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white text-sm">Apartments</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white text-sm">Office Spaces</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white text-sm">Retail Spaces</a></li>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#"
+                                class="text-gray-400 hover:text-white transition-colors duration-300">Residential</a>
+                        </li>
+                        <li><a href="#"
+                                class="text-gray-400 hover:text-white transition-colors duration-300">Commercial</a>
+                        </li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">Villas</a>
+                        </li>
+                        <li><a href="#"
+                                class="text-gray-400 hover:text-white transition-colors duration-300">Apartments</a>
+                        </li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">Office
+                                Spaces</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">Retail
+                                Spaces</a></li>
                     </ul>
                 </div>
 
                 <!-- Contact Info -->
                 <div>
                     <h4 class="text-lg font-bold mb-4">Contact Info</h4>
-                    <div class="space-y-3">
-                        <div class="flex items-start space-x-3">
-                            <div
-                                class="w-5 h-5 bg-blue-600 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
-                                <span class="text-white text-xs">📍</span>
-                            </div>
-                            <p class="text-gray-400 text-sm">Plot No. 123, Financial District, Gachibowli, Hyderabad -
-                                500032</p>
+                    <div class="space-y-3 text-sm text-gray-400">
+                        <div class="flex items-start space-x-2">
+                            <span class="text-blue-500 mt-1"><i class="fas fa-map-marker-alt"></i></span>
+                            <p>RAJA RANI TOWER, KAMAPALLI MAIN ROAD,<br> BERHAMPUR, ODISHA - 760004</p>
                         </div>
-                        <div class="flex items-center space-x-3">
-                            <div class="w-5 h-5 bg-blue-600 rounded-full flex items-center justify-center">
-                                <span class="text-white text-xs">📞</span>
-                            </div>
-                            <p class="text-gray-400 text-sm">+91 40 1234 5678</p>
+                        <div class="flex items-center space-x-2">
+                            <span class="text-blue-500"><i class="fas fa-phone"></i></span>
+                            <p>8260604188, 9237771777, 9124723354</p>
                         </div>
-                        <div class="flex items-center space-x-3">
-                            <div class="w-5 h-5 bg-blue-600 rounded-full flex items-center justify-center">
-                                <span class="text-white text-xs">✉️</span>
-                            </div>
-                            <p class="text-gray-400 text-sm">info@RAJARANI.com</p>
+                        <div class="flex items-center space-x-2">
+                            <span class="text-blue-500"><i class="fas fa-phone-volume"></i></span>
+                            <p>0680-2283535</p>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <span class="text-blue-500"><i class="fas fa-envelope"></i></span>
+                            <p>realestaterajarani@gmail.com</p>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <span class="text-blue-500"><i class="fas fa-envelope-open"></i></span>
+                            <p>rajaranihomespvtltd@gmail.com</p>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <span class="text-blue-500"><i class="fas fa-globe"></i></span>
+                            <p><a href="http://www.rajaranire                            <span class=" text-blue-500"><i
+                                        class="fas fa-globe"></i></span>
+                                    <p><a href="http://www.rajaranirealestate.com" target="_blank"
+                                            class="hover:text-white">www.rajaranirealestate.com</a></p>
+                        </div>
+                        <div class="flex items-start space-x-2">
+                            <span class="text-blue-500 mt-1"><i class="fas fa-clock"></i></span>
+                            <p>Mon–Sat: 10:00 AM – 8:00 PM<br>Sun: 10:00 AM – 02:00 PM</p>
                         </div>
                     </div>
                 </div>
+
             </div>
 
             <div class="border-t border-gray-700 mt-8 pt-8">
                 <div class="flex flex-col md:flex-row justify-between items-center">
-                    <p class="text-gray-400 text-sm mb-4 md:mb-0">© 2024 RAJARANI Properties Pvt Ltd. All rights
+                    <p class="text-gray-400 text-sm mb-4 md:mb-0">© 2025 RAJARANI REAL ESTATE Pvt Ltd. All rights
                         reserved.</p>
-                    <div class="flex space-x-6">
-                        <a href="#" class="text-gray-400 hover:text-white text-sm">Privacy Policy</a>
-                        <a href="#" class="text-gray-400 hover:text-white text-sm">Terms & Conditions</a>
-                        <a href="#" class="text-gray-400 hover:text-white text-sm">RERA</a>
+                    <div class="flex space-x-6 text-sm">
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">Privacy
+                            Policy</a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">Terms &
+                            Conditions</a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">RERA</a>
                     </div>
                 </div>
             </div>
         </div>
     </footer>
+
+    <!-- Particles.js for background effects -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
 
     <script>
         // Initialize Swiper
@@ -716,6 +1102,28 @@
             }
         });
 
+        const swiper2 = new Swiper('.featuredSwiper2', {
+            slidesPerView: 1,
+            spaceBetween: 30,
+            loop: true,
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+            },
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            },
+            breakpoints: {
+                768: {
+                    slidesPerView: 2,
+                },
+                1024: {
+                    slidesPerView: 3,
+                }
+            }
+        });
+
         // Mobile Menu Functionality
         const mobileMenuBtn = document.getElementById('mobileMenuBtn');
         const mobileMenu = document.getElementById('mobileMenu');
@@ -730,6 +1138,359 @@
                 mobileMenu.classList.add('hidden');
             }
         });
+
+        // 3D Hero Canvas
+        function initHeroCanvas() {
+            const canvas = document.getElementById('hero-canvas');
+            if (!canvas) return;
+
+            const renderer = new THREE.WebGLRenderer({
+                canvas,
+                antialias: true,
+                alpha: true
+            });
+            renderer.setSize(canvas.clientWidth, canvas.clientHeight);
+            renderer.setPixelRatio(window.devicePixelRatio);
+
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75, canvas.clientWidth / canvas.clientHeight, 0.1, 1000);
+            camera.position.z = 5;
+
+            // Add lights
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+            scene.add(ambientLight);
+
+            const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+            directionalLight.position.set(5, 5, 5);
+            scene.add(directionalLight);
+
+            // Create buildings
+            const buildings = [];
+            const buildingCount = 10;
+            const buildingGeometry = new THREE.BoxGeometry(1, 1, 1);
+
+            for (let i = 0; i < buildingCount; i++) {
+                const height = Math.random() * 3 + 1;
+                const width = Math.random() * 0.5 + 0.5;
+                const depth = Math.random() * 0.5 + 0.5;
+
+                const material = new THREE.MeshStandardMaterial({
+                    color: new THREE.Color(0x1e40af).lerp(new THREE.Color(0x3b82f6), Math.random()),
+                    metalness: 0.3,
+                    roughness: 0.7
+                });
+
+                const building = new THREE.Mesh(buildingGeometry, material);
+                building.scale.set(width, height, depth);
+                building.position.x = (Math.random() - 0.5) * 10;
+                building.position.y = height / 2 - 2;
+                building.position.z = (Math.random() - 0.5) * 10 - 2;
+
+                scene.add(building);
+                buildings.push({
+                    mesh: building,
+                    rotationSpeed: (Math.random() - 0.5) * 0.01,
+                    floatSpeed: Math.random() * 0.005 + 0.002,
+                    floatOffset: Math.random() * Math.PI * 2
+                });
+            }
+
+            // Ground plane
+            const groundGeometry = new THREE.PlaneGeometry(50, 50);
+            const groundMaterial = new THREE.MeshStandardMaterial({
+                color: 0x1e40af,
+                metalness: 0.2,
+                roughness: 0.8
+            });
+            const ground = new THREE.Mesh(groundGeometry, groundMaterial);
+            ground.rotation.x = -Math.PI / 2;
+            ground.position.y = -2;
+            scene.add(ground);
+
+            // Animation loop
+            function animate() {
+                requestAnimationFrame(animate);
+
+                const time = Date.now() * 0.001;
+
+                buildings.forEach(building => {
+                    building.mesh.rotation.y += building.rotationSpeed;
+                    building.mesh.position.y = (building.mesh.scale.y / 2 - 2) + Math.sin(time + building.floatOffset) * 0.1;
+                });
+
+                renderer.render(scene, camera);
+            }
+
+            // Handle resize
+            function onWindowResize() {
+                camera.aspect = canvas.clientWidth / canvas.clientHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(canvas.clientWidth, canvas.clientHeight);
+            }
+
+            window.addEventListener('resize', onWindowResize);
+            animate();
+        }
+
+        // Initialize particles.js
+        function initParticles() {
+            if (typeof particlesJS !== 'undefined') {
+                particlesJS("particles-js", {
+                    "particles": {
+                        "number": {
+                            "value": 80,
+                            "density": {
+                                "enable": true,
+                                "value_area": 800
+                            }
+                        },
+                        "color": {
+                            "value": "#ffffff"
+                        },
+                        "shape": {
+                            "type": "circle",
+                            "stroke": {
+                                "width": 0,
+                                "color": "#000000"
+                            },
+                        },
+                        "opacity": {
+                            "value": 0.3,
+                            "random": true,
+                            "anim": {
+                                "enable": false,
+                                "speed": 1,
+                                "opacity_min": 0.1,
+                                "sync": false
+                            }
+                        },
+                        "size": {
+                            "value": 3,
+                            "random": true,
+                            "anim": {
+                                "enable": false,
+                                "speed": 40,
+                                "size_min": 0.1,
+                                "sync": false
+                            }
+                        },
+                        "line_linked": {
+                            "enable": true,
+                            "distance": 150,
+                            "color": "#ffffff",
+                            "opacity": 0.2,
+                            "width": 1
+                        },
+                        "move": {
+                            "enable": true,
+                            "speed": 2,
+                            "direction": "none",
+                            "random": false,
+                            "straight": false,
+                            "out_mode": "out",
+                            "bounce": false,
+                        }
+                    },
+                    "interactivity": {
+                        "detect_on": "canvas",
+                        "events": {
+                            "onhover": {
+                                "enable": true,
+                                "mode": "grab"
+                            },
+                            "onclick": {
+                                "enable": true,
+                                "mode": "push"
+                            },
+                            "resize": true
+                        },
+                        "modes": {
+                            "grab": {
+                                "distance": 140,
+                                "line_linked": {
+                                    "opacity": 1
+                                }
+                            },
+                            "push": {
+                                "particles_nb": 4
+                            }
+                        }
+                    },
+                    "retina_detect": true
+                });
+            }
+        }
+
+        // Scroll animations
+        function initScrollAnimations() {
+            // Animate stats items
+            const statsItems = document.querySelectorAll('.stats-item');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            statsItems.forEach(item => {
+                observer.observe(item);
+            });
+
+            // Animate counters
+            const counters = document.querySelectorAll('.counter');
+            counters.forEach(counter => {
+                const target = parseInt(counter.getAttribute('data-target'));
+                const duration = 2000; // ms
+                const step = target / (duration / 16); // 60fps
+
+                let current = 0;
+                const updateCounter = () => {
+                    current += step;
+                    if (current < target) {
+                        counter.textContent = Math.floor(current);
+                        requestAnimationFrame(updateCounter);
+                    } else {
+                        counter.textContent = target;
+                    }
+                };
+
+                const counterObserver = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            updateCounter();
+                            counterObserver.unobserve(entry.target);
+                        }
+                    });
+                }, { threshold: 0.5 });
+
+                counterObserver.observe(counter);
+            });
+
+            // Parallax effect for images
+            const parallaxBgs = document.querySelectorAll('.parallax-bg');
+            window.addEventListener('scroll', () => {
+                parallaxBgs.forEach(bg => {
+                    const rect = bg.getBoundingClientRect();
+                    const windowHeight = window.innerHeight;
+
+                    if (rect.top < windowHeight && rect.bottom > 0) {
+                        const scrollPosition = (rect.top - windowHeight) / 2;
+                        bg.style.transform = `translateY(${scrollPosition * 0.1}px)`;
+                    }
+                });
+            });
+
+            // Animate section titles
+            const titles = document.querySelectorAll('.reason-title, .qvt-title');
+            const titleObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.animation = 'fadeInUp 1s forwards';
+                        titleObserver.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            titles.forEach(title => {
+                title.style.opacity = '0';
+                titleObserver.observe(title);
+            });
+        }
+
+        // Initialize animations
+        document.addEventListener('DOMContentLoaded', function () {
+            // Initialize 3D effects
+            initHeroCanvas();
+            initParticles();
+            initScrollAnimations();
+
+            // Add animation classes to nav links
+            const navLinks = document.querySelectorAll('.nav-link');
+            navLinks.forEach((link, index) => {
+                link.style.opacity = '0';
+                link.style.transform = 'translateY(-10px)';
+                link.style.transition = `opacity 0.3s ease ${index * 0.1}s, transform 0.3s ease ${index * 0.1}s, color 0.3s ease`;
+
+                setTimeout(() => {
+                    link.style.opacity = '1';
+                    link.style.transform = 'translateY(0)';
+                }, 100);
+            });
+
+            // Add animation to hero content
+            const heroTitle = document.querySelector('.hero-title');
+            const heroSubtitle = document.querySelector('.hero-subtitle');
+
+            if (heroTitle) {
+                heroTitle.style.opacity = '0';
+                heroTitle.style.transform = 'translateY(30px)';
+                heroTitle.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+
+                setTimeout(() => {
+                    heroTitle.style.opacity = '1';
+                    heroTitle.style.transform = 'translateY(0)';
+                }, 300);
+            }
+
+            if (heroSubtitle) {
+                heroSubtitle.style.opacity = '0';
+                heroSubtitle.style.transform = 'translateY(30px)';
+                heroSubtitle.style.transition = 'opacity 0.8s ease 0.3s, transform 0.8s ease 0.3s';
+
+                setTimeout(() => {
+                    heroSubtitle.style.opacity = '1';
+                    heroSubtitle.style.transform = 'translateY(0)';
+                }, 600);
+            }
+
+            // Add 3D effect to cards
+            const cards = document.querySelectorAll('.card-3d, .project-card, .commercial-card, .qvt-card');
+            cards.forEach(card => {
+                card.addEventListener('mousemove', function (e) {
+                    const rect = card.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+
+                    const centerX = rect.width / 2;
+                    const centerY = rect.height / 2;
+
+                    const rotateX = (y - centerY) / 20;
+                    const rotateY = (centerX - x) / 20;
+
+                    card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+                });
+
+                card.addEventListener('mouseleave', function () {
+                    card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)';
+                });
+            });
+        });
+
+        // Add CSS3 keyframes animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes fadeInUp {
+                from {
+                    opacity: 0;
+                    transform: translateY(30px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+
+            @keyframes rotate-y-180 {
+                from {
+                    transform: rotateY(0deg);
+                }
+                to {
+                    transform: rotateY(180deg);
+                }
+            }
+        `;
+        document.head.appendChild(style);
     </script>
 </body>
 
