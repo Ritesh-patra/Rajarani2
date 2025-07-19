@@ -10,7 +10,30 @@
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 
-
+    <script>
+        // Tailwind CSS Custom Configuration
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        // Custom Brand Colors
+                        'brand': {
+                            'navy': '#102E50',      // Primary Dark Blue
+                            'gold': '#F5C45E',      // Secondary Gold
+                            'orange': '#E78B48',    // Accent Orange
+                            'red': '#BE3D2A'        // Accent Red
+                        }
+                    },
+                    fontFamily: {
+                        // Centralized Font Configuration (easy to change later)
+                        'primary': ['Inter', 'system-ui', 'sans-serif'],
+                        'secondary': ['Poppins', 'system-ui', 'sans-serif'],
+                        'heading': ['Montserrat', 'system-ui', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
 
     <style>
         /* Import Google Fonts */
@@ -145,7 +168,7 @@
     </style>
 </head>
 
-<body style="font-family: 'Poppins', sans-serif;" class="bg-white " >
+<body class="bg-white font-primary">
     <!-- Navigation -->
     <nav class="bg-white shadow-md py-4 sticky top-0 z-50">
         <div class="container mx-auto px-4 flex justify-between items-center">
@@ -154,25 +177,25 @@
                     <img class="w-full h-full object-contain" src="images/logo.png" alt="RAJARANI Logo">
                 </div>
                 <div>
-                    <h1 class="text-xl font-bold text-[#102E50] " style="font-family: 'Montserrat', sans-serif;">RAJARANI</h1>
-                    <p class="text-xs text-[#E78B48] font-medium">REAL ESTATE</p>
+                    <h1 class="text-xl font-bold text-brand-navy font-heading">RAJARANI</h1>
+                    <p class="text-xs text-brand-orange font-medium">REAL ESTATE</p>
                 </div>
             </div>
 
             <!-- Desktop Menu -->
             <div class="hidden md:flex space-x-8">
-                <a href="#home" class="text-[#102E50] hover:text-[#F5C45E] font-medium nav-link">HOME</a>
-                <a href="#about" class="text-[#102E50] hover:text-[#F5C45E] font-medium nav-link">ABOUT US</a>
-                <a href="#completed" class="text-[#102E50] hover:text-[#F5C45E] font-medium nav-link">PAST
+                <a href="#home" class="text-brand-navy hover:text-brand-gold font-medium nav-link">HOME</a>
+                <a href="#about" class="text-brand-navy hover:text-brand-gold font-medium nav-link">ABOUT US</a>
+                <a href="#completed" class="text-brand-navy hover:text-brand-gold font-medium nav-link">PAST
                     PROJECTS</a>
-                <a href="#commercial" class="text-[#102E50] hover:text-[#F5C45E] font-medium nav-link">COMMERCIAL
+                <a href="#commercial" class="text-brand-navy hover:text-brand-gold font-medium nav-link">COMMERCIAL
                     PROJECT</a>
-                <a href="#footer" class="text-[#102E50] hover:text-[#F5C45E] font-medium nav-link">CONTACT US</a>
+                <a href="#footer" class="text-brand-navy hover:text-brand-gold font-medium nav-link">CONTACT US</a>
             </div>
 
             <!-- Mobile Menu Button -->
             <div class="md:hidden">
-                <button id="mobileMenuBtn" class="text-[#102E50] focus:outline-none">
+                <button id="mobileMenuBtn" class="text-brand-navy focus:outline-none">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M4 6h16M4 12h16M4 18h16"></path>
@@ -185,17 +208,17 @@
         <div id="mobileMenu" class="mobile-menu md:hidden bg-white shadow-lg">
             <div class="px-4 py-2 space-y-2">
                 <a href="#home"
-                    class="block text-[#102E50] hover:text-[#F5C45E] font-medium py-2 mobile-nav-link">HOME</a>
+                    class="block text-brand-navy hover:text-brand-gold font-medium py-2 mobile-nav-link">HOME</a>
                 <a href="#about"
-                    class="block text-[#102E50] hover:text-[#F5C45E] font-medium py-2 mobile-nav-link">ABOUT US</a>
+                    class="block text-brand-navy hover:text-brand-gold font-medium py-2 mobile-nav-link">ABOUT US</a>
                 <a href="#completed"
-                    class="block text-[#102E50] hover:text-[#F5C45E] font-medium py-2 mobile-nav-link">RESIDENTIAL
+                    class="block text-brand-navy hover:text-brand-gold font-medium py-2 mobile-nav-link">RESIDENTIAL
                     PROJECT</a>
                 <a href="#commercial"
-                    class="block text-[#102E50] hover:text-[#F5C45E] font-medium py-2 mobile-nav-link">PAST PROJECTS
+                    class="block text-brand-navy hover:text-brand-gold font-medium py-2 mobile-nav-link">PAST PROJECTS
                 </a>
                 <a href="#footer"
-                    class="block text-[#102E50] hover:text-[#F5C45E] font-medium py-2 mobile-nav-link">CONTACT US</a>
+                    class="block text-brand-navy hover:text-brand-gold font-medium py-2 mobile-nav-link">CONTACT US</a>
             </div>
         </div>
     </nav>
@@ -203,21 +226,21 @@
     <!-- Hero Section -->
     <section id="home" class="relative h-[80vh] bg-cover bg-center text-white py-20"
         style="background-image: url('https://img.freepik.com/free-photo/four-people-protective-helmets-inspecting-building-area_259150-60517.jpg?ga=GA1.1.172258652.1750391369&semt=ais_hybrid&w=740');">
-        <div class="absolute inset-0 bg-[#102E50] bg-opacity-70"></div>
+        <div class="absolute inset-0 bg-brand-navy bg-opacity-70"></div>
         <div class="container mx-auto px-4 h-full flex items-center relative z-10">
             <div class="w-full md:w-1/2">
-                <h1 class="text-5xl md:text-6xl font-bold mb-6 text-white floating ">Building Dreams,
+                <h1 class="text-5xl md:text-6xl font-bold mb-6 text-white floating font-heading">Building Dreams,
                     <br>Creating Homes
                 </h1>
-                <p class="text-xl mb-8 text-white ">Experience luxury living with RAJARANI Properties -
+                <p class="text-xl mb-8 text-white font-primary">Experience luxury living with RAJARANI Properties -
                     where quality meets innovation.</p>
                 <div class="flex space-x-4">
                     <a href="#completed"
-                        class="bg-[#F5C45E] text-[#102E50] px-6 py-3 rounded-lg font-bold hover:bg-[#E78B48] hover:text-white transition duration-300 transform hover:scale-105">
+                        class="bg-brand-gold text-brand-navy px-6 py-3 rounded-lg font-bold hover:bg-brand-orange hover:text-white transition duration-300 transform hover:scale-105">
                         Explore Projects
                     </a>
                     <a href="#footer"
-                        class="border-2 border-[#F5C45E] text-[#F5C45E] px-6 py-3 rounded-lg font-bold hover:bg-[#F5C45E] hover:text-[#102E50] transition duration-300 transform hover:scale-105">
+                        class="border-2 border-brand-gold text-brand-gold px-6 py-3 rounded-lg font-bold hover:bg-brand-gold hover:text-brand-navy transition duration-300 transform hover:scale-105">
                         Contact Us
                     </a>
                 </div>
@@ -228,57 +251,33 @@
     <!-- Featured Projects Section -->
     <section id="completed" class="py-16 bg-gray-50">
         <div class="container mx-auto px-4">
-            <h2 class="text-4xl font-bold text-center text-[#102E50] mb-4 " style="font-family: 'Montserrat', sans-serif;">Ongoing Projects</h2>
-            <div class="w-20 h-1 bg-[#F5C45E] mx-auto mb-12"></div>
+            <h2 class="text-4xl font-bold text-center text-brand-navy mb-4 font-heading">Ongoing Projects</h2>
+            <div class="w-20 h-1 bg-brand-gold mx-auto mb-12"></div>
 
             <div class="swiper featuredSwiper">
                 <div class="swiper-wrapper">
                     <!-- Project 1 -->
-                    <div class="swiper-slide">
-                        <div
-                            class="bg-white rounded-lg shadow-lg overflow-hidden card-hover border-2 border-[#F5C45E]/20">
-                            <div style="background-image: url(images/future1.jpg);"
-                                class="h-80 bg-center bg-cover relative">
-                                <a href="https://maps.app.goo.gl/eqpWfDupf7sS7GM1A" target="_blank"
-                                    class="absolute bottom-2 left-4 bg-[#BE3D2A] text-white px-3 py-1 rounded text-sm font-bold flex items-center gap-2 shadow-lg hover:bg-[#E78B48] transition">
-                                    <i class="fas fa-map-marker-alt text-white"></i> Station Road
-                                </a>
-                            </div>
-                            <div class="bg-[#102E50] text-white p-6">
-                                <h3 class="text-2xl font-bold mb-2 capitalize " style="font-family: 'Montserrat', sans-serif;">Raja Rani Field Phase - 2
-                                    (PUKUDIBANDHA)</h3>
-                                <p class="text-sm mb-2 text-[#F5C45E]">Premium Lifestyle 2 & 3 BHK Apartments</p>
-                                <p class="text-sm mb-2">Pukidubandha, Berhampur</p>
-                                <div class="flex justify-between items-center">
-                                    <p class="text-lg font-bold text-[#F5C45E]">Price On Request</p>
-                                    <button
-                                        class="bg-[#F5C45E] text-[#102E50] px-4 py-2 rounded text-sm font-bold hover:bg-[#E78B48] hover:text-white transition">Know
-                                        More</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
 
                     <!-- Project 2 -->
                     <div class="swiper-slide">
                         <div
-                            class="bg-white rounded-lg shadow-lg overflow-hidden card-hover border-2 border-[#F5C45E]/20">
+                            class="bg-white rounded-lg shadow-lg overflow-hidden card-hover border-2 border-brand-gold/20">
                             <div style="background-image: url(images/complete1.jpg);"
                                 class="h-80 bg-center bg-cover relative">
                                 <a href="https://www.google.com/maps?q=19.341404,84.766602" target="_blank"
-                                    class="absolute bottom-2 left-4 bg-[#BE3D2A] text-white px-3 py-1 rounded text-sm font-bold flex items-center gap-2 shadow-lg hover:bg-[#E78B48] transition">
+                                    class="absolute bottom-2 left-4 bg-brand-red text-white px-3 py-1 rounded text-sm font-bold flex items-center gap-2 shadow-lg hover:bg-brand-orange transition">
                                     <i class="fas fa-map-marker-alt text-white"></i> Aska Road Near
                                 </a>
                             </div>
-                            <div class="bg-[#102E50] text-white p-6">
-                                <h3 class="text-2xl font-bold mb-2 capitalize " style="font-family: 'Montserrat', sans-serif;">Raja Rani Dream Homes</h3>
-                                <p class="text-sm mb-2 text-[#F5C45E]">Premium Lifestyle 2 & 3 BHK Apartments</p>
+                            <div class="bg-brand-navy text-white p-6">
+                                <h3 class="text-2xl font-bold mb-2 capitalize font-heading">Raja Rani Dream Homes</h3>
+                                <p class="text-sm mb-2 text-brand-gold">Premium Lifestyle 2 & 3 BHK Apartments</p>
                                 <p class="text-sm mb-2">Aska Road, Berhampur</p>
                                 <div class="flex justify-between items-center">
-                                    <p class="text-lg font-bold text-[#F5C45E]">Price On Request</p>
-                                    <button
-                                        class="bg-[#F5C45E] text-[#102E50] px-4 py-2 rounded text-sm font-bold hover:bg-[#E78B48] hover:text-white transition">Know
-                                        More</button>
+                                    <p class="text-lg font-bold text-brand-gold">Price On Request</p>
+                                    <a href="form.html"
+                                        class="bg-brand-gold text-brand-navy px-4 py-2 rounded text-sm font-bold hover:bg-brand-orange hover:text-white transition">Know
+                                        More</a>
                                 </div>
                             </div>
                         </div>
@@ -287,23 +286,23 @@
                     <!-- Project 3 -->
                     <div class="swiper-slide">
                         <div
-                            class="bg-white rounded-lg shadow-lg overflow-hidden card-hover border-2 border-[#F5C45E]/20">
+                            class="bg-white rounded-lg shadow-lg overflow-hidden card-hover border-2 border-brand-gold/20">
                             <div style="background-image: url(images/greenvelly.jpg);"
                                 class="h-80 bg-center bg-cover relative">
                                 <a href="#" target="_blank"
-                                    class="absolute bottom-2 left-4 bg-[#BE3D2A] text-white px-3 py-1 rounded text-sm font-bold flex items-center gap-2 shadow-lg hover:bg-[#E78B48] transition">
+                                    class="absolute bottom-2 left-4 bg-brand-red text-white px-3 py-1 rounded text-sm font-bold flex items-center gap-2 shadow-lg hover:bg-brand-orange transition">
                                     <i class="fas fa-map-marker-alt text-white"></i> Ambapua
                                 </a>
                             </div>
-                            <div class="bg-[#102E50] text-white p-6">
-                                <h3 class="text-xl font-bold mb-2 " style="font-family: 'Montserrat', sans-serif;">Raja Rani Green Valley (AMBAPUA)</h3>
-                                <p class="text-sm mb-2 text-[#F5C45E]">2BHK & 3BHK Luxury Apartments</p>
+                            <div class="bg-brand-navy text-white p-6">
+                                <h3 class="text-xl font-bold mb-2 font-heading">Raja Rani Green Valley (AMBAPUA)</h3>
+                                <p class="text-sm mb-2 text-brand-gold">2BHK & 3BHK Luxury Apartments</p>
                                 <p class="text-sm mb-2">Ambapua, Berhampur</p>
                                 <div class="flex justify-between items-center">
-                                    <p class="text-lg font-bold text-[#F5C45E]">Price On Request</p>
-                                    <button
-                                        class="bg-[#F5C45E] text-[#102E50] px-4 py-2 rounded text-sm font-bold hover:bg-[#E78B48] hover:text-white transition">Know
-                                        More</button>
+                                    <p class="text-lg font-bold text-brand-gold">Price On Request</p>
+                                    <a href="form.html"
+                                        class="bg-brand-gold text-brand-navy px-4 py-2 rounded text-sm font-bold hover:bg-brand-orange hover:text-white transition">Know
+                                        More</a>
                                 </div>
                             </div>
                         </div>
@@ -317,52 +316,52 @@
     </section>
 
     <!-- QVT Assured Section -->
-    <section class="py-16 bg-[#102E50]">
+    <section class="py-16 bg-brand-navy">
         <div class="container mx-auto px-4">
             <div class="text-center mb-12">
-                <h2 class="text-4xl font-bold text-white mb-2 " style="font-family: 'Montserrat', sans-serif;">RAJA RANI</h2>
-                <div class="w-20 h-1 bg-[#F5C45E] mx-auto mb-12"></div>
-                <p class="text-xl text-[#F5C45E] font-medium tracking-wider font-secondary">ASSURED</p>
+                <h2 class="text-4xl font-bold text-white mb-2 font-heading">RAJA RANI</h2>
+                <div class="w-20 h-1 bg-brand-gold mx-auto mb-12"></div>
+                <p class="text-xl text-brand-gold font-medium tracking-wider font-secondary">ASSURED</p>
                 <div class="flex justify-center space-x-4 mt-2">
-                    <span class="text-sm text-[#E78B48] font-medium">QUALITY</span>
-                    <span class="text-[#F5C45E]">•</span>
-                    <span class="text-sm text-[#E78B48] font-medium">TRANSPARENCY</span>
-                    <span class="text-[#F5C45E]">•</span>
-                    <span class="text-sm text-[#E78B48] font-medium">DELIVERY</span>
+                    <span class="text-sm text-brand-orange font-medium">QUALITY</span>
+                    <span class="text-brand-gold">•</span>
+                    <span class="text-sm text-brand-orange font-medium">TRANSPARENCY</span>
+                    <span class="text-brand-gold">•</span>
+                    <span class="text-sm text-brand-orange font-medium">DELIVERY</span>
                 </div>
             </div>
 
             <div class="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
                 <!-- Quality -->
-                <div class="bg-white p-8 rounded-lg shadow-lg card-hover border-t-4 border-[#F5C45E]">
-                    <div class="w-16 h-16 bg-[#F5C45E]/20 rounded-full flex items-center justify-center mb-6 mx-auto">
-                        <i class="fas fa-medal text-[#F5C45E] text-2xl"></i>
+                <div class="bg-white p-8 rounded-lg shadow-lg card-hover border-t-4 border-brand-gold">
+                    <div class="w-16 h-16 bg-brand-gold/20 rounded-full flex items-center justify-center mb-6 mx-auto">
+                        <i class="fas fa-medal text-brand-gold text-2xl"></i>
                     </div>
-                    <h3 class="text-2xl font-bold text-center mb-4 text-[#102E50] " style="font-family: 'Montserrat', sans-serif;">QUALITY</h3>
-                    <p class="text-center text-gray-600 leading-relaxed ">Quality is the way of life at
+                    <h3 class="text-2xl font-bold text-center mb-4 text-brand-navy font-heading">QUALITY</h3>
+                    <p class="text-center text-gray-600 leading-relaxed font-primary">Quality is the way of life at
                         RAJARANI Properties. Using premium materials and innovative technology, we've set new benchmarks
                         in how real estate is conceived, designed and built.</p>
                 </div>
 
                 <!-- Transparency -->
-                <div class="bg-white p-8 rounded-lg shadow-lg card-hover border-t-4 border-[#E78B48]">
+                <div class="bg-white p-8 rounded-lg shadow-lg card-hover border-t-4 border-brand-orange">
                     <div
-                        class="w-16 h-16 bg-[#E78B48]/20 rounded-full flex items-center justify-center mb-6 mx-auto">
-                        <i class="fas fa-search-dollar text-[#E78B48] text-2xl"></i>
+                        class="w-16 h-16 bg-brand-orange/20 rounded-full flex items-center justify-center mb-6 mx-auto">
+                        <i class="fas fa-search-dollar text-brand-orange text-2xl"></i>
                     </div>
-                    <h3 class="text-2xl font-bold text-center mb-4 text-[#102E50] " style="font-family: 'Montserrat', sans-serif;">TRANSPARENCY</h3>
-                    <p class="text-center text-gray-600 leading-relaxed ">Trust and credibility drive our
+                    <h3 class="text-2xl font-bold text-center mb-4 text-brand-navy font-heading">TRANSPARENCY</h3>
+                    <p class="text-center text-gray-600 leading-relaxed font-primary">Trust and credibility drive our
                         business. RAJARANI Properties is synonymous with transparency, ensuring customers can make fully
                         informed decisions with complete confidence.</p>
                 </div>
 
                 <!-- Timely Delivery -->
-                <div class="bg-white p-8 rounded-lg shadow-lg card-hover border-t-4 border-[#BE3D2A]">
-                    <div class="w-16 h-16 bg-[#BE3D2A]/20 rounded-full flex items-center justify-center mb-6 mx-auto">
-                        <i class="fas fa-clock text-[#BE3D2A] text-2xl"></i>
+                <div class="bg-white p-8 rounded-lg shadow-lg card-hover border-t-4 border-brand-red">
+                    <div class="w-16 h-16 bg-brand-red/20 rounded-full flex items-center justify-center mb-6 mx-auto">
+                        <i class="fas fa-clock text-brand-red text-2xl"></i>
                     </div>
-                    <h3 class="text-2xl font-bold text-center mb-4 text-[#102E50] " style="font-family: 'Montserrat', sans-serif;">TIMELY DELIVERY</h3>
-                    <p class="text-center text-gray-600 leading-relaxed ">Our unwavering commitment to
+                    <h3 class="text-2xl font-bold text-center mb-4 text-brand-navy font-heading">TIMELY DELIVERY</h3>
+                    <p class="text-center text-gray-600 leading-relaxed font-primary">Our unwavering commitment to
                         project timelines sets us apart in the real estate industry. We honor our promises, delivering
                         homes when we say we will.</p>
                 </div>
@@ -373,24 +372,24 @@
     <!-- 5 Reasons Section -->
     <section class="py-16 bg-[#FEF3E2]">
         <div class="container mx-auto px-4">
-            <h2 class="text-4xl font-bold text-center text-[#102E50] mb-16 " style="font-family: 'Montserrat', sans-serif;">5 REASONS TO CHOOSE RAJARANI
+            <h2 class="text-4xl font-bold text-center text-brand-navy mb-16 font-heading">5 REASONS TO CHOOSE RAJARANI
             </h2>
 
             <!-- Customer Focus -->
             <div class="grid md:grid-cols-2 gap-12 items-center mb-16">
                 <div class="flex items-start space-x-4">
-                    <div class="w-16 h-16 bg-[#F5C45E]/20 rounded-full flex items-center justify-center flex-shrink-0">
-                        <i class="fas fa-user-friends text-[#F5C45E] text-2xl"></i>
+                    <div class="w-16 h-16 bg-brand-gold/20 rounded-full flex items-center justify-center flex-shrink-0">
+                        <i class="fas fa-user-friends text-brand-gold text-2xl"></i>
                     </div>
                     <div>
-                        <h3 class="text-2xl font-bold text-[#102E50] mb-3 " style="font-family: 'Montserrat', sans-serif;">Customer Focus</h3>
-                        <p class="text-gray-600 leading-relaxed ">Our main focus is on producing
+                        <h3 class="text-2xl font-bold text-brand-navy mb-3 font-heading">Customer Focus</h3>
+                        <p class="text-gray-600 leading-relaxed font-primary">Our main focus is on producing
                             customer-centric homes. We strive to create living spaces that will significantly improve
                             the quality of life for individuals and families.</p>
                     </div>
                 </div>
                 <div
-                    class="w-full h-64 bg-gradient-to-br from-[#F5C45E]/20 to-[#E78B48]/20 rounded-lg flex items-center justify-center">
+                    class="w-full h-64 bg-gradient-to-br from-brand-gold/20 to-brand-orange/20 rounded-lg flex items-center justify-center">
                     <img class="w-full h-full object-cover rounded-lg"
                         src="https://i.pinimg.com/736x/05/f3/43/05f343318e93ec3568e0009dea4ea2b4.jpg"
                         alt="Happy family">
@@ -402,12 +401,12 @@
                 <!-- TEXT First on mobile -->
                 <div class="flex items-start space-x-4 order-1 md:order-2">
                     <div
-                        class="w-16 h-16 bg-[#E78B48]/20 rounded-full flex items-center justify-center flex-shrink-0">
-                        <i class="fas fa-search-dollar text-[#E78B48] text-2xl"></i>
+                        class="w-16 h-16 bg-brand-orange/20 rounded-full flex items-center justify-center flex-shrink-0">
+                        <i class="fas fa-search-dollar text-brand-orange text-2xl"></i>
                     </div>
                     <div>
-                        <h3 class="text-2xl font-bold text-[#102E50] mb-3 " style="font-family: 'Montserrat', sans-serif;">Transparency</h3>
-                        <p class="text-gray-600 leading-relaxed ">
+                        <h3 class="text-2xl font-bold text-brand-navy mb-3 font-heading">Transparency</h3>
+                        <p class="text-gray-600 leading-relaxed font-primary">
                             Transparency is the key to a successful real estate brand. Our goal is to build brand value
                             and foster trust & loyalty among customers with our transparent operations.
                         </p>
@@ -416,7 +415,7 @@
 
                 <!-- IMAGE Second on mobile -->
                 <div
-                    class="w-full h-64 bg-gradient-to-br from-[#E78B48]/20 to-[#BE3D2A]/20 rounded-lg flex items-center justify-center order-2 md:order-1">
+                    class="w-full h-64 bg-gradient-to-br from-brand-orange/20 to-brand-red/20 rounded-lg flex items-center justify-center order-2 md:order-1">
                     <img class="w-full h-full object-cover rounded-lg"
                         src="https://i.pinimg.com/736x/bd/63/40/bd63408123944839840dc33e9d15d943.jpg"
                         alt="Transparency">
@@ -427,18 +426,18 @@
             <!-- Trust -->
             <div class="grid md:grid-cols-2 gap-12 items-center mb-16">
                 <div class="flex items-start space-x-4">
-                    <div class="w-16 h-16 bg-[#BE3D2A]/20 rounded-full flex items-center justify-center flex-shrink-0">
-                        <i class="fas fa-handshake text-[#BE3D2A] text-2xl"></i>
+                    <div class="w-16 h-16 bg-brand-red/20 rounded-full flex items-center justify-center flex-shrink-0">
+                        <i class="fas fa-handshake text-brand-red text-2xl"></i>
                     </div>
                     <div>
-                        <h3 class="text-2xl font-bold text-[#102E50] mb-3 " style="font-family: 'Montserrat', sans-serif;">Trust</h3>
-                        <p class="text-gray-600 leading-relaxed ">Trust is one of the most important
+                        <h3 class="text-2xl font-bold text-brand-navy mb-3 font-heading">Trust</h3>
+                        <p class="text-gray-600 leading-relaxed font-primary">Trust is one of the most important
                             components of the real estate business. We ensure that the relationship between customers
                             and our brand is immortalised with our end-to-end services.</p>
                     </div>
                 </div>
                 <div
-                    class="w-full h-64 bg-gradient-to-br from-[#102E50]/20 to-[#F5C45E]/20 rounded-lg flex items-center justify-center">
+                    class="w-full h-64 bg-gradient-to-br from-brand-navy/20 to-brand-gold/20 rounded-lg flex items-center justify-center">
                     <img class="w-full h-full object-cover rounded-lg"
                         src="https://i.pinimg.com/736x/be/1c/ff/be1cff5cc27026e555bfea382918c33c.jpg" alt="Trust">
                 </div>
@@ -448,12 +447,12 @@
             <div class="grid md:grid-cols-2 gap-12 items-center mb-16">
                 <!-- TEXT First on mobile -->
                 <div class="flex items-start space-x-4 order-1 md:order-2">
-                    <div class="w-16 h-16 bg-[#102E50]/20 rounded-full flex items-center justify-center flex-shrink-0">
-                        <i class="fas fa-lightbulb text-[#102E50] text-2xl"></i>
+                    <div class="w-16 h-16 bg-brand-navy/20 rounded-full flex items-center justify-center flex-shrink-0">
+                        <i class="fas fa-lightbulb text-brand-navy text-2xl"></i>
                     </div>
                     <div>
-                        <h3 class="text-2xl font-bold text-[#102E50] mb-3 " style="font-family: 'Montserrat', sans-serif;">Innovation</h3>
-                        <p class="text-gray-600 leading-relaxed ">
+                        <h3 class="text-2xl font-bold text-brand-navy mb-3 font-heading">Innovation</h3>
+                        <p class="text-gray-600 leading-relaxed font-primary">
                             Real estate innovation is synonymous to building a brighter future of the sector. For 18
                             years, we have been constantly reinventing ourselves to explore newer avenues.
                         </p>
@@ -462,7 +461,7 @@
 
                 <!-- IMAGE Second on mobile -->
                 <div
-                    class="w-full h-64 bg-gradient-to-br from-[#F5C45E]/20 to-[#102E50]/20 rounded-lg flex items-center justify-center order-2 md:order-1">
+                    class="w-full h-64 bg-gradient-to-br from-brand-gold/20 to-brand-navy/20 rounded-lg flex items-center justify-center order-2 md:order-1">
                     <img class="w-full h-full object-cover rounded-lg"
                         src="https://i.pinimg.com/736x/f8/32/36/f8323628ac09a215bf29d7d532318e2b.jpg" alt="Innovation">
                 </div>
@@ -473,18 +472,18 @@
             <div class="grid md:grid-cols-2 gap-12 items-center">
                 <div class="flex items-start space-x-4">
                     <div
-                        class="w-16 h-16 bg-[#E78B48]/20 rounded-full flex items-center justify-center flex-shrink-0">
-                        <i class="fas fa-leaf text-[#E78B48] text-2xl"></i>
+                        class="w-16 h-16 bg-brand-orange/20 rounded-full flex items-center justify-center flex-shrink-0">
+                        <i class="fas fa-leaf text-brand-orange text-2xl"></i>
                     </div>
                     <div>
-                        <h3 class="text-2xl font-bold text-[#102E50] mb-3 " style="font-family: 'Montserrat', sans-serif;">Sustainability</h3>
-                        <p class="text-gray-600 leading-relaxed ">We understand the increased importance of
+                        <h3 class="text-2xl font-bold text-brand-navy mb-3 font-heading">Sustainability</h3>
+                        <p class="text-gray-600 leading-relaxed font-primary">We understand the increased importance of
                             environmental sustainability and have taken the initiative to incorporate eco-friendly real
                             estate designs.</p>
                     </div>
                 </div>
                 <div
-                    class="w-full h-64 bg-gradient-to-br from-[#BE3D2A]/20 to-[#E78B48]/20 rounded-lg flex items-center justify-center">
+                    class="w-full h-64 bg-gradient-to-br from-brand-red/20 to-brand-orange/20 rounded-lg flex items-center justify-center">
                     <img class="w-full h-full object-cover rounded-lg"
                         src="https://i.pinimg.com/736x/49/7b/de/497bde65654ebd191be0071d2b7ce182.jpg"
                         alt="Sustainability">
@@ -496,56 +495,56 @@
     <!-- About Section -->
     <section id="about" class="py-20 z-[999] bg-white">
         <div class="container mx-auto px-4">
-            <h2 class="text-4xl font-bold text-center text-[#102E50] mb-4 " style="font-family: 'Montserrat', sans-serif;" >RAJA RANI GROUP</h2>
-            <div class="w-20 h-1 bg-[#F5C45E] mx-auto mb-12"></div>
+            <h2 class="text-4xl font-bold text-center text-brand-navy mb-4 font-heading">RAJA RANI GROUP</h2>
+            <div class="w-20 h-1 bg-brand-gold mx-auto mb-12"></div>
 
             <!-- Stats Section -->
             <div class="grid md:grid-cols-4 gap-10 mb-16">
                 <div class="text-center">
                     <div
-                        class="w-20 h-20 bg-[#F5C45E]/20 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
-                        <i class="fas fa-trophy text-[#F5C45E] text-3xl"></i>
+                        class="w-20 h-20 bg-brand-gold/20 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
+                        <i class="fas fa-trophy text-brand-gold text-3xl"></i>
                     </div>
-                    <h3 class="text-3xl font-bold text-[#102E50] " style="font-family: 'Montserrat', sans-serif;">18+</h3>
-                    <p class="text-lg font-medium text-[#E78B48] mt-1 font-secondary">YEARS OF EXCELLENCE</p>
+                    <h3 class="text-3xl font-bold text-brand-navy font-heading">18+</h3>
+                    <p class="text-lg font-medium text-brand-orange mt-1 font-secondary">YEARS OF EXCELLENCE</p>
                 </div>
 
                 <div class="text-center">
                     <div
-                        class="w-20 h-20 bg-[#E78B48]/20 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
-                        <i class="fas fa-city text-[#E78B48] text-3xl"></i>
+                        class="w-20 h-20 bg-brand-orange/20 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
+                        <i class="fas fa-city text-brand-orange text-3xl"></i>
                     </div>
-                    <h3 class="text-3xl font-bold text-[#102E50] " style="font-family: 'Montserrat', sans-serif;">STRONG</h3>
-                    <p class="text-lg font-medium text-[#E78B48] mt-1 font-secondary">FOUNDATION IN ODISHA</p>
+                    <h3 class="text-3xl font-bold text-brand-navy font-heading">STRONG</h3>
+                    <p class="text-lg font-medium text-brand-orange mt-1 font-secondary">FOUNDATION IN ODISHA</p>
                 </div>
 
                 <div class="text-center">
                     <div
-                        class="w-20 h-20 bg-[#BE3D2A]/20 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
-                        <i class="fas fa-stopwatch text-[#BE3D2A] text-3xl"></i>
+                        class="w-20 h-20 bg-brand-red/20 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
+                        <i class="fas fa-stopwatch text-brand-red text-3xl"></i>
                     </div>
-                    <h3 class="text-3xl font-bold text-[#102E50] " style="font-family: 'Montserrat', sans-serif;">TIMELY</h3>
-                    <p class="text-lg font-medium text-[#E78B48] mt-1 font-secondary">DELIVERY</p>
+                    <h3 class="text-3xl font-bold text-brand-navy font-heading">TIMELY</h3>
+                    <p class="text-lg font-medium text-brand-orange mt-1 font-secondary">DELIVERY</p>
                 </div>
 
                 <div class="text-center">
                     <div
-                        class="w-20 h-20 bg-[#102E50]/20 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
-                        <i class="fas fa-heart text-[#102E50] text-3xl"></i>
+                        class="w-20 h-20 bg-brand-navy/20 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
+                        <i class="fas fa-heart text-brand-navy text-3xl"></i>
                     </div>
-                    <h3 class="text-3xl font-bold text-[#102E50] " style="font-family: 'Montserrat', sans-serif;">10000+</h3>
-                    <p class="text-lg font-medium text-[#E78B48] mt-1 font-secondary">TRUSTED BY THOUSANDS</p>
+                    <h3 class="text-3xl font-bold text-brand-navy font-heading">10000+</h3>
+                    <p class="text-lg font-medium text-brand-orange mt-1 font-secondary">TRUSTED BY THOUSANDS</p>
                 </div>
             </div>
 
             <!-- About Content -->
             <div class="max-w-4xl mx-auto mb-16">
-                <p class="text-gray-700 text-lg leading-relaxed text-center mb-6 ">
-                    <strong class="text-[#102E50]">RAJA RANI GROUP</strong> began its journey in 2008 with a vision to
+                <p class="text-gray-700 text-lg leading-relaxed text-center mb-6 font-primary">
+                    <strong class="text-brand-navy">RAJA RANI GROUP</strong> began its journey in 2008 with a vision to
                     transform the real estate landscape through honest practices and high-quality construction. What
                     started as a modest venture has now evolved into a well-recognized real estate enterprise.
                 </p>
-                <p class="text-gray-700 text-lg leading-relaxed text-center ">
+                <p class="text-gray-700 text-lg leading-relaxed text-center font-primary">
                     Over the past 18+ years, RAJA RANI GROUP has built a strong foundation in Odisha, particularly in
                     Berhampur and beyond. Our commitment to transparency and high construction standards has made us a
                     trusted name among property seekers and investors.
@@ -555,12 +554,12 @@
             <!-- Mission Vision Values -->
             <div class="grid md:grid-cols-3 gap-8">
                 <!-- Our Mission -->
-                <div class="bg-[#F5C45E]/10 p-6 rounded-xl shadow-md card-hover border-l-4 border-[#F5C45E]">
+                <div class="bg-brand-gold/10 p-6 rounded-xl shadow-md card-hover border-l-4 border-brand-gold">
                     <div class="flex items-center mb-4">
-                        <i class="fas fa-bullseye text-[#F5C45E] text-2xl mr-3"></i>
-                        <h3 class="text-xl font-bold text-[#102E50] " style="font-family: 'Montserrat', sans-serif;">Our Mission</h3>
+                        <i class="fas fa-bullseye text-brand-gold text-2xl mr-3"></i>
+                        <h3 class="text-xl font-bold text-brand-navy font-heading">Our Mission</h3>
                     </div>
-                    <ul class="list-disc list-inside text-sm space-y-2 text-gray-700 ">
+                    <ul class="list-disc list-inside text-sm space-y-2 text-gray-700 font-primary">
                         <li>Deliver high-quality real estate solutions with customer-first approach</li>
                         <li>Create vibrant, inclusive, and sustainable communities</li>
                         <li>Adopt modern construction practices and eco-friendly designs</li>
@@ -569,12 +568,12 @@
                 </div>
 
                 <!-- Our Vision -->
-                <div class="bg-[#E78B48]/10 p-6 rounded-xl shadow-md card-hover border-l-4 border-[#E78B48]">
+                <div class="bg-brand-orange/10 p-6 rounded-xl shadow-md card-hover border-l-4 border-brand-orange">
                     <div class="flex items-center mb-4">
-                        <i class="fas fa-eye text-[#E78B48] text-2xl mr-3"></i>
-                        <h3 class="text-xl font-bold text-[#102E50] ">Our Vision</h3>
+                        <i class="fas fa-eye text-brand-orange text-2xl mr-3"></i>
+                        <h3 class="text-xl font-bold text-brand-navy font-heading">Our Vision</h3>
                     </div>
-                    <ul class="list-disc list-inside text-sm space-y-2 text-gray-700 ">
+                    <ul class="list-disc list-inside text-sm space-y-2 text-gray-700 font-primary">
                         <li>Become one of India's most admired and trusted real estate companies</li>
                         <li>Deliver landmark projects that define luxury and quality</li>
                         <li>Uphold transparency and long-term client relationships</li>
@@ -583,19 +582,19 @@
                 </div>
 
                 <!-- Core Values -->
-                <div class="bg-[#BE3D2A]/10 p-6 rounded-xl shadow-md card-hover border-l-4 border-[#BE3D2A]">
+                <div class="bg-brand-red/10 p-6 rounded-xl shadow-md card-hover border-l-4 border-brand-red">
                     <div class="flex items-center mb-4">
-                        <i class="fas fa-gem text-[#BE3D2A] text-2xl mr-3"></i>
-                        <h3 class="text-xl font-bold text-[#102E50] " style="font-family: 'Montserrat', sans-serif;">Core Values</h3>
+                        <i class="fas fa-gem text-brand-red text-2xl mr-3"></i>
+                        <h3 class="text-xl font-bold text-brand-navy font-heading">Core Values</h3>
                     </div>
-                    <ul class="list-disc list-inside text-sm space-y-2 text-gray-700 ">
-                        <li><strong class="text-[#102E50]">Integrity:</strong> Honest, fair, and accountable practices
+                    <ul class="list-disc list-inside text-sm space-y-2 text-gray-700 font-primary">
+                        <li><strong class="text-brand-navy">Integrity:</strong> Honest, fair, and accountable practices
                         </li>
-                        <li><strong class="text-[#102E50]">Quality:</strong> Highest standards in materials and
+                        <li><strong class="text-brand-navy">Quality:</strong> Highest standards in materials and
                             workmanship</li>
-                        <li><strong class="text-[#102E50]">Innovation:</strong> Latest technology and design thinking
+                        <li><strong class="text-brand-navy">Innovation:</strong> Latest technology and design thinking
                         </li>
-                        <li><strong class="text-[#102E50]">Commitment:</strong> On-time delivery and customer
+                        <li><strong class="text-brand-navy">Commitment:</strong> On-time delivery and customer
                             satisfaction</li>
                     </ul>
                 </div>
@@ -604,25 +603,25 @@
     </section>
 
     <!-- Commercial Projects Section with Swiper -->
-    <section id="commercial" class="py-16 bg-[#102E50]">
+    <section id="commercial" class="py-16 bg-brand-navy">
         <div class="container mx-auto px-4">
-            <h2 class="text-4xl font-bold text-center text-white mb-4 " style="font-family: 'Montserrat', sans-serif;">PAST PROJECTS</h2>
-            <div class="w-20 h-1 bg-[#F5C45E] mx-auto mb-12"></div>
+            <h2 class="text-4xl font-bold text-center text-white mb-4 font-heading">PAST PROJECTS</h2>
+            <div class="w-20 h-1 bg-brand-gold mx-auto mb-12"></div>
 
             <div class="swiper commercialSwiper">
                 <div class="swiper-wrapper">
                     <!-- Commercial Project 1 -->
                     <div class="swiper-slide">
                         <div
-                            class="bg-white rounded-lg shadow-lg overflow-hidden border-2 border-[#F5C45E]/30 card-hover">
-                            <div class="bg-[#F5C45E] text-[#102E50] text-center py-2">
+                            class="bg-white rounded-lg shadow-lg overflow-hidden border-2 border-brand-gold/30 card-hover">
+                            <div class="bg-brand-gold text-brand-navy text-center py-2">
                                 <span class="font-bold font-secondary">Commercial</span>
                             </div>
                             <div class="h-64 bg-cover bg-center"
                                 style="background-image: url('images/comercial1.jpg');"></div>
-                            <div class="bg-[#102E50] text-white p-6">
-                                <h3 class="text-2xl font-bold text-center mb-2 " style="font-family: 'Montserrat', sans-serif;" >Raja Rani Complex</h3>
-                                <p class="text-sm text-center text-[#F5C45E]">Courtpeta, In front of B.D.A Office</p>
+                            <div class="bg-brand-navy text-white p-6">
+                                <h3 class="text-2xl font-bold text-center mb-2 font-heading">Raja Rani Complex</h3>
+                                <p class="text-sm text-center text-brand-gold">Courtpeta, In front of B.D.A Office</p>
                             </div>
                         </div>
                     </div>
@@ -630,15 +629,15 @@
                     <!-- Commercial Project 2 -->
                     <div class="swiper-slide">
                         <div
-                            class="bg-white rounded-lg shadow-lg overflow-hidden border-2 border-[#F5C45E]/30 card-hover">
-                            <div class="bg-[#F5C45E] text-[#102E50] text-center py-2">
+                            class="bg-white rounded-lg shadow-lg overflow-hidden border-2 border-brand-gold/30 card-hover">
+                            <div class="bg-brand-gold text-brand-navy text-center py-2">
                                 <span class="font-bold font-secondary">Commercial</span>
                             </div>
                             <div class="h-64 bg-cover bg-center"
                                 style="background-image: url('images/commercial2.jpg');"></div>
-                            <div class="bg-[#102E50] text-white p-6">
-                                <h3 class="text-2xl font-bold text-center mb-2 " style="font-family: 'Montserrat', sans-serif;">Raja Rani Mall</h3>
-                                <p class="text-sm text-center text-[#F5C45E]">GOSANINUAGAON, Berhampur</p>
+                            <div class="bg-brand-navy text-white p-6">
+                                <h3 class="text-2xl font-bold text-center mb-2 font-heading">Raja Rani Mall</h3>
+                                <p class="text-sm text-center text-brand-gold">GOSANINUAGAON, Berhampur</p>
                             </div>
                         </div>
                     </div>
@@ -646,15 +645,15 @@
                     <!-- Commercial Project 3 -->
                     <div class="swiper-slide">
                         <div
-                            class="bg-white rounded-lg shadow-lg overflow-hidden border-2 border-[#F5C45E]/30 card-hover">
-                            <div class="bg-[#F5C45E] text-[#102E50] text-center py-2">
+                            class="bg-white rounded-lg shadow-lg overflow-hidden border-2 border-brand-gold/30 card-hover">
+                            <div class="bg-brand-gold text-brand-navy text-center py-2">
                                 <span class="font-bold font-secondary">Commercial</span>
                             </div>
                             <div class="h-64 bg-cover bg-center"
                                 style="background-image: url('images/commercial3.jpg');"></div>
-                            <div class="bg-[#102E50] text-white p-6">
-                                <h3 class="text-2xl font-bold text-center mb-2 " style="font-family: 'Montserrat', sans-serif;">Raja Rani Paradise</h3>
-                                <p class="text-sm text-center text-[#F5C45E]">At Station Road, Berhampur</p>
+                            <div class="bg-brand-navy text-white p-6">
+                                <h3 class="text-2xl font-bold text-center mb-2 font-heading">Raja Rani Paradise</h3>
+                                <p class="text-sm text-center text-brand-gold">At Station Road, Berhampur</p>
                             </div>
                         </div>
                     </div>
@@ -662,15 +661,15 @@
                     <!-- Commercial Project 4 -->
                     <div class="swiper-slide">
                         <div
-                            class="bg-white rounded-lg shadow-lg overflow-hidden border-2 border-[#F5C45E]/30 card-hover">
-                            <div class="bg-[#F5C45E] text-[#102E50] text-center py-2">
+                            class="bg-white rounded-lg shadow-lg overflow-hidden border-2 border-brand-gold/30 card-hover">
+                            <div class="bg-brand-gold text-brand-navy text-center py-2">
                                 <span class="font-bold font-secondary">Commercial</span>
                             </div>
                             <div class="h-64 bg-cover bg-center"
                                 style="background-image: url('images/commpercial4.jpg');"></div>
-                            <div class="bg-[#102E50] text-white p-6">
-                                <h3 class="text-2xl font-bold text-center mb-2 " style="font-family: 'Montserrat', sans-serif;">Raja Rani Tower</h3>
-                                <p class="text-sm text-center text-[#F5C45E]">Kamapali, Berhampur</p>
+                            <div class="bg-brand-navy text-white p-6">
+                                <h3 class="text-2xl font-bold text-center mb-2 font-heading">Raja Rani Tower</h3>
+                                <p class="text-sm text-center text-brand-gold">Kamapali, Berhampur</p>
                             </div>
                         </div>
                     </div>
@@ -678,15 +677,15 @@
                     <!-- Commercial Project 5 -->
                     <div class="swiper-slide">
                         <div
-                            class="bg-white rounded-lg shadow-lg overflow-hidden border-2 border-[#F5C45E]/30 card-hover">
-                            <div class="bg-[#E78B48] text-white text-center py-2">
+                            class="bg-white rounded-lg shadow-lg overflow-hidden border-2 border-brand-gold/30 card-hover">
+                            <div class="bg-brand-orange text-white text-center py-2">
                                 <span class="font-bold font-secondary">Commercial</span>
                             </div>
                             <div class="h-64 bg-cover bg-center"
                                 style="background-image: url('images/commercial5.jpg');"></div>
-                            <div class="bg-[#102E50] text-white p-6">
-                                <h3 class="text-2xl font-bold text-center mb-2 " style="font-family: 'Montserrat', sans-serif;">Raja Rani Enclave</h3>
-                                <p class="text-sm text-center text-[#F5C45E]">Gokuldham, Gosaninuagaon, Berhampur</p>
+                            <div class="bg-brand-navy text-white p-6">
+                                <h3 class="text-2xl font-bold text-center mb-2 font-heading">Raja Rani Enclave</h3>
+                                <p class="text-sm text-center text-brand-gold">Gokuldham, Gosaninuagaon, Berhampur</p>
                             </div>
                         </div>
                     </div>
@@ -694,15 +693,15 @@
                     <!-- Residential Project 1 -->
                     <div class="swiper-slide">
                         <div
-                            class="bg-white rounded-lg shadow-lg overflow-hidden border-2 border-[#F5C45E]/30 card-hover">
-                            <div class="bg-[#BE3D2A] text-white text-center py-2">
+                            class="bg-white rounded-lg shadow-lg overflow-hidden border-2 border-brand-gold/30 card-hover">
+                            <div class="bg-brand-red text-white text-center py-2">
                                 <span class="font-bold font-secondary">Residential</span>
                             </div>
                             <div class="h-64 bg-cover bg-center" style="background-image: url('images/comlete2.jpg');">
                             </div>
-                            <div class="bg-[#102E50] text-white p-6">
-                                <h3 class="text-2xl font-bold text-center mb-2 " style="font-family: 'Montserrat', sans-serif;">Raja Rani Residency</h3>
-                                <p class="text-sm text-center text-[#F5C45E]">Gosaninuagaon, Berhampur</p>
+                            <div class="bg-brand-navy text-white p-6">
+                                <h3 class="text-2xl font-bold text-center mb-2 font-heading">Raja Rani Residency</h3>
+                                <p class="text-sm text-center text-brand-gold">Gosaninuagaon, Berhampur</p>
                             </div>
                         </div>
                     </div>
@@ -710,15 +709,15 @@
                     <!-- Residential Project 2 -->
                     <div class="swiper-slide">
                         <div
-                            class="bg-white rounded-lg shadow-lg overflow-hidden border-2 border-[#F5C45E]/30 card-hover">
-                            <div class="bg-[#BE3D2A] text-white text-center py-2">
+                            class="bg-white rounded-lg shadow-lg overflow-hidden border-2 border-brand-gold/30 card-hover">
+                            <div class="bg-brand-red text-white text-center py-2">
                                 <span class="font-bold font-secondary">Residential</span>
                             </div>
                             <div class="h-64 bg-cover bg-center" style="background-image: url('images/nilaya.jpg');">
                             </div>
-                            <div class="bg-[#102E50] text-white p-6">
-                                <h3 class="text-2xl font-bold text-center mb-2 " style="font-family: 'Montserrat', sans-serif;">Raja Rani Nilaya</h3>
-                                <p class="text-sm text-center text-[#F5C45E]">Rajeev Nagar Gosaninuagaon, Berhampur</p>
+                            <div class="bg-brand-navy text-white p-6">
+                                <h3 class="text-2xl font-bold text-center mb-2 font-heading">Raja Rani Nilaya</h3>
+                                <p class="text-sm text-center text-brand-gold">Rajeev Nagar Gosaninuagaon, Berhampur</p>
                             </div>
                         </div>
                     </div>
@@ -823,7 +822,7 @@
 
 
     <!-- Footer -->
-    <footer id="footer" class="bg-[#102E50] text-white py-12">
+    <footer id="footer" class="bg-brand-navy text-white py-12">
         <div class="container mx-auto px-4">
             <div class="grid md:grid-cols-4 gap-8">
                 <!-- Company Info -->
@@ -833,20 +832,20 @@
                             <img class="w-10 h-12" src="images/logo.png" alt="Logo">
                         </div>
                         <div>
-                            <h3 class="text-xl font-bold text-[#F5C45E] ">RAJARANI</h3>
-                            <p class="text-xs text-[#E78B48] font-secondary">REAL ESTATE</p>
+                            <h3 class="text-xl font-bold text-brand-gold font-heading">RAJARANI</h3>
+                            <p class="text-xs text-brand-orange font-secondary">REAL ESTATE</p>
                         </div>
                     </div>
-                    <p class="text-gray-300 text-sm mb-4 ">
+                    <p class="text-gray-300 text-sm mb-4 font-primary">
                         Shaping innovations in real estate with quality, transparency, and timely delivery since 2008.
                     </p>
                     <div class="flex space-x-4">
                         <a href="https://www.facebook.com/profile.php?id=100088773827960" target="_blank"
-                            class="w-8 h-8 bg-[#F5C45E] rounded-full flex items-center justify-center hover:bg-[#E78B48] transition">
-                            <i class="fab fa-facebook-f text-[#102E50] text-sm"></i>
+                            class="w-8 h-8 bg-brand-gold rounded-full flex items-center justify-center hover:bg-brand-orange transition">
+                            <i class="fab fa-facebook-f text-brand-navy text-sm"></i>
                         </a>
                         <a href="https://www.instagram.com/raja_rani_homes" target="_blank"
-                            class="w-8 h-8 bg-[#E78B48] rounded-full flex items-center justify-center hover:bg-[#BE3D2A] transition">
+                            class="w-8 h-8 bg-brand-orange rounded-full flex items-center justify-center hover:bg-brand-red transition">
                             <i class="fab fa-instagram text-white text-sm"></i>
                         </a>
                     </div>
@@ -854,72 +853,72 @@
 
                 <!-- Quick Links -->
                 <div>
-                    <h4 class="text-lg font-bold mb-4 text-[#F5C45E] ">Quick Links</h4>
-                    <ul class="space-y-2 text-sm ">
-                        <li><a href="#home" class="text-gray-300 hover:text-[#F5C45E] transition">Home</a></li>
-                        <li><a href="#about" class="text-gray-300 hover:text-[#F5C45E] transition">About Us</a></li>
-                        <li><a href="#completed" class="text-gray-300 hover:text-[#F5C45E] transition">Properties</a>
+                    <h4 class="text-lg font-bold mb-4 text-brand-gold font-heading">Quick Links</h4>
+                    <ul class="space-y-2 text-sm font-primary">
+                        <li><a href="#home" class="text-gray-300 hover:text-brand-gold transition">Home</a></li>
+                        <li><a href="#about" class="text-gray-300 hover:text-brand-gold transition">About Us</a></li>
+                        <li><a href="#completed" class="text-gray-300 hover:text-brand-gold transition">Properties</a>
                         </li>
-                        <li><a href="#commercial" class="text-gray-300 hover:text-[#F5C45E] transition">Commercial</a>
+                        <li><a href="#commercial" class="text-gray-300 hover:text-brand-gold transition">Commercial</a>
                         </li>
                     </ul>
                 </div>
 
                 <!-- Property Types -->
                 <div>
-                    <h4 class="text-lg font-bold mb-4 text-[#F5C45E] ">Cities</h4>
-                    <ul class="space-y-2 text-sm ">
-                        <li><a href="#completed" class="text-gray-300 hover:text-[#F5C45E] transition">Berhampur</a>
+                    <h4 class="text-lg font-bold mb-4 text-brand-gold font-heading">Cities</h4>
+                    <ul class="space-y-2 text-sm font-primary">
+                        <li><a href="#completed" class="text-gray-300 hover:text-brand-gold transition">Berhampur</a>
                         </li>
-                        <li><a href="#commercial" class="text-gray-300 hover:text-[#F5C45E] transition">Puri</a>
+                        <li><a href="#commercial" class="text-gray-300 hover:text-brand-gold transition">Puri</a>
 
-                        <li><a href="#completed" class="text-gray-300 hover:text-[#F5C45E] transition">Ichhapuram</a>
+                        <li><a href="#completed" class="text-gray-300 hover:text-brand-gold transition">Ichhapuram</a>
                         </li>
                         </li>
-                        <li><a href="#commercial" class="text-gray-300 hover:text-[#F5C45E] transition">Bhubaneswar</a>
+                        <li><a href="#commercial" class="text-gray-300 hover:text-brand-gold transition">Bhubaneswar</a>
                         </li>
                     </ul>
                 </div>
 
                 <!-- Contact Info -->
                 <div>
-                    <h4 class="text-lg font-bold mb-4 text-[#F5C45E] ">Contact Info</h4>
-                    <div class="space-y-3 text-sm text-gray-300 ">
+                    <h4 class="text-lg font-bold mb-4 text-brand-gold font-heading">Contact Info</h4>
+                    <div class="space-y-3 text-sm text-gray-300 font-primary">
                         <h3 class="text-lg font-bold text-[#fff] mb-2">Corporate Office:</h3>
                         <div class="flex items-start space-x-2">
-                            <i class="fas fa-map-marker-alt text-[#E78B48] mt-1"></i>
+                            <i class="fas fa-map-marker-alt text-brand-orange mt-1"></i>
                             <p>RAJA RANI TOWER, KAMAPALLI MAIN ROAD, BERHAMPUR, ODISHA - 760004</p>
                         </div>
                         <div class="flex items-center space-x-2">
-                            <i class="fas fa-phone-volume text-[#E78B48]"></i>
+                            <i class="fas fa-phone-volume text-brand-orange"></i>
                             <p>8260604188, 9237771777, 9124723354</p>
                         </div>
 
                         <div class="flex items-center space-x-2">
-                            <i class="fas fa-envelope text-[#E78B48]"></i>
+                            <i class="fas fa-envelope text-brand-orange"></i>
                             <p>realestaterajarani@gmail.com</p>
                         </div>
                         <div class="flex items-center space-x-2">
-                            <i class="fas fa-globe text-[#E78B48]"></i>
+                            <i class="fas fa-globe text-brand-orange"></i>
                             <p><a href="http://www.rajaranirealestate.com" target="_blank"
-                                    class="hover:text-[#F5C45E]">www.rajaranirealestate.com</a></p>
+                                    class="hover:text-brand-gold">www.rajaranirealestate.com</a></p>
                         </div>
                         <div class="flex items-start space-x-2">
-                            <i class="fas fa-clock text-[#E78B48] mt-1"></i>
+                            <i class="fas fa-clock text-brand-orange mt-1"></i>
                             <p>Mon–Sat: 10:00 AM – 8:00 PM<br>Sun: 10:00 AM – 02:00 PM</p>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div class="border-t border-[#F5C45E]/30 mt-8 pt-8">
+            <div class="border-t border-brand-gold/30 mt-8 pt-8">
                 <div class="flex flex-col md:flex-row justify-between items-center">
-                    <p class="text-gray-300 text-sm mb-4 md:mb-0 ">© 2025 RAJARANI REAL ESTATE Pvt Ltd. All
+                    <p class="text-gray-300 text-sm mb-4 md:mb-0 font-primary">© 2025 RAJARANI REAL ESTATE Pvt Ltd. All
                         rights reserved.</p>
-                    <div class="flex space-x-6 text-sm ">
-                        <a href="#" class="text-gray-300 hover:text-[#F5C45E] transition">Privacy Policy</a>
-                        <a href="#" class="text-gray-300 hover:text-[#F5C45E] transition">Terms & Conditions</a>
-                        <a href="#" class="text-gray-300 hover:text-[#F5C45E] transition">RERA</a>
+                    <div class="flex space-x-6 text-sm font-primary">
+                        <a href="#" class="text-gray-300 hover:text-brand-gold transition">Privacy Policy</a>
+                        <a href="#" class="text-gray-300 hover:text-brand-gold transition">Terms & Conditions</a>
+                        <a href="#" class="text-gray-300 hover:text-brand-gold transition">RERA</a>
                     </div>
                 </div>
             </div>
@@ -1042,9 +1041,9 @@
                 });
 
                 navLinks.forEach(link => {
-                    link.classList.remove('text-[#F5C45E]');
+                    link.classList.remove('text-brand-gold');
                     if (link.getAttribute('href') === `#${current}`) {
-                        link.classList.add('text-[#F5C45E]');
+                        link.classList.add('text-brand-gold');
                     }
                 });
             });
